@@ -16,7 +16,7 @@ var NavbarTop = React.createClass({
       <Navbar brand='Myelin' toggleNavKey={0}>
     <CollapsibleNav eventKey={2}> {/* This is the eventKey referenced */}
       <Nav navbar>
-      <DropdownButton eventKey={3} title='' bsStyle="fprimary">
+      <DropdownButton eventKey={3} title='Test' bsStyle="primary">
           <MenuItem eventKey='1'><Glyphicon glyph='lock' /></MenuItem>
           <MenuItem eventKey='2'>Twitter</MenuItem>
           <MenuItem eventKey='3'>Github</MenuItem>

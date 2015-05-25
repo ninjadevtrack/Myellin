@@ -9,6 +9,7 @@ var CurrentUserStore   = require('./stores/CurrentUserStore');
 var NavbarTop          = require('./components/NavbarTop');
 var Footer             = require('./components/Footer');
 var RequestOutcome     = require('./components/RequestOutcome');
+var Outcomes     = require('./components/Outcomes');
 
 var App = React.createClass({
 
@@ -41,8 +42,8 @@ var App = React.createClass({
     return (
       <div>
         <NavbarTop />
-        <RequestOutcome />
-
+        <Outcomes />
+<RequestOutcome />
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser} />
