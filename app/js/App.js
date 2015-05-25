@@ -8,8 +8,9 @@ var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var NavbarTop          = require('./components/NavbarTop');
 var Footer             = require('./components/Footer');
-var RequestOutcome     = require('./components/RequestOutcome');
-var Outcomes     = require('./components/Outcomes');
+var MainPage             = require('./pages/MainPage');
+
+
 
 var App = React.createClass({
 
@@ -42,8 +43,7 @@ var App = React.createClass({
     return (
       <div>
         <NavbarTop />
-        <Outcomes />
-<RequestOutcome />
+        <MainPage />
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser} />
