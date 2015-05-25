@@ -4,8 +4,6 @@ var React         = require('react/addons');
 var Link          = require('react-router').Link;
 var DocumentTitle = require('react-document-title');
 
-
-
 var HomePage = React.createClass({
 
   propTypes: {
@@ -14,8 +12,13 @@ var HomePage = React.createClass({
 
   render: function() {
     return (
-<DocumentTitle title="Home">
-<section className="home-page">
+      <DocumentTitle title="Home">
+        <section className="home-page">
+
+          <div>
+            
+          </div>
+
           <div>
             <Link to="Search"></Link>
           </div>

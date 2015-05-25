@@ -6,7 +6,7 @@
   & > .panel-heading {
     color: $heading-text-color;
     background-color: $heading-bg-color;
-    border-color: $gray-darker;
+    border-color: $heading-border;
 
     + .panel-collapse > .panel-body {
       border-top-color: $border;
