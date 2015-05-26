@@ -198,7 +198,7 @@
 
 .navbar-toggle {
   position: relative;
-  float: right;
+  float: left;
   margin-right: $navbar-padding-horizontal;
   padding: 9px 10px;
   @include navbar-vertical-align(34px);

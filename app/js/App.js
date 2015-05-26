@@ -7,9 +7,12 @@ var RouteHandler       = require('react-router').RouteHandler;
 var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var NavbarTop          = require('./components/NavbarTop');
+var HomePage             = require('./pages/HomePage');
+var SearchPage             = require('./pages/SearchPage');
 var Footer             = require('./components/Footer');
-var RequestOutcome     = require('./components/RequestOutcome');
-var Outcomes     = require('./components/Outcomes');
+
+
+
 
 var App = React.createClass({
 
@@ -40,16 +43,18 @@ var App = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <NavbarTop />
-        <Outcomes />
-<RequestOutcome />
+        <div>
+
+ <NavbarTop />
+               
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser} />
-
-        <Footer />
+ <Footer />
+                        <HomePage />
+                        <SearchPage />
       </div>
+     
     );
   }
 
