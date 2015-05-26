@@ -9,6 +9,7 @@ var DefaultRoute  = Router.DefaultRoute;
 var App           = require('./App');
 var HomePage      = require('./pages/HomePage');
 var SearchPage    = require('./pages/SearchPage');
+var MainPage    = require('./pages/MainPage');
 var NotFoundPage  = require('./pages/NotFoundPage');
 
 module.exports = (
@@ -18,6 +19,7 @@ module.exports = (
 
     <Route name='Home' path='/' handler={HomePage} />
     <Route name='Search' path='/search' handler={SearchPage} />
+    <Route name='MainPage' path='/mainpage' handler={SearchPage} />
 
     <NotFoundRoute handler={NotFoundPage} />
 

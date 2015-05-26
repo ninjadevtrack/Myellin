@@ -9,9 +9,15 @@ var DocumentTitle = require('react-document-title');
 
 
 var MainPage = React.createClass({
+  
+ propTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
+
   render: function() {
     return (
-<DocumentTitle title="Home">
+<DocumentTitle title="MainPage">
+<section className="mainpage">
 <Grid>
 <Col sd={10} sdPush={1} md={8} mdPush={2}>
 
@@ -20,6 +26,7 @@ var MainPage = React.createClass({
 </Grid>
 
 <RequestOutcome />
+</section>
       </DocumentTitle>
     );
   }

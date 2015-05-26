@@ -9,6 +9,7 @@ var CurrentUserStore   = require('./stores/CurrentUserStore');
 var NavbarTop          = require('./components/NavbarTop');
 var HomePage             = require('./pages/HomePage');
 var SearchPage             = require('./pages/SearchPage');
+var MainPage             = require('./pages/MainPage');
 var Footer             = require('./components/Footer');
 
 
@@ -46,6 +47,7 @@ var App = React.createClass({
         <div>
 
  <NavbarTop />
+  <MainPage />
                
         <RouteHandler params={this.props.params}
                       query={this.props.query}
