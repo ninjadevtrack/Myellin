@@ -18,6 +18,8 @@ $gray-light:             #bbb !default;
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
 $brand-primary:         $white !default;
+$brand-secondary:       #00D8FF !default;
+$brand-third:           #FBFBFB !default;
 $brand-success:         #4CAF50 !default;
 $brand-info:            #9C27B0 !default;
 $brand-warning:         #ff9800 !default;
@@ -51,8 +53,9 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          13px !default;
+$font-size-base:          15px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-huge:         ceil(($font-size-base * 1.5)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
 
 $font-size-h1:            56px !default;
@@ -327,7 +330,7 @@ $grid-columns:              12 !default;
 $grid-gutter-width:         30px !default;
 $grid-gutter-none:         0px !default;// Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-$grid-float-breakpoint:     $screen-sm-min !default;
+$grid-float-breakpoint:     $screen-xs-min !default;
 //** Point at which the navbar begins collapsing.
 $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
 
@@ -595,16 +598,16 @@ $modal-title-padding:         15px !default;
 $modal-title-line-height:     $line-height-base !default;
 
 //** Background color of modal content area
-$modal-content-bg:                             #fff !default;
+$modal-content-bg:                             transparent !default;
 //** Modal content border color
 $modal-content-border-color:                   transparent !default;
 //** Modal content border color **for IE8**
 $modal-content-fallback-border-color:          #999 !default;
 
 //** Modal backdrop background color
-$modal-backdrop-bg:           #000 !default;
+$modal-backdrop-bg:           $white !default;
 //** Modal backdrop opacity
-$modal-backdrop-opacity:      .5 !default;
+$modal-backdrop-opacity:      .9 !default;
 //** Modal header border color
 $modal-header-border-color:   transparent !default;
 //** Modal footer border color
@@ -670,7 +673,7 @@ $progress-bar-info-bg:        $brand-info !default;
 //** Background color on `.list-group-item`
 $list-group-bg:                 #fff !default;
 //** `.list-group-item` border color
-$list-group-border:             #ddd !default;
+$list-group-border:             $brand-third !default;
 //** List group border radius
 $list-group-border-radius:      $border-radius-none !default;
 
@@ -767,17 +770,16 @@ $well-border:                 transparent !default;
 //
 //##
 
-$badge-color:                 #fff !default;
+$badge-color:                 $brand-secondary !default;
 //** Linked badge text color on hover
-$badge-link-hover-color:      #fff !default;
-$badge-bg:                    $gray-light !default;
+$badge-link-hover-color:      $brand-secondary !default;               
 
 //** Badge text color in active nav link
-$badge-active-color:          $link-color !default;
+$badge-active-color:          #111 !default;
 //** Badge background color in active nav link
-$badge-active-bg:             #fff !default;
+$badge-active-bg:             #111 !default;
 
-$badge-font-weight:           normal !default;
+$badge-font-weight:           400 !default;
 $badge-line-height:           1 !default;
 $badge-border-radius:         10px !default;
 

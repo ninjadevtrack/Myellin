@@ -331,7 +331,6 @@
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
 .s-lg {
   font-size: 1.3333333333333333em;
@@ -340,6 +339,8 @@
 }
 
 .s-1sm { font-size: 20vh; }
+.hamburger { font-size: 25px; }
+.lock { font-size: 20px; }
 .s-2x { font-size: 2em; }
 .s-3x { font-size: 3em; }
 .s-4x { font-size: 4em; }
@@ -347,6 +348,7 @@
 .s-fw {
   width: 1.2857142857142858em;
   text-align: center;
+}
 }
 
 .s-glyph01:before { content: "\E001" }
