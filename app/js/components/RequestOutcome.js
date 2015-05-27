@@ -2,7 +2,6 @@
 
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
-var Col = require('react-bootstrap').Col;
 var Modal = require('react-bootstrap').Modal;
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
 var Form = require('react-bootstrap').Form;
@@ -26,11 +25,11 @@ var RequestOutcome = React.createClass({
 
   render: function() {
     return (
-<Col xs={1} xsPush={5} sd={1} sdPush={10} md={1} mdPush={10}>
-      <section className="requestoutcome center-block">
-      <Button onClick={this.handleToggle} bsStyle='link'><h3><i className="s s-glyph04"></i></h3></Button>
+
+      <section className="requestoutcome">
+      <Button onClick={this.handleToggle} bsStyle='link'><h4><i className="s s-glyph04 s-outcome"></i></h4></Button>
     </section>
-</Col>
+
     );
   },
 
