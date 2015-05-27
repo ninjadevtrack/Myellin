@@ -19,7 +19,7 @@ var MainPage = React.createClass({
 <DocumentTitle title="MainPage">
 <section className="mainpage">
 <Grid>
-<Col sd={10} sdPush={1} md={8} mdPush={2}>
+<Col sd={10} sdPush={1} md={10} mdPush={1} ld={10} ldPush={1}>
 
 <Outcomes />
 </Col>

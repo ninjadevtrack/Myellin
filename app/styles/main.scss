@@ -4,3 +4,8 @@ $icon-font-path: "../fonts/";
 @import "bootstrap/bootswatch";
 
 @import "elements/requestoutcome";
+@import "elements/searchbar";
+
+.navbar-collapse {
+  overflow: hidden;
+}

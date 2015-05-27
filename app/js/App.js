@@ -45,7 +45,6 @@ var App = React.createClass({
   render: function() {
     return (
         <div>
-
  <NavbarTop />
   <MainPage />
                
@@ -56,7 +55,6 @@ var App = React.createClass({
                         <HomePage />
                         <SearchPage />
       </div>
-     
     );
   }
 
