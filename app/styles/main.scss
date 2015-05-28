@@ -5,7 +5,9 @@ $icon-font-path: "../fonts/";
 
 @import "elements/requestoutcome";
 @import "elements/searchbar";
+@import "elements/navbartop";
 
 .navbar-collapse {
   overflow: hidden;
 }
+

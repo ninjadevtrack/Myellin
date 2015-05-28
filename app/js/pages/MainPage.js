@@ -3,6 +3,7 @@
 var React         = require('react/addons');
 var RequestOutcome      = require('../components/RequestOutcome');
 var Outcomes        = require('../components/Outcomes');
+var SearchBar        = require('../components/SearchBar');
 var Grid        = require('react-bootstrap').Grid;
 var Col         = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
@@ -19,8 +20,8 @@ var MainPage = React.createClass({
 <DocumentTitle title="MainPage">
 <section className="mainpage">
 <Grid>
-<Col sd={10} sdPush={1} md={10} mdPush={1} ld={10} ldPush={1}>
-
+<SearchBar />
+<Col sm={10} smPush={1} md={10} mdPush={1} lg={10} lgPush={1}>
 <Outcomes />
 </Col>
 </Grid>
