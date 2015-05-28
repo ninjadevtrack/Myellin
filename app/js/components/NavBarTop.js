@@ -15,6 +15,7 @@ var NavbarTop = React.createClass({
 
   render: function() {
     return (
+      <div className='navbarhidemobilemenu'>
       <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand='Myelin'>{/* This is the eventKey referenced */}
       <Nav navbar left>
       <DropdownButton eventKey={1} title={<i className="s s-glyph01 s-hamburger"></i>} noCaret>
@@ -30,6 +31,7 @@ var NavbarTop = React.createClass({
     <CollapsibleNav eventKey={0}>   
     </CollapsibleNav>
   </Navbar>
+  </div>
     );
   }
 
