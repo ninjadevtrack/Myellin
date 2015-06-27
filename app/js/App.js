@@ -6,7 +6,7 @@ var RouteHandler       = require('react-router').RouteHandler;
 
 var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
-var NavbarTop          = require('./components/NavbarTop');
+var NavbarTop          = require('./components/NavBarTop');
 var HomePage             = require('./pages/HomePage');
 var SearchPage             = require('./pages/SearchPage');
 var MainPage             = require('./pages/MainPage');
