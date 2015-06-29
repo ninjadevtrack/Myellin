@@ -20,6 +20,7 @@ module.exports = (
     <Route name='Home' path='/' handler={HomePage} />
     <Route name='Search' path='/search' handler={SearchPage} />
     <Route name='MainPage' path='/mainpage' handler={SearchPage} />
+    <Route name='Outcome' path='/mainpage/:outcome_id' handle={SearchPage} />
 
     <NotFoundRoute handler={NotFoundPage} />
 
