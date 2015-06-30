@@ -1,9 +1,6 @@
-react-rocket
+Myelin
 ============
 
-A boilerplate using ReactJS (along with React Router and RefluxJS), SASS, Gulp, and Browserify that also utilizes Gulp best practices from [this resource](https://github.com/greypants/gulp-starter).
-
----
 
 ### Getting up and running
 
@@ -16,8 +13,6 @@ A boilerplate using ReactJS (along with React Router and RefluxJS), SASS, Gulp, 
 Now that `gulp dev` is running, the server is up as well and serving files from the `/build` directory. Any changes in the `/app` directory will be automatically processed by Gulp and the changes will be injected to any open browsers pointed at the proxy address.
 
 ---
-
-This boilerplate uses the latest versions of the following libraries:
 
 - [ReactJS](https://github.com/facebook/react)
 - [React Router](https://github.com/rackt/react-router)
