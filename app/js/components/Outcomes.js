@@ -44,7 +44,7 @@ var Outcomes = React.createClass({
   },
 
   _handleClick: function (id) {
-    this.context.router.transitionTo('Outcome', {outcome_id: id});
+    this.context.router.transitionTo('Outcomes', {outcome_id: id});
   }
 
 });
