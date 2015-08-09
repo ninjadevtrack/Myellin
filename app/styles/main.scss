@@ -6,20 +6,21 @@ $icon-font-path: "../fonts/";
 @import "elements/requestoutcome";
 @import "elements/searchbar";
 @import "elements/navbartop";
+@import "elements/playlist";
 
 
 .navbar-collapse.collapse {
-display: block!important;
+  display: block!important;
 }
 
 .navbar-nav>li, .navbar-nav {
-float: left !important;
+  float: left !important;
 }
 
 .navbar-nav.navbar-right:last-child {
-margin-right: -15px !important;
+  margin-right: -15px !important;
 }
 
 .navbar-right {
-float: right!important;
+  float: right!important;
 }
