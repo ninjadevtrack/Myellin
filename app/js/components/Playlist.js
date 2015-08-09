@@ -87,8 +87,8 @@ var Playlist = React.createClass({
     e.preventDefault();
 
     // TODO: Add row to upvotes table
-    // Reject if already upvote for outcome_id AND user_id then
-    // If succeeds, increment vote count
+    // Reject if already upvote for outcome_id AND user_id
+    // If it succeeds, increment vote count
 
     this.refOutcome.update({
       upvote: this.state.outcome.upvote + 1
@@ -96,7 +96,7 @@ var Playlist = React.createClass({
   },
 
   _handleClick: function (id) {
-    this.context.router.transitionTo('Outcomes', {outcome_id: id});
+    //this.context.router.transitionTo('Outcomes', {outcome_id: id});
   }
 
 });
