@@ -42,11 +42,11 @@ var RequestOutcome = React.createClass({
       <Modal title='' onRequestHide={this.handleToggle}>
         <div className='modal-body'>
           <form>
-    <Input type='text' label='' placeholder='Enter text' />
-    </form>
+            <Input type='text' label='' placeholder='Enter text' />
+          </form>
         </div>
         <div className='modal-footer'>
-          <Button onClick={this.handleToggle} bsStyle='link'><h5><i className="s s-glyph10"></i></h5></Button>
+            <Button onClick={this.handleToggle} bsStyle='link'><h5><i className="s s-glyph10"></i></h5></Button>
         </div>
       </Modal>
     );

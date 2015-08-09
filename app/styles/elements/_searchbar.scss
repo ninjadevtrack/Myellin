@@ -1,32 +1,31 @@
 .compensate-for-the-nav {
-margin-top: 50px;
-text-align: center;
+  margin-top: 50px;
+  text-align: center;
 
-.form-group {
-margin-bottom: -8px;
-}
+  .form-group {
+    margin-bottom: -8px;
+  }
 
 }
 .inputplaceholder {
-::-webkit-input-placeholder::after { font-family: symbols; content:'\E002  '; color: #585858}
-::-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* firefox 19+ */
-:-ms-input-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* ie */
-input:-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858}
+  ::-webkit-input-placeholder::after { font-family: symbols; content:'\E002  '; color: #585858}
+  ::-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* firefox 19+ */
+  :-ms-input-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* ie */
+  input:-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858}
 
-input {
-	text-align: center;
-}
+  input {
+      text-align: center;
+  }
  
-::-webkit-input-placeholder {
-   text-align: center;
-}
- 
-:-moz-placeholder {
-   text-align: center;
- 
-}
+  ::-webkit-input-placeholder {
+     text-align: center;
+  }
+   
+  :-moz-placeholder {
+     text-align: center;
+   
+  }
 }
 
-.latest-first {
-}
+.latest-first {}
 
