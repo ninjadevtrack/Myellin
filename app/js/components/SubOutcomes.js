@@ -37,7 +37,7 @@ var SubOutcomes = React.createClass({
 
     var elements = this.state.data.map(function (suboutcome) {
       return (
-        <ListGroupItem onClick={this._handleClick.bind(this, suboutcome.id)} key={suboutcome['.key']}>
+        <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, suboutcome.id)} key={suboutcome['.key']}>
           {suboutcome.title}
         </ListGroupItem>
       );
