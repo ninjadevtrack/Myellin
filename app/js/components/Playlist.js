@@ -9,14 +9,17 @@ var Button = require('react-bootstrap').Button;
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
+var AuthorName = require('./AuthorName');
+var SubOutcomes = require('./SubOutcomes');
+var UpvoteButton = require('./UpvoteButton');
+
 var Playlist = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
   getInitialState: function(){
     return {
-      outcome: [],
-      suboutcomes: []
+      data: {}
     };
   },
 
@@ -24,61 +27,48 @@ var Playlist = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  componentDidUpdate: function(prevProps, nextState) {
-    // If playlist id changes we need to bind new Firebase refs
-    if (this.props.id !== prevProps.id){
-      this.unbindFirebaseRefs();
-      this.bindFirebaseRefs();
-    }
-  },
-
   bindFirebaseRefs: function(){
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    var firebase = new Firebase(firebaseRoot);
 
-    this.refOutcome = new Firebase(firebaseRoot + '/outcomes/' + this.props.id);
-
-    this.refSubOutcomes = new Firebase(firebaseRoot + '/suboutcomes')
-                            .orderByChild("parent_outcome")
-                            .equalTo(this.props.id);
-
-    this.bindAsObject(this.refOutcome, 'outcome');
-    this.bindAsArray(this.refSubOutcomes, 'suboutcomes');
+    this.refPlaylist = firebase.child('playlists/' + this.props.id);
+    this.bindAsObject(this.refPlaylist, 'data');
   },
-
-  unbindFirebaseRefs: function(){
-    this.unbind('outcome');
-    this.unbind('suboutcomes');
-  },
-
 
   render: function () {
 
-    var suboutcomes = this.state.suboutcomes.map(function (suboutcome) {
-      return (
-        <ListGroupItem onClick={this._handleClick.bind(this, suboutcome.id)} key={suboutcome['.key']}>
-          {suboutcome.title}
-        </ListGroupItem>
-      );
-    }.bind(this));
-
+    if (!this.state.data)
+      return false;
+ 
     return (
       <div className="playlist-container">
-        { this.state.outcome &&
-          <div>
-            <h4>{this.state.outcome.title}</h4>
-            <p>{this.state.outcome.description}</p>
-            <div className="upvote">
-              <div className="count">{this.state.outcome.upvote}</div>
-              <Button onClick={this.handleUpvote}>r</Button>
-            </div>
-          </div>
-        }
-        <ListGroup fill>
-          {suboutcomes}
-        </ListGroup>
+   
+        <div>
+          <AuthorName id={this.state.data.author_id} />
 
-        <Button onClick={this.handleUpvote}>Recommend</Button>
+          <p>{this.state.data.description}</p>
+
+          <div className="upvote">
+            <div className="count">{this.state.data.upvote_count}</div>
+
+            <UpvoteButton 
+              type="small" 
+              playlist_id={this.state.data.id} 
+              parent_outcome={this.state.data.parent_outcome} 
+              handleUpvote={this.handleUpvote} />
+          
+          </div>
+        </div>
+
+        <SubOutcomes parent_playlist={this.props.id} />
+
+        <UpvoteButton
+          type="large" 
+          playlist_id={this.state.data.id} 
+          parent_outcome={this.state.data.parent_outcome} 
+          handleUpvote={this.handleUpvote} />
+        
       </div>
     );
   },
@@ -86,13 +76,54 @@ var Playlist = React.createClass({
   handleUpvote: function(e){
     e.preventDefault();
 
-    // TODO: Add row to upvotes table
-    // Reject if already upvote for outcome_id AND user_id
-    // If it succeeds, increment vote count
+    if (!this.state.data){
+      console.log('Can\'t vote, playlist data not loaded yet');
+      return false;
+    }
 
-    this.refOutcome.update({
-      upvote: this.state.outcome.upvote + 1
-    });
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    var firebase = new Firebase(firebaseRoot);
+
+    // Store playlist_id in votes/{parent_outcome}/{user_id}
+    // Assume user_id = 1 for now
+    var voteRef = firebase.child('upvotes/' + this.state.data.parent_outcome + '/1')
+
+    voteRef.transaction(function(currentValue) {
+
+      // No data yet set value to playlist_id
+      if (currentValue === null)
+        return this.state.data.id;
+      
+      // If voting again for same playlist do nothing
+      if (currentValue === this.state.data.id){
+        console.log('This user already voted for playlist_id '+ this.state.data.id);
+        return;
+      }
+
+      // De-increment upvote_count for playlist user previously voted for
+      firebase.child('playlists/' + currentValue + '/upvote_count').transaction(function(currentValue) {
+        return currentValue - 1;
+      });
+
+      return this.state.data.id;
+    
+    }.bind(this), function(error, committed, snapshot) {
+      if (error) {
+        console.log('Transaction failed abnormally!', error);
+      } else if (!committed) {
+        console.log('We aborted the transaction (because vote already exists).');
+      } else {
+
+        console.log('Vote added!');
+
+        // Increment upvote_count for this playlist
+        this.refPlaylist.child('upvote_count').transaction(function(currentValue) {
+          return currentValue + 1;
+        });
+      }
+      console.log("Vote data: ", snapshot.val());
+    }.bind(this));
+
   },
 
   _handleClick: function (id) {
