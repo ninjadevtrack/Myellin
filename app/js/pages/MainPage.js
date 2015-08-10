@@ -10,8 +10,7 @@ var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
-var Playlist = require('../components/Playlist');
-
+var Playlists = require('../components/Playlists');
 
 var MainPage = React.createClass({
 
@@ -22,18 +21,19 @@ var MainPage = React.createClass({
   },
 
   computeOutcomesWidth: function() {
-    return this.getParams().outcome_id ? 6 : 12;
+    return this.getParams().outcome_id ? 5 : 12;
   },
 
-  computeSubOutcomesWidth: function() {
-    return this.getParams().outcome_id ? 6 : 0;
+  computePlaylistsWidth: function() {
+    return this.getParams().outcome_id ? 7 : 0;
   },
 
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
 
-    var column_width = this.computeOutcomesWidth();
+    var outcomes_column_width = this.computeOutcomesWidth();
+    var playlists_column_width = this.computePlaylistsWidth();
 
     return (
       <DocumentTitle title="MainPage">
@@ -43,9 +43,9 @@ var MainPage = React.createClass({
             <SearchBar />
             <div id="give-me-some-space" style={{ height: '2em', width: '100%' }}> </div>
 
-            <Col sm={column_width}
-                 md={column_width}
-                 lg={column_width} 
+            <Col sm={outcomes_column_width}
+                 md={outcomes_column_width}
+                 lg={outcomes_column_width} 
                  smPush={0}
                  mdPush={0}
                  lgPush={0}>
@@ -55,14 +55,14 @@ var MainPage = React.createClass({
             </Col>
 
             { outcome_id &&
-              <Col sm={column_width}
-                   md={column_width}
-                   lg={column_width} 
+              <Col sm={playlists_column_width}
+                   md={playlists_column_width}
+                   lg={playlists_column_width} 
                    smPush={0}
                    mdPush={0}
                    lgPush={0}>
 
-                <Playlist id={outcome_id}/>
+                <Playlists outcome_id={outcome_id} />
               </Col>
             }
 
