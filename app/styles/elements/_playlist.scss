@@ -1,0 +1,26 @@
+.playlists { border-left: 1px solid #ccc; }
+
+.playlist-container {
+
+  position: relative;
+  padding-left: 6em;
+  margin-bottom: 3em;
+
+  .upvote{
+    position: absolute;
+    left: 1em;
+    top: 0em;
+    font-size: 2em;
+    line-height: 1em;
+   
+    .count{
+       margin-bottom: 0.5em;
+    }
+
+    button{
+
+    }
+
+  }
+
+}

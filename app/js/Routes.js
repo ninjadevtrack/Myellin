@@ -13,15 +13,23 @@ var MainPage    = require('./pages/MainPage');
 var NotFoundPage  = require('./pages/NotFoundPage');
 
 module.exports = (
-  <Route handler={App} path='/'>
+  <Route name='app' path='/' handler={App}>
 
-    <DefaultRoute handler={HomePage} />
+    /*
+     * If this route is matched, the outcomes will be half of the width
+     * and sub-outcomes the second half.
+     */
+    <Route name='Outcomes' path='mainpage/:outcome_id' handler={MainPage} />
 
-    <Route name='Home' path='/' handler={HomePage} />
-    <Route name='Search' path='/search' handler={SearchPage} />
-    <Route name='MainPage' path='/mainpage' handler={SearchPage} />
+    /*
+     * If none of the above routes matched, then load the MainPage component.
+     * The outcomes will take the full width of the screen.
+     */
+    <DefaultRoute handler={MainPage} />
 
+    /*
+     * Route displayed when none of the above were matched.
+     */
     <NotFoundRoute handler={NotFoundPage} />
-
   </Route>
 );

@@ -1,9 +1,13 @@
 {
-  "firebase": "blazing-fire-4313",
-  "public": ".",
+  "firebase": "myelin-gabe",
+  "public": "build",
   "ignore": [
     "firebase.json",
     "**/.*",
     "**/node_modules/**"
-  ]
+  ],
+  "rewrites": [ {
+    "source": "**",
+    "destination": "/index.html"
+  }]
 }

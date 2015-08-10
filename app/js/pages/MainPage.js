@@ -1,33 +1,85 @@
 'use strict';
 
-var React         = require('react/addons');
-var RequestOutcome      = require('../components/RequestOutcome');
-var Outcomes        = require('../components/Outcomes');
-var SearchBar        = require('../components/SearchBar');
-var Grid        = require('react-bootstrap').Grid;
-var Col         = require('react-bootstrap').Col;
+var React = require('react/addons');
+var Router = require('react-router');
+var RequestOutcome = require('../components/RequestOutcome');
+var Outcomes = require('../components/Outcomes');
+var SearchBar = require('../components/SearchBar');
+var Grid = require('react-bootstrap').Grid;
+var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
+var ReactFireMixin = require('reactfire');
+var Playlists = require('../components/Playlists');
 
 var MainPage = React.createClass({
-  
- propTypes: {
+
+  mixins: [Router.State, ReactFireMixin],
+
+  propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
 
-  render: function() {
-    return (
-<DocumentTitle title="MainPage">
-<section className="mainpage">
-<Grid>
-<SearchBar />
-<Col sm={10} smPush={1} md={10} mdPush={1} lg={10} lgPush={1}>
-<Outcomes />
-</Col>
-</Grid>
+  computeOutcomesWidth: function() {
+    return this.getParams().outcome_id ? 5 : 12;
+  },
 
-<RequestOutcome />
-</section>
+  computePlaylistsWidth: function() {
+    return this.getParams().outcome_id ? 7 : 0;
+  },
+
+  render: function () {
+
+    var outcome_id = this.getParams().outcome_id;
+
+    var outcomes_column_width = this.computeOutcomesWidth();
+    var playlists_column_width = this.computePlaylistsWidth();
+
+    return (
+      <DocumentTitle title="MainPage">
+        <section className="mainpage">
+          <Grid fluid={true}>
+
+            <SearchBar />
+            <div id="give-me-some-space" style={{ height: '2em', width: '100%' }}> </div>
+
+            <Col sm={outcomes_column_width}
+                 md={outcomes_column_width}
+                 lg={outcomes_column_width} 
+                 smPush={0}
+                 mdPush={0}
+                 lgPush={0}>
+
+              <Outcomes />
+
+            </Col>
+
+            { outcome_id &&
+              <Col sm={playlists_column_width}
+                   md={playlists_column_width}
+                   lg={playlists_column_width} 
+                   smPush={0}
+                   mdPush={0}
+                   lgPush={0}>
+
+                <Playlists outcome_id={outcome_id} />
+              </Col>
+            }
+
+            {/*
+            <Col sm={10} smPush={0} md={this.computeOutcomesWidth()} mdPush={0} lg={10} lgPush={1}>
+              <Outcomes />
+            </Col>
+            <Col sm={10} smPush={0} md={this.computeSubOutcomesWidth()} mdPush={0} lg={10} lgPush={1}>
+              Display the list of sub-outcomes for the outcome with id {outcome_id}
+            </Col>
+            */}
+
+          </Grid>
+
+          <RequestOutcome />
+          
+        </section>
       </DocumentTitle>
     );
   }
