@@ -1,9 +1,13 @@
 'use strict';
 
 var React = require('react/addons');
-var ListGroupItem = require('react-bootstrap').ListGroupItem;
-var ListGroup = require('react-bootstrap').ListGroup;
+//var ListGroupItem = require('react-bootstrap').ListGroupItem;
+//var ListGroup = require('react-bootstrap').ListGroup;
+var PanelGroup = require('react-bootstrap').PanelGroup;
+var Panel = require('react-bootstrap').Panel;
 var Router = require('react-router');
+
+var UrlEmbed = require('./UrlEmbed');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
@@ -14,7 +18,8 @@ var SubOutcomes = React.createClass({
 
   getInitialState: function(){
     return {
-      data: []
+      data: [],
+      activeKey: 1
     };
   },
 
@@ -37,17 +42,24 @@ var SubOutcomes = React.createClass({
 
     var elements = this.state.data.map(function (suboutcome) {
       return (
-        <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, suboutcome.id)} key={suboutcome['.key']}>
-          {suboutcome.title}
-        </ListGroupItem>
+        <Panel header={suboutcome.title} eventKey={suboutcome['.key']}>
+          {suboutcome.description}
+          {suboutcome.url && 
+            <UrlEmbed url={suboutcome.url} />
+          }
+        </Panel>
       );
     }.bind(this));
 
     return (
-      <ListGroup fill>
+      <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
         {elements}
-      </ListGroup>
+      </PanelGroup>
     );
+  },
+
+  handleSelect: function(activeKey) {
+    this.setState({ activeKey });
   },
 
 
