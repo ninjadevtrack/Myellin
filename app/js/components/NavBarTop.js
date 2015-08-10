@@ -12,7 +12,7 @@ var Button = require('react-bootstrap').Button;
 var icon = (
     <span class="logo">
       <a href="/">
-        <img src="/images/monogram.svg" height="22" width="25" alt="text here" /></a>
+        <img src="/images/monogram.svg" height="30" width="34" alt="text here" /></a>
     </span>
   );
 
