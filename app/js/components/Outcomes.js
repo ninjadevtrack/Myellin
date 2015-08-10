@@ -25,7 +25,7 @@ var Outcomes = React.createClass({
       return (
         <ListGroupItem onClick={this._handleClick.bind(this, outcome.id)} key={outcome['.key']}>
           {outcome.title}
-          <Badge>{outcome.upvote}</Badge>
+          <Badge>{outcome.playlist_count}</Badge>
         </ListGroupItem>
       );
     }.bind(this));
