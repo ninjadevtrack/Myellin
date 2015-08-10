@@ -40,9 +40,17 @@ var Playlists = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refPlaylists = firebase.child('playlists')
-                            .orderByChild("parent_outcome")
-                            .equalTo(parseInt(this.props.outcome_id));
+    // Fetch by outcome_id
+    if (this.props.outcome_id){
+      this.refPlaylists = firebase.child('playlists')
+                              .orderByChild("parent_outcome")
+                              .equalTo(parseInt(this.props.outcome_id));
+    // Or by author_id
+    }else{
+      this.refPlaylists = firebase.child('playlists')
+                              .orderByChild("author_id")
+                              .equalTo(parseInt(this.props.author_id));
+    }
 
     this.bindAsArray(this.refPlaylists, 'data');
   },
