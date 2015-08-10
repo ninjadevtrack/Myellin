@@ -1,9 +1,6 @@
 'use strict';
 
 var React = require('react/addons');
-var ListGroupItem = require('react-bootstrap').ListGroupItem;
-var ListGroup = require('react-bootstrap').ListGroup;
-var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
 
 require('firebase');
@@ -11,7 +8,7 @@ var ReactFireMixin = require('reactfire');
 
 var UpvoteButton = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [ReactFireMixin],
 
   getInitialState: function(){
     return {
@@ -82,12 +79,14 @@ var UpvoteButton = React.createClass({
 
   render: function () {
 
-    var bsStyle = 'default';
- 
     var label = (this.props.type === 'small' ? 'r' : 'recommend');
 
+    // If we value from Firebase (user voted for a playlist for this outcome)
+    // AND the playlist is this playlist ...
     if (this.state.upvote && this.state.upvote['.value'] === this.props.playlist_id){
-      bsStyle = 'success';
+      var bsStyle = 'success';
+    }else{
+      var bsStyle = 'default';
     }
 
     return (
