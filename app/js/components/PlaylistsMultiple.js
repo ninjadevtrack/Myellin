@@ -11,7 +11,7 @@ var ReactFireMixin = require('reactfire');
 
 var Playlist = require('./Playlist');
 
-var Playlists = React.createClass({
+var PlaylistsMultiple = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
@@ -26,8 +26,9 @@ var Playlists = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, nextState) {
-    // If outcome_id changes we need to bind new Firebase refs
-    if (this.props.outcome_id !== prevProps.outcome_id){
+    // If outcome_id or author_id changes we need to bind to new Firebase paths
+    if (this.props.outcome_id !== prevProps.outcome_id ||
+              this.props.author_id !== prevProps.author_id ){
       this.bindFirebaseRefs(true);
     }
   },
@@ -64,7 +65,7 @@ var Playlists = React.createClass({
     }.bind(this));
 
     return (
-      <div className="playlists">
+      <div className="playlists-multiple">
         {playlists}
       </div>
     );
@@ -73,4 +74,4 @@ var Playlists = React.createClass({
 
 });
 
-module.exports = Playlists;
+module.exports = PlaylistsMultiple;

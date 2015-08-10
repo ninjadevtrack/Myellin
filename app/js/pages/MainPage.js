@@ -10,7 +10,7 @@ var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
-var Playlists = require('../components/Playlists');
+var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 
 var MainPage = React.createClass({
 
@@ -62,7 +62,7 @@ var MainPage = React.createClass({
                    mdPush={0}
                    lgPush={0}>
 
-                <Playlists outcome_id={outcome_id} />
+                <PlaylistsMultiple outcome_id={outcome_id} />
               </Col>
             }
 
