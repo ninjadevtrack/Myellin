@@ -8,10 +8,10 @@
 
 }
 .inputplaceholder {
-  ::-webkit-input-placeholder::after { font-family: symbols; content:'\E002  '; color: #585858}
-  ::-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* firefox 19+ */
-  :-ms-input-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858} /* ie */
-  input:-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: #585858}
+  ::-webkit-input-placeholder::after { font-family: symbols; content:'\E002  '; color: $gray-light}
+  ::-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: $gray-light} /* firefox 19+ */
+  :-ms-input-placeholder::after  { font-family: symbols; content:'\E002  '; color: $gray-light} /* ie */
+  input:-moz-placeholder::after  { font-family: symbols; content:'\E002  '; color: $gray-light}
 
   input {
       text-align: center;

@@ -7,7 +7,6 @@ var Form = require('react-bootstrap').Form;
 var Row = require('react-bootstrap').Row;
 
 
-
 var SearchBar = React.createClass({
 
   render: function() {
@@ -19,7 +18,7 @@ var SearchBar = React.createClass({
 <Input type='text' bsSize="large" placeholder="&#32;" />
 </div>
 </Col>
-<Col xs={2} xsPush={7} sm={2} smPush={7}  md={2} mdPush={7} lg={2} lgPush={7} >
+<Col xs={2} xsPush={8} sm={2} smPush={8}  md={2} mdPush={8} lg={2} lgPush={8} >
 
  <form><Input type='select' placeholder='Latest First'>
       <option value='select'>LATEST FIRST</option>

@@ -38,10 +38,10 @@ var MainPage = React.createClass({
     return (
       <DocumentTitle title="MainPage">
         <section className="mainpage">
-          <Grid fluid={true}>
+          <Grid fluid={false}>
 
             <SearchBar />
-            <div id="give-me-some-space" style={{ height: '2em', width: '100%' }}> </div>
+            <div id="give-me-some-space" style={{ height: '0.3em', width: '100%' }}> </div>
 
             <Col sm={outcomes_column_width}
                  md={outcomes_column_width}

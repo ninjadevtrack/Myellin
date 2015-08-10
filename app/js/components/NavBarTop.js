@@ -9,14 +9,19 @@ var NavItem = require('react-bootstrap').NavItem;
 var MenuItem = require('react-bootstrap').MenuItem;
 var Button = require('react-bootstrap').Button;
 
-
+var icon = (
+    <span class="logo">
+      <a href="/">
+        <img src="/images/monogram.svg" height="22" width="25" alt="text here" /></a>
+    </span>
+  );
 
 var NavbarTop = React.createClass({
 
   render: function() {
     return (
       <div className='navbarhidemobilemenu'>
-      <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand='Myelin'>{/* This is the eventKey referenced */}
+      <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
       <Nav navbar left>
       <DropdownButton eventKey={1} title={<i className="s s-glyph01 s-hamburger"></i>} noCaret>
           <MenuItem eventKey='1'>Home</MenuItem>
