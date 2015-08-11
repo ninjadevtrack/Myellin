@@ -221,7 +221,7 @@ $input-height-small:             (floor($font-size-small * $line-height-small) +
 //** `.form-group` margin
 $form-group-margin-bottom:       15px !default;
 
-$legend-color:                   $gray-dark !default;
+$legend-color:                   $gray-light !default;
 $legend-border-color:            #e5e5e5 !default;
 
 //** Background color for textual input addons
@@ -249,7 +249,7 @@ $dropdown-divider-bg:            #e5e5e5 !default;
 //** Dropdown link text color.
 $dropdown-link-color:            $text-color !default;
 //** Hover color for dropdown links.
-$dropdown-link-hover-color:      darken($gray-dark, 5%) !default;
+$dropdown-link-hover-color:      darken($gray-light, 5%) !default;
 //** Hover background for dropdown links.
 $dropdown-link-hover-bg:         $gray-lighter !default;
 

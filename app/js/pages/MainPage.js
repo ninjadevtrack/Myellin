@@ -40,18 +40,15 @@ var MainPage = React.createClass({
         <section className="mainpage">
           <Grid fluid={false}>
 
-            <SearchBar />
-            <div id="give-me-some-space" style={{ height: '0.3em', width: '100%' }}> </div>
-
             <Col sm={outcomes_column_width}
                  md={outcomes_column_width}
                  lg={outcomes_column_width} 
                  smPush={0}
                  mdPush={0}
                  lgPush={0}>
-
+          <SearchBar />
               <Outcomes />
-
+              <RequestOutcome />
             </Col>
 
             { outcome_id &&
@@ -61,8 +58,11 @@ var MainPage = React.createClass({
                    smPush={0}
                    mdPush={0}
                    lgPush={0}>
+                <SearchBar />
 
                 <Playlists outcome_id={outcome_id} />
+                <RequestOutcome />
+
               </Col>
             }
 
@@ -76,8 +76,6 @@ var MainPage = React.createClass({
             */}
 
           </Grid>
-
-          <RequestOutcome />
           
         </section>
       </DocumentTitle>
