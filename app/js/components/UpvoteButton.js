@@ -10,6 +10,16 @@ var UpvoteButton = React.createClass({
 
   mixins: [ReactFireMixin],
 
+  getDefaultProps: function(){
+    return {
+      this_type: 'playlist', // playlist or suboutcome
+      this_id: null,
+      parent_id: null, // parent_id will belong to outcome or playlist
+      size: 'default',
+      label: 'recommend'
+    };
+  },
+
   getInitialState: function(){
     return {
       upvote: null
@@ -25,7 +35,11 @@ var UpvoteButton = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refUpvote = firebase.child('upvotes/' + this.props.parent_outcome + '/1');
+    // We store playlist_id in votes/playlist/{parent_outcome}/{user_id}
+    // Or suboutcome_id in votes/suboutcome/{parent_playlist}/{user_id}
+    // Assume user_id = 1 for now
+    this.refUpvote = firebase.child('upvotes/' + this.props.this_type + '/' + this.props.parent_id + '/1');
+
     this.bindAsObject(this.refUpvote, 'upvote');
   },
 
@@ -35,28 +49,24 @@ var UpvoteButton = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    // Store playlist_id in votes/{parent_outcome}/{user_id}
-    // Assume user_id = 1 for now
-    var voteRef = firebase.child('upvotes/' + this.props.parent_outcome + '/1')
+    this.refUpvote.transaction(function(currentValue) {
 
-    voteRef.transaction(function(currentValue) {
-
-      // No data yet set value to playlist_id
+      // No data yet set value to this_id
       if (currentValue === null)
-        return this.state.data.id;
+        return this.props.this_id;
       
-      // If voting again for same playlist do nothing
-      if (currentValue === this.props.playlist_id){
-        console.log('This user already voted for playlist_id '+ this.props.playlist_id);
+      // If voting again for same thing do nothing
+      if (currentValue === this.props.this_id){
+        console.log('This user already voted for ' + this.props.this_type + ' with id: ' + this.props.this_id);
         return;
       }
 
-      // De-increment upvote_count for playlist user previously voted for
-      firebase.child('playlists/' + currentValue + '/upvote_count').transaction(function(currentValue) {
+      // De-increment upvote_count for thing user previously voted for
+      firebase.child( this.props.this_type + 's/' + currentValue + '/upvote_count').transaction(function(currentValue) {
         return currentValue - 1;
       });
 
-      return this.props.playlist_id;
+      return this.props.this_id;
     
     }.bind(this), function(error, committed, snapshot) {
       if (error) {
@@ -67,8 +77,8 @@ var UpvoteButton = React.createClass({
 
         console.log('Vote added!');
 
-        // Increment upvote_count for this playlist
-        firebase.child('playlists/' + this.props.playlist_id + '/upvote_count').transaction(function(currentValue) {
+        // Increment upvote_count for this
+        firebase.child( this.props.this_type + 's/' + this.props.this_id + '/upvote_count').transaction(function(currentValue) {
           return currentValue + 1;
         });
       }
@@ -79,19 +89,17 @@ var UpvoteButton = React.createClass({
 
   render: function () {
 
-    var label = (this.props.type === 'small' ? 'r' : 'recommend');
-
-    // If we value from Firebase (user voted for a playlist for this outcome)
-    // AND the playlist is this playlist ...
-    if (this.state.upvote && this.state.upvote['.value'] === this.props.playlist_id){
+    // If we have value from Firebase (user voted for something for this parent_id)
+    // AND the value equals this_id, then vote button should show success state ...
+    if (this.state.upvote && this.state.upvote['.value'] === this.props.this_id){
       var bsStyle = 'success';
     }else{
       var bsStyle = 'default';
     }
 
     return (
-      <Button bsStyle={bsStyle} onClick={this.handleUpvote}>
-        {label}
+      <Button bsSize={this.props.size} bsStyle={bsStyle} onClick={this.handleUpvote}>
+        {this.props.label}
       </Button>
     );
   }

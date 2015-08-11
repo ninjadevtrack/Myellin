@@ -7,7 +7,10 @@ var PanelGroup = require('react-bootstrap').PanelGroup;
 var Panel = require('react-bootstrap').Panel;
 var Router = require('react-router');
 
+var Option = require('./Option');
+
 var UrlEmbed = require('./UrlEmbed');
+var UpvoteButton = require('./UpvoteButton');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
@@ -19,7 +22,7 @@ var SubOutcomes = React.createClass({
   getInitialState: function(){
     return {
       data: [],
-      activeKey: 1
+      activeKey: null
     };
   },
 
@@ -40,15 +43,37 @@ var SubOutcomes = React.createClass({
 
   render: function () {
 
-    var elements = this.state.data.map(function (suboutcome) {
-      return (
-        <Panel header={suboutcome.title} eventKey={suboutcome['.key']}>
-          {suboutcome.description}
-          {suboutcome.url && 
-            <UrlEmbed url={suboutcome.url} />
+    var elements = this.state.data.map(function (suboutcome, i) {
+
+      var PanelHeader = (
+        <div className="suboutcome-header">
+
+          <div className="suboutcome-header-title">
+            {suboutcome.title}
+          </div>
+
+          { false && this.state.activeKey == i &&
+            <div>
+              <div href="javascript:void(0)" onClick={this.loadOptions}>options</div>
+              <UpvoteButton size="xsmall" label="r" 
+                this_type="suboutcome"
+                this_id={suboutcome.id}
+                parent_id={this.props.parent_playlist} />
+            </div>
           }
+        </div>
+      );
+
+      return (
+        <Panel header={PanelHeader} eventKey={suboutcome['.key']}>
+
+          { suboutcome.chosen_option >= 0 && 
+            <Option id={suboutcome.chosen_option} />
+          }
+
         </Panel>
       );
+
     }.bind(this));
 
     return (
@@ -56,6 +81,10 @@ var SubOutcomes = React.createClass({
         {elements}
       </PanelGroup>
     );
+  },
+
+  loadOptions: function(){
+    alert('load options');
   },
 
   handleSelect: function(activeKey) {

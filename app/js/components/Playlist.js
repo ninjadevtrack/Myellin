@@ -53,9 +53,10 @@ var Playlist = React.createClass({
             <div className="count">{this.state.data.upvote_count}</div>
 
             <UpvoteButton 
-              type="small" 
-              playlist_id={this.state.data.id} 
-              parent_outcome={this.state.data.parent_outcome} />
+              label="r"
+              this_type="playlist"
+              this_id={this.state.data.id} 
+              parent_id={this.state.data.parent_outcome} />
           
           </div>
         </div>
@@ -63,9 +64,9 @@ var Playlist = React.createClass({
         <SubOutcomes parent_playlist={this.props.id} />
 
         <UpvoteButton
-          type="large" 
-          playlist_id={this.state.data.id} 
-          parent_outcome={this.state.data.parent_outcome} />
+          this_type="playlist"
+          this_id={this.state.data.id} 
+          parent_id={this.state.data.parent_outcome} />
         
       </div>
     );
