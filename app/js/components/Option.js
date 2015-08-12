@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 
+var Button = require('react-bootstrap').Button;
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
@@ -23,7 +24,17 @@ var Option = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  bindFirebaseRefs: function(){
+  componentDidUpdate: function(prevProps, nextState) {
+    if (this.props.id !== prevProps.id){
+      this.bindFirebaseRefs(true);
+    }
+  },
+
+  bindFirebaseRefs: function(rebind){
+
+    if (rebind)
+      this.unbind('data');
+
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
@@ -51,6 +62,10 @@ var Option = React.createClass({
               this_id={this.state.data.id} 
               parent_type="suboutcome"
               parent_id={this.props.relationData.parent_suboutcome_id} />
+
+            <div style={{ marginTop:'0.5em', marginLeft:'-0.4em'}}>
+              <Button bsSize="xsmall" onClick={this.chooseOption}>choose</Button>
+            </div>
           
           </div>
 
@@ -72,9 +87,10 @@ var Option = React.createClass({
     );
   },
 
-
-  _handleClick: function (id) {
-
+  chooseOption: function(){
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    var firebase = new Firebase(firebaseRoot);
+    firebase.child('suboutcomes/' + this.props.relationData.parent_suboutcome_id + '/chosen_option').set(this.state.data.id);
   }
  
 

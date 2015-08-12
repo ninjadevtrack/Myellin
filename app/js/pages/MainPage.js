@@ -41,8 +41,8 @@ var MainPage = React.createClass({
 
     if (outcome_id && suboutcome_id){
       column_width_outcomes = 2;
-      column_width_playlists = 4;
-      column_width_options = 6;
+      column_width_playlists = 5;
+      column_width_options = 5;
     }else
     if (outcome_id){
       column_width_outcomes = 5;
