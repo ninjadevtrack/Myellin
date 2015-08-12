@@ -44,8 +44,6 @@ var SubOutcome = React.createClass({
     if (this.props.optionsExpanded)
       headerClassNames += ' expanded';
 
-    //alert(headerClassNames);
-    
     var PanelHeader = (
       <div className={headerClassNames}>
 
