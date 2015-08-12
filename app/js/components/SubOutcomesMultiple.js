@@ -48,11 +48,11 @@ var SubOutcomesMultiple = React.createClass({
     // ... <PanelGroup> will pass props to <SubOutcome> which are then forwarded to <Panel> via {...this.props}
     var subOutcomes = this.state.data.map(function (relationData) {
 
-      var optionsExpanded = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
+      var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 
       relationData.parent_playlist_id = parseInt(this.props.playlist_id);
       return (
-        <SubOutcome optionsExpanded={optionsExpanded} eventKey={relationData.suboutcome_id} relationData={relationData} key={relationData.suboutcome_id}/>
+        <SubOutcome optionsShown={optionsShown} eventKey={relationData.suboutcome_id} relationData={relationData} key={relationData.suboutcome_id}/>
       );
     }.bind(this));
 

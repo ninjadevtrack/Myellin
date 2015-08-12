@@ -62,8 +62,8 @@ var SubOutcome = React.createClass({
     );
 
     var containerClassNames = 'suboutcome-container';
-    if (this.props.optionsExpanded)
-      containerClassNames += ' expanded';
+    if (this.props.optionsShown)
+      containerClassNames += ' options-shown';
 
     // NOTE: We must pass all props to <Panel> using JSX spread attributes: {...this.props}
     // This allows parent <PanelGroup> to alter <Panel> props even though our <SubOutcome> wraps <Panel>
