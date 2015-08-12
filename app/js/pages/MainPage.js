@@ -10,7 +10,9 @@ var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
-var Playlists = require('../components/Playlists');
+var PlaylistsMultiple = require('../components/PlaylistsMultiple');
+var OptionsMultiple = require('../components/OptionsMultiple');
+var ColumnManager = require('../components/ColumnManager');
 
 var MainPage = React.createClass({
 
@@ -20,60 +22,45 @@ var MainPage = React.createClass({
     currentUser: React.PropTypes.object.isRequired
   },
 
-  computeOutcomesWidth: function() {
-    return this.getParams().outcome_id ? 5 : 12;
-  },
-
-  computePlaylistsWidth: function() {
-    return this.getParams().outcome_id ? 7 : 0;
-  },
 
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
-
-    var outcomes_column_width = this.computeOutcomesWidth();
-    var playlists_column_width = this.computePlaylistsWidth();
+    var suboutcome_id = this.getParams().suboutcome_id;
 
     return (
       <DocumentTitle title="MainPage">
         <section className="mainpage">
-          <Grid fluid={false}>
 
-            <Col sm={outcomes_column_width}
-                 md={outcomes_column_width}
-                 lg={outcomes_column_width} 
-                 smPush={0}
-                 mdPush={0}
-                 lgPush={0}>
-          <SearchBar />
-              <Outcomes />
-            </Col>
+          <Grid fluid={true}>
 
-            { outcome_id &&
-              <Col sm={playlists_column_width}
-                   md={playlists_column_width}
-                   lg={playlists_column_width} 
-                   smPush={0}
-                   mdPush={0}
-                   lgPush={0}>
+            <ColumnManager>
+
+              <Col>
                 <SearchBar />
-
-                <Playlists outcome_id={outcome_id} />
-
+                <Outcomes selected_outcome_id={outcome_id} />
               </Col>
-            }
 
-            {/*
-            <Col sm={10} smPush={0} md={this.computeOutcomesWidth()} mdPush={0} lg={10} lgPush={1}>
-              <Outcomes />
-            </Col>
-            <Col sm={10} smPush={0} md={this.computeSubOutcomesWidth()} mdPush={0} lg={10} lgPush={1}>
-              Display the list of sub-outcomes for the outcome with id {outcome_id}
-            </Col>
-            */}
+              { outcome_id &&
+                <Col>
+                  <SearchBar />
+                  <PlaylistsMultiple outcome_id={outcome_id} selected_suboutcome_id={suboutcome_id} />
+                </Col>
+              }
+
+              { suboutcome_id &&
+                <Col>
+                  <SearchBar />
+                  <OptionsMultiple suboutcome_id={suboutcome_id} />
+                </Col>
+              }
+
+            </ColumnManager>
 
           </Grid>
+
+          <RequestOutcome />
+
           
         </section>
       </DocumentTitle>

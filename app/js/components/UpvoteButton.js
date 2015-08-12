@@ -10,6 +10,17 @@ var UpvoteButton = React.createClass({
 
   mixins: [ReactFireMixin],
 
+  getDefaultProps: function(){
+    return {
+      this_type: 'playlist', // playlist or option
+      this_id: null,
+      parent_type: 'outcome', // outcome or suboutcome
+      parent_id: null,
+      size: 'default',
+      label: 'recommend'
+    };
+  },
+
   getInitialState: function(){
     return {
       upvote: null
@@ -25,8 +36,27 @@ var UpvoteButton = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refUpvote = firebase.child('upvotes/' + this.props.parent_outcome + '/1');
+    // Returns the path of the upvote data
+    // Path depends on whether we are upvoting a playlist or suboutcome
+    // Assume user_id = 1 for now
+    this.refUpvote = firebase.child('upvotes'
+                                      + '/' + this.props.this_type 
+                                      + '/user_1'
+                                      + '/' + this.props.parent_type + '_' + this.props.parent_id);
+   
     this.bindAsObject(this.refUpvote, 'upvote');
+  },
+
+  // Returns the Firebase path to the upvote_count
+  // Path depends on whether we are upvoting a playlist or option
+  getUpvoteCountPath: function(the_id){
+    var path = 'relations'
+                + '/' + this.props.parent_type + '_to_' + this.props.this_type
+                + '/' + this.props.parent_type + '_' + this.props.parent_id
+                + '/' + this.props.this_type + '_' + the_id
+                + '/upvote_count';
+
+    return path;
   },
 
   handleUpvote: function(e){
@@ -35,28 +65,32 @@ var UpvoteButton = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    // Store playlist_id in votes/{parent_outcome}/{user_id}
-    // Assume user_id = 1 for now
-    var voteRef = firebase.child('upvotes/' + this.props.parent_outcome + '/1')
+    var newUpvoteData = {};
+    newUpvoteData[ this.props.this_type + '_id' ] = this.props.this_id;
+    newUpvoteData['timestamp'] = Firebase.ServerValue.TIMESTAMP;
 
-    voteRef.transaction(function(currentValue) {
+    this.refUpvote.transaction(function(currentUpvote) {
 
-      // No data yet set value to playlist_id
-      if (currentValue === null)
-        return this.state.data.id;
+      // No data yet set value to this_id
+      if (currentUpvote === null)
+        return newUpvoteData;
       
-      // If voting again for same playlist do nothing
-      if (currentValue === this.props.playlist_id){
-        console.log('This user already voted for playlist_id '+ this.props.playlist_id);
+      // If voting for same thing again do nothing
+      if (currentUpvote[ this.props.this_type + '_id' ] === this.props.this_id){
+        console.log('This user already voted for ' + this.props.this_type + ' with id: ' + this.props.this_id);
         return;
       }
 
-      // De-increment upvote_count for playlist user previously voted for
-      firebase.child('playlists/' + currentValue + '/upvote_count').transaction(function(currentValue) {
+      // Get the Firebase path to the upvote_count
+      // Path depends on whether we are upvoting a playlist or option
+      var upvoteCountPath = this.getUpvoteCountPath( currentUpvote[this.props.this_type + '_id'] );
+
+      // De-increment upvote_count for thing user previously voted for
+      firebase.child(upvoteCountPath).transaction(function(currentValue) {
         return currentValue - 1;
       });
 
-      return this.props.playlist_id;
+      return newUpvoteData;
     
     }.bind(this), function(error, committed, snapshot) {
       if (error) {
@@ -67,8 +101,7 @@ var UpvoteButton = React.createClass({
 
         console.log('Vote added!');
 
-        // Increment upvote_count for this playlist
-        firebase.child('playlists/' + this.props.playlist_id + '/upvote_count').transaction(function(currentValue) {
+        firebase.child( this.getUpvoteCountPath(this.props.this_id) ).transaction(function(currentValue) {
           return currentValue + 1;
         });
       }
@@ -79,19 +112,17 @@ var UpvoteButton = React.createClass({
 
   render: function () {
 
-    var label = (this.props.type === 'small' ? 'r' : 'recommend');
-
-    // If we value from Firebase (user voted for a playlist for this outcome)
-    // AND the playlist is this playlist ...
-    if (this.state.upvote && this.state.upvote['.value'] === this.props.playlist_id){
+    // If we have value from Firebase (user voted for something for this parent_id)
+    // AND the value equals this_id, then vote button should show success state ...
+    if (this.state.upvote && this.state.upvote[ this.props.this_type + '_id' ] === this.props.this_id){
       var bsStyle = 'success';
     }else{
       var bsStyle = 'default';
     }
 
     return (
-      <Button bsStyle={bsStyle} onClick={this.handleUpvote}>
-        {label}
+      <Button bsSize={this.props.size} bsStyle={bsStyle} onClick={this.handleUpvote}>
+        {this.props.label}
       </Button>
     );
   }

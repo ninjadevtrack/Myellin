@@ -1,11 +1,13 @@
-.playlists-multiple { border-left: 1px solid #ccc; }
+.options-multiple { 
+  border-left: 1px solid #ccc;
+  padding-right: 3em;
+}
 
-.playlist-container {
+.option-container {
 
   position: relative;
-  padding-left: 6em;
-  padding-right: 3em;
   margin-bottom: 3em;
+  padding-left: 6em;
 
   .upvote{
     position: absolute;

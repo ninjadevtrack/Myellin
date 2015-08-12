@@ -23,7 +23,7 @@ var Outcomes = React.createClass({
 
     var elements = this.state.outcomes.map(function (outcome) {
       return (
-        <ListGroupItem onClick={this._handleClick.bind(this, outcome.id)} key={outcome['.key']}>
+        <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, outcome.id)} key={outcome['.key']}>
           {outcome.title}
           <Badge>{outcome.playlist_count}</Badge>
         </ListGroupItem>

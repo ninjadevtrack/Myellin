@@ -1,21 +1,17 @@
 'use strict';
 
 var React = require('react/addons');
-var ListGroupItem = require('react-bootstrap').ListGroupItem;
-var ListGroup = require('react-bootstrap').ListGroup;
-var Router = require('react-router');
-var Button = require('react-bootstrap').Button;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var AuthorName = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [ReactFireMixin],
 
   getInitialState: function(){
     return {
-      data: {}
+      data: null
     };
   },
 
@@ -32,14 +28,18 @@ var AuthorName = React.createClass({
     this.bindAsObject(this.refAuthor, 'data');
   },
 
-  render: function () {
- 
-    var name = (this.state.data.full_name || '•••');
+  render: function() {
 
+    if (this.state.data) {
+      var name = this.state.data.full_name + ' | ' + this.state.data.title;
+    }else{
+      var name = '•••';
+    }
+ 
     return (
-      <h4>
+      <div className="author-name">
         {name}
-      </h4>
+      </div>
     );
   }
 

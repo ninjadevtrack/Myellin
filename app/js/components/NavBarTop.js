@@ -22,22 +22,22 @@ var NavbarTop = React.createClass({
   render: function() {
     return (
       <div className='navbarhidemobilemenu'>
-      <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
-      <Nav navbar left>
-      <DropdownButton eventKey={1} title={<i className="s s-glyph01 s-hamburger"></i>} noCaret>
-          <MenuItem eventKey='1'>Home</MenuItem>
-          <MenuItem eventKey='2'>About</MenuItem>
-          <MenuItem eventKey='3'>Contact</MenuItem>
-          <MenuItem eventKey='4'>Filter</MenuItem>
-        </DropdownButton>
-      </Nav>
-      <Nav navbar right>
-<div><LoginButton/></div>
-      </Nav>
-    <CollapsibleNav eventKey={0}>   
-    </CollapsibleNav>
-  </Navbar>
-  </div>
+        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
+          <Nav navbar left>
+            <DropdownButton eventKey={1} title={<i className="s s-glyph01 s-hamburger"></i>} noCaret>
+              <MenuItem eventKey='1'>Home</MenuItem>
+              <MenuItem eventKey='2'>About</MenuItem>
+              <MenuItem eventKey='3'>Contact</MenuItem>
+              <MenuItem eventKey='4'>Filter</MenuItem>
+            </DropdownButton>
+          </Nav>
+          <Nav navbar right>
+            <div><LoginButton/></div>
+          </Nav>
+          <CollapsibleNav eventKey={0}>   
+          </CollapsibleNav>
+        </Navbar>
+      </div>
     );
   }
 
