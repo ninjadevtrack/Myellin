@@ -11,7 +11,7 @@ var AuthorName = React.createClass({
 
   getInitialState: function(){
     return {
-      data: {}
+      data: null
     };
   },
 
@@ -28,22 +28,18 @@ var AuthorName = React.createClass({
     this.bindAsObject(this.refAuthor, 'data');
   },
 
-  render: function () {
+  render: function() {
 
-    console.log('AUTHOR!');
-    console.log('users/' + this.props.id);
-    console.log(this.state.data);
-
-    if (this.state.data.full_name) {
+    if (this.state.data) {
       var name = this.state.data.full_name + ' | ' + this.state.data.title;
     }else{
       var name = '•••';
     }
  
     return (
-      <h4>
+      <div className="author-name">
         {name}
-      </h4>
+      </div>
     );
   }
 
