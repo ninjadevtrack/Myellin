@@ -39,13 +39,8 @@ var SubOutcome = React.createClass({
     if (!this.state.data)
       return false;
 
-    var headerClassNames = 'suboutcome-header';
-
-    if (this.props.optionsExpanded)
-      headerClassNames += ' expanded';
-
     var PanelHeader = (
-      <div className={headerClassNames}>
+      <div className="suboutcome-header">
 
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
@@ -66,16 +61,22 @@ var SubOutcome = React.createClass({
       </div>
     );
 
+    var containerClassNames = 'suboutcome-container';
+    if (this.props.optionsExpanded)
+      containerClassNames += ' expanded';
+
     // NOTE: We must pass all props to <Panel> using JSX spread attributes: {...this.props}
     // This allows parent <PanelGroup> to alter <Panel> props even though our <SubOutcome> wraps <Panel>
     return (
-      <Panel {...this.props} header={PanelHeader}>
+      <div className={containerClassNames}>
+        <Panel {...this.props} header={PanelHeader}>
 
-        { this.state.data.chosen_option >= 0 && 
-          <Option contentOnly={true} id={this.state.data.chosen_option} />
-        }
+          { this.state.data.chosen_option >= 0 && 
+            <Option contentOnly={true} id={this.state.data.chosen_option} />
+          }
 
-      </Panel>
+        </Panel>
+      </div>
     );
 
   },
