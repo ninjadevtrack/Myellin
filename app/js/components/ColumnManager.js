@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var Col = require('react-bootstrap').Col;
 
 var ColumnManager = React.createClass({
 
@@ -8,15 +9,15 @@ var ColumnManager = React.createClass({
     return {}
   },
 
-  // Quick and dirty way to count number of columns.
-  // We can't just do React.Children.count() because there are null children (wtf)
   getColumnCount: function(){
 
     var column_count = 0;
     React.Children.forEach(this.props.children, function(child){
-      if (child) // Ignore null children
+
+      if (this.childIsValidColumn(child))
         column_count++;
-    });
+
+    }.bind(this));
 
     return column_count;
   },
@@ -45,13 +46,17 @@ var ColumnManager = React.createClass({
     }
   },
 
+  childIsValidColumn: function(child){
+    return (child && child.type === Col.type);
+  },
+
   updateColumnsWithProps: function(){
 
     var column_count = this.getColumnCount();
 
     var columns = React.Children.map(this.props.children, function (child, i) {
 
-      if (!child) // Ignore null children
+      if (!this.childIsValidColumn(child))
         return false;
 
       var column_width = this.getColumnWidth(i, column_count);
