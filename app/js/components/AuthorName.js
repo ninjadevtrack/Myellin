@@ -33,9 +33,13 @@ var AuthorName = React.createClass({
     console.log('AUTHOR!');
     console.log('users/' + this.props.id);
     console.log(this.state.data);
- 
-    var name = (this.state.data.full_name || '•••');
 
+    if (this.state.data.full_name) {
+      var name = this.state.data.full_name + ' | ' + this.state.data.title;
+    }else{
+      var name = '•••';
+    }
+ 
     return (
       <h4>
         {name}
