@@ -48,7 +48,6 @@ var MainPage = React.createClass({
                  lgPush={0}>
           <SearchBar />
               <Outcomes />
-              <RequestOutcome />
             </Col>
 
             { outcome_id &&
@@ -61,7 +60,6 @@ var MainPage = React.createClass({
                 <SearchBar />
 
                 <Playlists outcome_id={outcome_id} />
-                <RequestOutcome />
 
               </Col>
             }

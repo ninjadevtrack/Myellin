@@ -8,7 +8,7 @@ var CollapsibleNav = require('react-bootstrap').CollapsibleNav;
 var NavItem = require('react-bootstrap').NavItem;
 var MenuItem = require('react-bootstrap').MenuItem;
 var Button = require('react-bootstrap').Button;
-var HoverButton = require('./HoverButton');
+var LoginButton = require('./LoginButton');
 
 var icon = (
     <span class="logo">
@@ -16,9 +16,7 @@ var icon = (
         <img src="/images/monogram.svg" height="30" width="34" alt="text here" /></a>
     </span>
   );
-var login = (
-    <HoverButton/>
-  );
+
 var NavbarTop = React.createClass({
 
   render: function() {
@@ -34,7 +32,7 @@ var NavbarTop = React.createClass({
         </DropdownButton>
       </Nav>
       <Nav navbar right>
-<NavItem eventKey={1} href='#'>{login}</NavItem>
+<div><LoginButton/></div>
       </Nav>
     <CollapsibleNav eventKey={0}>   
     </CollapsibleNav>
