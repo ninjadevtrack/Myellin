@@ -8,9 +8,10 @@ var ColumnManager = React.createClass({
     return {}
   },
 
+  // Quick and dirty way to count number of columns.
+  // We can't just do React.Children.count() because there are null children (wtf)
   getColumnCount: function(){
-    // Hacky way to count number of columns.
-    // We can't just do React.Children.count() because there are null children (wtf)
+
     var column_count = 0;
     React.Children.forEach(this.props.children, function(child){
       if (child) // Ignore null children
@@ -20,7 +21,7 @@ var ColumnManager = React.createClass({
     return column_count;
   },
 
-  // HACKY solution until we finalize how column widths should actually be computed
+  // Quick and dirty solution until we finalize how column widths should actually be computed
   // Returns the width that a column should be depending on column number and total number of columns 
   getColumnWidth: function(column_num, column_count){
 
@@ -44,7 +45,7 @@ var ColumnManager = React.createClass({
     }
   },
 
-  render: function() {
+  updateColumnsWithProps: function(){
 
     var column_count = this.getColumnCount();
 
@@ -62,6 +63,13 @@ var ColumnManager = React.createClass({
       });
 
     }.bind(this))
+
+    return columns;
+  },
+
+  render: function() {
+
+    var columns = this.updateColumnsWithProps();
 
     return (
       <div>
