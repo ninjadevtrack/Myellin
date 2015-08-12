@@ -1,17 +1,13 @@
 'use strict';
 
 var React = require('react/addons');
-var ListGroupItem = require('react-bootstrap').ListGroupItem;
-var ListGroup = require('react-bootstrap').ListGroup;
-var Router = require('react-router');
-var Button = require('react-bootstrap').Button;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var AuthorName = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [ReactFireMixin],
 
   getInitialState: function(){
     return {
@@ -33,6 +29,10 @@ var AuthorName = React.createClass({
   },
 
   render: function () {
+
+    console.log('AUTHOR!');
+    console.log('users/' + this.props.id);
+    console.log(this.state.data);
  
     var name = (this.state.data.full_name || '•••');
 

@@ -4,6 +4,7 @@ var React = require('react/addons');
 
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
+var AuthorName = require('./AuthorName');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
@@ -14,7 +15,7 @@ var Option = React.createClass({
 
   getInitialState: function(){
     return {
-      data: {}
+      data: null
     };
   },
 
@@ -33,8 +34,33 @@ var Option = React.createClass({
 
   render: function () {
 
-    console.log('STATE!');
-    console.log(this.state.data);
+    if (!this.state.data)
+      return false;
+
+    if (this.props.full){
+      return (
+        <div className="option-container">
+          <AuthorName id={this.state.data.author_id} />
+
+          <div className="upvote">
+            <div className="count">{this.props.relationData.upvote_count}</div>
+
+            <UpvoteButton 
+              label="r"
+              this_type="option"
+              this_id={this.state.data.id} 
+              parent_type="suboutcome"
+              parent_id={this.props.relationData.parent_suboutcome_id} />
+          
+          </div>
+
+          {this.state.data.description}
+          {this.state.data.url && 
+            <UrlEmbed url={this.state.data.url} />
+          }
+        </div>
+      );
+    }
 
     return (
       <div>

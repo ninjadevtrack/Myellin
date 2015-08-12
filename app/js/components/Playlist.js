@@ -10,16 +10,20 @@ require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var AuthorName = require('./AuthorName');
-var SubOutcomes = require('./SubOutcomes');
+var SubOutcomesMultiple = require('./SubOutcomesMultiple');
 var UpvoteButton = require('./UpvoteButton');
 
 var Playlist = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
+  propTypes: {
+    relationData: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function(){
     return {
-      data: {}
+      data: null
     };
   },
 
@@ -32,7 +36,7 @@ var Playlist = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refPlaylist = firebase.child('playlists/' + this.props.id);
+    this.refPlaylist = firebase.child('playlists/' + this.props.relationData.playlist_id);
     this.bindAsObject(this.refPlaylist, 'data');
   },
 
@@ -40,40 +44,39 @@ var Playlist = React.createClass({
 
     if (!this.state.data)
       return false;
- 
+
     return (
       <div className="playlist-container">
    
         <div>
+
           <AuthorName id={this.state.data.author_id} />
 
           <p>{this.state.data.description}</p>
-
+          
           <div className="upvote">
-            <div className="count">{this.state.data.upvote_count}</div>
+            <div className="count">{this.props.relationData.upvote_count}</div>
 
             <UpvoteButton 
               label="r"
               this_type="playlist"
               this_id={this.state.data.id} 
-              parent_id={this.state.data.parent_outcome} />
+              parent_type="outcome"
+              parent_id={this.props.relationData.parent_outcome_id} />
           
           </div>
         </div>
 
-        <SubOutcomes parent_playlist={this.props.id} />
-
+        <SubOutcomesMultiple playlist_id={this.state.data.id} />
+        
         <UpvoteButton
           this_type="playlist"
           this_id={this.state.data.id} 
-          parent_id={this.state.data.parent_outcome} />
+          parent_type="outcome"
+          parent_id={this.props.relationData.parent_outcome_id} />
         
       </div>
     );
-  },
-
-  _handleClick: function (id) {
-    //this.context.router.transitionTo('Outcomes', {outcome_id: id});
   }
 
 });

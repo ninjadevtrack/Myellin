@@ -10,7 +10,9 @@ var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
+
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
+var OptionsMultiple = require('../components/OptionsMultiple');
 
 var MainPage = React.createClass({
 
@@ -30,10 +32,27 @@ var MainPage = React.createClass({
 
   render: function () {
 
-    var outcome_id = this.getParams().outcome_id;
+    var column_width_outcomes,
+        column_width_playlists,
+        column_width_options;
 
-    var outcomes_column_width = this.computeOutcomesWidth();
-    var playlists_column_width = this.computePlaylistsWidth();
+    var outcome_id = this.getParams().outcome_id;
+    var suboutcome_id = this.getParams().suboutcome_id;
+
+    if (outcome_id && suboutcome_id){
+      column_width_outcomes = 2;
+      column_width_playlists = 4;
+      column_width_options = 6;
+    }else
+    if (outcome_id){
+      column_width_outcomes = 5;
+      column_width_playlists = 7;
+    }else{
+      column_width_outcomes = 12;
+    }
+
+    //var outcomes_column_width = this.computeOutcomesWidth();
+    //var playlists_column_width = this.computePlaylistsWidth();
 
     return (
       <DocumentTitle title="MainPage">
@@ -43,9 +62,9 @@ var MainPage = React.createClass({
             <SearchBar />
             <div id="give-me-some-space" style={{ height: '2em', width: '100%' }}> </div>
 
-            <Col sm={outcomes_column_width}
-                 md={outcomes_column_width}
-                 lg={outcomes_column_width} 
+            <Col sm={column_width_outcomes}
+                 md={column_width_outcomes}
+                 lg={column_width_outcomes} 
                  smPush={0}
                  mdPush={0}
                  lgPush={0}>
@@ -55,14 +74,26 @@ var MainPage = React.createClass({
             </Col>
 
             { outcome_id &&
-              <Col sm={playlists_column_width}
-                   md={playlists_column_width}
-                   lg={playlists_column_width} 
+              <Col sm={column_width_playlists}
+                   md={column_width_playlists}
+                   lg={column_width_playlists} 
                    smPush={0}
                    mdPush={0}
                    lgPush={0}>
 
                 <PlaylistsMultiple outcome_id={outcome_id} />
+              </Col>
+            }
+
+            { suboutcome_id &&
+              <Col sm={column_width_options}
+                   md={column_width_options}
+                   lg={column_width_options} 
+                   smPush={0}
+                   mdPush={0}
+                   lgPush={0}>
+
+                <OptionsMultiple suboutcome_id={suboutcome_id} />
               </Col>
             }
 

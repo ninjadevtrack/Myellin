@@ -41,11 +41,12 @@ var PlaylistsMultiple = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    // Fetch by outcome_id
+    // Fetch all playlists that are in this outcome
     if (this.props.outcome_id){
-      this.refPlaylists = firebase.child('playlists')
-                              .orderByChild("parent_outcome")
-                              .equalTo(parseInt(this.props.outcome_id));
+      this.refPlaylists = firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
+
+      // TODO: Set priority equal to vote count so they get sorted correctly
+
     // Or by author_id
     }else{
       this.refPlaylists = firebase.child('playlists')
@@ -58,9 +59,12 @@ var PlaylistsMultiple = React.createClass({
 
   render: function () {
 
-    var playlists = this.state.data.map(function (playlist) {
+    var playlists = this.state.data.map(function (relationData) {
+
+      relationData.parent_outcome_id = parseInt(this.props.outcome_id);
+
       return (
-        <Playlist id={playlist.id} key={playlist['.key']}/>
+        <Playlist relationData={relationData} key={relationData.playlist_id}/>
       );
     }.bind(this));
 
