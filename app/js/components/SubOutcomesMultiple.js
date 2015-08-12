@@ -43,13 +43,20 @@ var SubOutcomesMultiple = React.createClass({
 
   render: function () {
 
+    
+
     // Setup SubOutcome components
     // Note: eventKey prop is required by <PanelGroup> to control which panel is expanded ...
     // ... <PanelGroup> will pass props to <SubOutcome> which are then forwarded to <Panel> via {...this.props}
     var subOutcomes = this.state.data.map(function (relationData) {
+
+      console.log(this.getParams().suboutcome_id + ' / ' + relationData.suboutcome_id);
+
+      var optionsExpanded = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
+
       relationData.parent_playlist_id = parseInt(this.props.playlist_id);
       return (
-        <SubOutcome eventKey={relationData.suboutcome_id} relationData={relationData} key={relationData.suboutcome_id}/>
+        <SubOutcome optionsExpanded={optionsExpanded} eventKey={relationData.suboutcome_id} relationData={relationData} key={relationData.suboutcome_id}/>
       );
     }.bind(this));
 

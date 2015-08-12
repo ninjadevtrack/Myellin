@@ -39,8 +39,15 @@ var SubOutcome = React.createClass({
     if (!this.state.data)
       return false;
 
+    var headerClassNames = 'suboutcome-header';
+
+    if (this.props.optionsExpanded)
+      headerClassNames += ' expanded';
+
+    //alert(headerClassNames);
+    
     var PanelHeader = (
-      <div className="suboutcome-header">
+      <div className={headerClassNames}>
 
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
