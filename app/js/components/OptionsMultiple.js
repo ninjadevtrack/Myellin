@@ -54,7 +54,7 @@ var OptionsMultiple = React.createClass({
 
       return (
         <div>
-          <Option full="true" relationData={relationData} id={relationData.option_id} />
+          <Option relationData={relationData} id={relationData.option_id} />
         </div>
       );
     }.bind(this));

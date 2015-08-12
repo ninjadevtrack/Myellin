@@ -24,10 +24,10 @@ var Option = React.createClass({
     this.bindFirebaseRefs();
   },
 
+  // Rebind Firebase refs if props.id changes so we fetch new data
   componentDidUpdate: function(prevProps, nextState) {
-    if (this.props.id !== prevProps.id){
+    if (this.props.id !== prevProps.id)
       this.bindFirebaseRefs(true);
-    }
   },
 
   bindFirebaseRefs: function(rebind){
@@ -39,7 +39,6 @@ var Option = React.createClass({
     var firebase = new Firebase(firebaseRoot);
 
     this.refOptions = firebase.child('options/' + this.props.id);
-
     this.bindAsObject(this.refOptions, 'data');
   },
 
@@ -48,36 +47,7 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
-    if (this.props.full){
-      return (
-        <div className="option-container">
-          <AuthorName id={this.state.data.author_id} />
-
-          <div className="upvote">
-            <div className="count">{this.props.relationData.upvote_count}</div>
-
-            <UpvoteButton 
-              label="r"
-              this_type="option"
-              this_id={this.state.data.id} 
-              parent_type="suboutcome"
-              parent_id={this.props.relationData.parent_suboutcome_id} />
-
-            <div style={{ marginTop:'0.5em', marginLeft:'-0.4em'}}>
-              <Button bsSize="xsmall" onClick={this.chooseOption}>choose</Button>
-            </div>
-          
-          </div>
-
-          {this.state.data.description}
-          {this.state.data.url && 
-            <UrlEmbed url={this.state.data.url} />
-          }
-        </div>
-      );
-    }
-
-    return (
+    var optionContent = (
       <div>
         {this.state.data.description}
         {this.state.data.url && 
@@ -85,12 +55,45 @@ var Option = React.createClass({
         }
       </div>
     );
+
+    if (this.props.contentOnly)
+      return optionContent;
+
+    return (
+      <div className="option-container">
+        <AuthorName id={this.state.data.author_id} />
+
+        <div className="upvote">
+          <div className="count">{this.props.relationData.upvote_count}</div>
+
+          <UpvoteButton 
+            label="r"
+            this_type="option"
+            this_id={this.state.data.id} 
+            parent_type="suboutcome"
+            parent_id={this.props.relationData.parent_suboutcome_id} />
+
+          {/* For testing */}
+          <div style={{ marginTop:'0.5em', marginLeft:'-0.4em'}}>
+            <Button bsSize="xsmall" onClick={this.chooseOption}>choose</Button>
+          </div>
+        </div>
+
+        {optionContent}
+
+      </div>
+    );
+        
   },
 
+  // For testing purposes
+  // Will set this option as the default option displayed under parent suboutcome
   chooseOption: function(){
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
-    firebase.child('suboutcomes/' + this.props.relationData.parent_suboutcome_id + '/chosen_option').set(this.state.data.id);
+    firebase.child('suboutcomes' +
+                      '/' + this.props.relationData.parent_suboutcome_id + 
+                      '/chosen_option').set(this.state.data.id);
   }
  
 

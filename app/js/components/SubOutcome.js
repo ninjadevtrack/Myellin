@@ -67,7 +67,7 @@ var SubOutcome = React.createClass({
       <Panel {...this.props} header={PanelHeader}>
 
         { this.state.data.chosen_option >= 0 && 
-          <Option id={this.state.data.chosen_option} />
+          <Option contentOnly={true} id={this.state.data.chosen_option} />
         }
 
       </Panel>
