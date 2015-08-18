@@ -24,7 +24,7 @@ var NavbarTop = React.createClass({
       <div className='navbarhidemobilemenu'>
         <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
           <Nav navbar left>
-            <DropdownButton eventKey={1} title={<i className="s s-glyph01 s-hamburger"></i>} noCaret>
+            <DropdownButton eventKey={1} title={<i className="s s-glyph09 s-hamburger"></i>} className='marginleft' noCaret pullLeft>
               <MenuItem eventKey='1'>Home</MenuItem>
               <MenuItem eventKey='2'>About</MenuItem>
               <MenuItem eventKey='3'>Contact</MenuItem>

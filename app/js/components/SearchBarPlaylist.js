@@ -16,16 +16,16 @@ var menuStyle = {
 
 
 
-var ranking = (<Glyphicon glyph='sort-by-attributes' className='optiongreen' />);
+var ranking = (<Glyphicon glyph='sort-by-attributes' className='optiongray-playlist' />);
 
 var SearchBar = React.createClass({
 
   render: function() {
-    return (  
-      <div className="compensate-for-the-nav">
-        <Row className='nomargin'>
+    return (
+      <div className="compensate-for-the-nav-playlist">
+          <Row className='nomargin-playlist'>
           <Col xs={8} xsPush={2} sm={8} smPush={2} md={8} mdPush={2} lg={8} lgPush={2}>
-            <div className="inputplaceholder">
+            <div className="inputplaceholder-playlist">
               <Input type='text' bsSize="large" placeholder="&#32;" />
             </div>
           </Col>

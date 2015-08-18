@@ -2,13 +2,19 @@
 
 var React = require('react/addons');
 
-var Button = require('react-bootstrap').Button;
+var Button = require('react-bootstrap').Button; 
+var Glyphicon= require('react-bootstrap').Glyphicon;
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
+var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+var MenuItem = require('react-bootstrap').MenuItem;
+var DropdownButton = require('react-bootstrap').DropdownButton;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
+
+var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
 
 var Option = React.createClass({
 
@@ -61,26 +67,29 @@ var Option = React.createClass({
 
     return (
       <div className="option-container">
+         <div style={{ float: 'right'}}>
+ <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+        <MenuItem eventKey='1' onClick={this.chooseOption}>Switch</MenuItem>
+      </DropdownButton>
+      </div>
         <AuthorName id={this.state.data.author_id} />
 
         <div className="upvote">
           <div className="count">{this.props.relationData.upvote_count}</div>
 
           <UpvoteButton 
-            label="r"
+            label={<Glyphicon glyph='ok-circle'/>}
             this_type="option"
             this_id={this.state.data.id} 
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
 
           {/* For testing */}
-          <div style={{ marginTop:'0.5em', marginLeft:'-0.4em'}}>
-            <Button bsSize="xsmall" onClick={this.chooseOption}>choose</Button>
-          </div>
+         
         </div>
-
+ <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
         {optionContent}
-
+</div>
       </div>
     );
         

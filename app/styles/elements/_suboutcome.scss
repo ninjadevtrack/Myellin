@@ -1,6 +1,76 @@
 .suboutcome-container.options-shown{
 
   .suboutcome-header-title{
-    font-weight: bold;
   }
+
+    .options-icon {
+    color: #000;
+    font-size: 61px;
+      cursor: default;
+}
+}
+
+.suboutcome-container {
+
+
+    .upvote{
+    text-align: center;
+    }
+}
+
+.suboutcome-body {
+  p { 
+font-family:"Akkurat-Light";
+color: $gray;
+text-align: justify;
+
+}
+}
+
+.optionsicondiv {
+float: right;
+display: -webkit-flex;
+  display: flex;
+  margin-top: -20px;
+
+
+.btn-success {
+    margin: 0;
+    padding: 0;
+    margin: 16px 0 0 0;
+    font-size: 1.3em;
+    background: transparent;
+    color: #222;
+    box-shadow: 0 0 0;
+    }
+.btn-link {
+    margin: 0;
+    padding: 0;
+    margin: 16px 0 0 0;
+    font-size: 1.3em;
+    background: transparent;
+    color: #222;
+    box-shadow: 0 0 0;
+    }
+}
+
+  .options-icon {
+    display: -webkit-flex;
+  display: flex;
+    font-size: 60px;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.smallvoteicon {
+    display: -webkit-flex;
+  display: flex;
+  padding-top: 20px;
+  z-index: 10;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
 }

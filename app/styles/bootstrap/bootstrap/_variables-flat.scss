@@ -12,10 +12,11 @@ $bootstrap-sass-asset-helper: true !default;
 $white:                  #fff !default;
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
-$gray-dark:              #212121 !default;
-$gray:                   #666 !default;
-$gray-light:             #bbb !default;
-$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+$gray-dark:              #222222!default;
+$gray:                   #4D4747!default;
+$gray-light:             #9B9B9B !default;
+$gray-lighter:           #ECEBEC !default; // #eee
+$gray-lightest:          #FBFBFB !default; // #eee
 
 $brand-primary:         $white !default;
 $brand-secondary:       #00FF9B !default;
@@ -36,9 +37,9 @@ $body-bg:               #fff !default;
 $text-color:            $gray !default;
 
 //** Global textual link color.
-$link-color:            $brand-primary !default;
+$link-color:            $gray-dark !default;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%) !default;
+$link-hover-color:      $brand-secondary !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
 
@@ -47,10 +48,78 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Roboto-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+@font-face {
+    font-family: "Akkurat-Light";
+    src:url("...fonts/lineto-akkurat-light.eot");
+    src:url("../fonts/lineto-akkurat-light.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-light.woff") format("woff"),
+        url("../fonts/lineto-akkurat-light.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-light.svg#lineto-akkurat-light") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Akkurat-Regular";
+    src:url("../fonts/lineto-akkurat-regular.eot");
+    src:url("../fonts/lineto-akkurat-regular.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-regular.woff") format("woff"),
+        url("../fonts/lineto-akkurat-regular.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-regular.svg#lineto-akkurat-regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Akkurat-Lightitalic";
+    src:url("../fonts/lineto-akkurat-lightitalic.eot");
+    src:url("../fonts/lineto-akkurat-lightitalic.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-lightitalic.woff") format("woff"),
+        url("../fonts/lineto-akkurat-lightitalic.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-lightitalic.svg#lineto-akkurat-lightitalic") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Akkurat-Italic";
+    src:url("../fonts/lineto-akkurat-italic.eot");
+    src:url("../fonts/lineto-akkurat-italic.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-italic.woff") format("woff"),
+        url("../fonts/lineto-akkurat-italic.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-italic.svg#lineto-akkurat-italic") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Akkurat-Bold";
+    src:url("../fonts/lineto-akkurat-bold.eot");
+    src:url("../fonts/lineto-akkurat-bold.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-bold.woff") format("woff"),
+        url("../fonts/lineto-akkurat-bold.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-bold.svg#lineto-akkurat-bold") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Akkurat-Bolditalic";
+    src:url("../fonts/lineto-akkurat-bolditalic.eot");
+    src:url("../fonts/lineto-akkurat-bolditalic.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/lineto-akkurat-bolditalic.woff") format("woff"),
+        url("../fonts/lineto-akkurat-bolditalic.ttf") format("truetype"),
+        url("../fonts/lineto-akkurat-bolditalic.svg#lineto-akkurat-bolditalic") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+$font-family-sans-serif:  "Akkurat-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       "Akkurat-Regular", Georgia, Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-family-monospace:   "Akkurat-Regular", Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
 $font-size-base:          15px !default;
@@ -380,7 +449,7 @@ $navbar-default-link-color:                $gray !default;
 $navbar-default-link-hover-color:          $gray-dark !default;
 $navbar-default-link-hover-bg:             transparent !default;
 $navbar-default-link-active-color:         $gray-dark !default;
-$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
+$navbar-default-link-active-bg:            $white !default;
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
@@ -699,7 +768,7 @@ $list-group-disabled-bg:         $gray-lighter !default;
 //** Text color for content within disabled list items
 $list-group-disabled-text-color: $list-group-disabled-color !default;
 
-$list-group-link-color:         #555 !default;
+$list-group-link-color:         $gray-dark !default;
 $list-group-link-hover-color:   $list-group-link-color !default;
 $list-group-link-heading-color: #333 !default;
 
@@ -709,8 +778,8 @@ $list-group-link-heading-color: #333 !default;
 //##
 
 $panel-bg:                    #fff !default;
-$panel-body-padding:          15px !default;
-$panel-heading-padding:       10px 15px !default;
+$panel-body-padding:          10px 0px 10px 0px !default;
+$panel-heading-padding:       11px 0px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-none !default;
 
@@ -718,9 +787,9 @@ $panel-border-radius:         $border-radius-none !default;
 $panel-inner-border:          #ddd !default;
 $panel-footer-bg:             #f5f5f5 !default;
 
-$panel-default-text:          $gray-dark !default;
-$panel-default-border:        #ddd !default;
-$panel-default-heading-bg:    $white !default;
+$panel-default-text:          $gray !default;
+$panel-default-border:        $gray-lighter  !default;
+$panel-default-heading-bg:    #fff !default;
 
 $panel-primary-text:          #fff !default;
 $panel-primary-border:        $brand-primary !default;

@@ -1,26 +1,27 @@
-.compensate-for-the-nav {
-  margin-top: 70px;
+.compensate-for-the-nav-playlist {
+  margin-top: 49px;
   text-align: center;
 
   .form-group {
-    
+    margin: 0;
   }
 
-.optiongreen {
+.optiongray-playlist {
   color: $gray-light;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .btn-link{
   padding: 10px 8px 0px 0px;
 }
 
-.nomargin {
-  margin: 0 0 -5px 0;
+.nomargin-playlist {
+  margin: 0 6em 0 6em;
+  border-bottom: 1px solid $gray-lighter;
 }
 
 }
-.inputplaceholder {
+.inputplaceholder-playlist {
   font-size: 30px;
   ::-webkit-input-placeholder::before {  font-family: symbols; content:'\EA0D'; color: $gray-light}
   ::-moz-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-light} /* firefox 19+ */
@@ -30,7 +31,7 @@
   input[type=text]
 {
     text-align: center;
-    font-size: 35px !important;
+    font-size: 30px !important;
     line-height: 1.6 !important;
 
 

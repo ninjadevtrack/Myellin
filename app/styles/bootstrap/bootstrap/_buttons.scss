@@ -97,6 +97,7 @@
   fieldset[disabled] & {
     background-color: transparent;
     @include box-shadow(none);
+    
   }
   &,
   &:hover,

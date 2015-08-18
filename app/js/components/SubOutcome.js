@@ -1,7 +1,8 @@
 'use strict';
 
 var React = require('react/addons');
-var Panel = require('react-bootstrap').Panel;
+var Panel = require('react-bootstrap').Panel; 
+var Glyphicon = require('react-bootstrap').Glyphicon; 
 var Router = require('react-router');
 
 var Option = require('./Option');
@@ -41,24 +42,26 @@ var SubOutcome = React.createClass({
 
     var PanelHeader = (
       <div className="suboutcome-header">
-
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
         </div>
-
-        { this.props.expanded && this.state.data.chosen_option >= 0 &&
-          <div style={{float:'right'}}>
-            <div style={{display:'inline', marginRight: '1em'}} href="javascript:void(0)" onClick={this._handleOptionsClick}>options</div>
-            <UpvoteButton size="xsmall" label="r" style={{display:'inline'}}
+        <div className="clearfix"></div>
+         </div>
+);
+var VoteButton = (
+<div className="suboutcome-body">
+  { this.props.expanded && this.state.data.chosen_option >= 0 &&
+     <div>
+            <UpvoteButton size="small" label={<Glyphicon glyph='ok-circle'/>} className="smallvoteicon"
               this_type="option"
               this_id={this.state.data.chosen_option}
               parent_type="suboutcome"
               parent_id={this.state.data.id} />
-          </div>
+              </div>
         }
+</div>
 
-        <div className="clearfix"></div>
-      </div>
+     
     );
 
     var containerClassNames = 'suboutcome-container';
@@ -68,15 +71,24 @@ var SubOutcome = React.createClass({
     // NOTE: We must pass all props to <Panel> using JSX spread attributes: {...this.props}
     // This allows parent <PanelGroup> to alter <Panel> props even though our <SubOutcome> wraps <Panel>
     return (
+      
       <div className={containerClassNames}>
-        <Panel {...this.props} header={PanelHeader}>
-
+        <Panel {...this.props} header={PanelHeader} accordion>
+<div className="optionsicondiv">
+<Glyphicon href="javascript:void(0)" onClick={this._handleOptionsClick} glyph='option-horizontal' className="options-icon"/>
+{VoteButton}
+</div>
+ <div style={{borderBottom: '2px solid #ECEBEC' }} >
+ <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
           { this.state.data.chosen_option >= 0 && 
             <Option contentOnly={true} id={this.state.data.chosen_option} />
           }
-
+          
+</div>
+</div>
         </Panel>
       </div>
+
     );
 
   },

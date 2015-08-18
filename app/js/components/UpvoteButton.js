@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
+var Glyphicon = require('react-bootstrap').Glyphicon;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
@@ -16,8 +17,8 @@ var UpvoteButton = React.createClass({
       this_id: null,
       parent_type: 'outcome', // outcome or suboutcome
       parent_id: null,
-      size: 'default',
-      label: 'recommend'
+      size: 'medium',
+      label: [<Glyphicon glyph='ok-circle'/>]
     };
   },
 
@@ -116,8 +117,10 @@ var UpvoteButton = React.createClass({
     // AND the value equals this_id, then vote button should show success state ...
     if (this.state.upvote && this.state.upvote[ this.props.this_type + '_id' ] === this.props.this_id){
       var bsStyle = 'success';
+      this.props.label =[<Glyphicon glyph='ok-sign'/>];
     }else{
-      var bsStyle = 'default';
+      var bsStyle = 'link';
+      this.props.label =[<Glyphicon glyph='ok-circle'/>];
     }
 
     return (
@@ -126,7 +129,6 @@ var UpvoteButton = React.createClass({
       </Button>
     );
   }
-
 });
 
 module.exports = UpvoteButton;

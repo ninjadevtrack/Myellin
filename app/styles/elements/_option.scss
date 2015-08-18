@@ -1,6 +1,6 @@
 .options-multiple { 
   border-left: 1px solid #ccc;
-  padding-right: 3em;
+  padding-right: 6em;
 }
 
 .option-container {
@@ -8,16 +8,49 @@
   position: relative;
   margin-bottom: 3em;
   padding-left: 6em;
+  margin-top: 2em;
 
+:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+ .optionplaylist {
+  color: $gray-dark;
+  font-size: 2em;
+ }
+
+.retweetstyle {
+  font-size: 0.8em;
+  text-align: center;
+  color: $gray-light;
+}
+
+ .btn-success {
+    margin: -0.3em 0 0 0.3em;
+    padding: 0;
+    font-size: 1.1em;
+    background: transparent;
+    color: #222;
+    box-shadow: 0 0 0;
+    }
+.btn-link {
+    margin: -0.3em 0 0 0.3em;
+    padding: 0;
+    font-size: 1.1em;
+    color: $gray-dark;
+    }
   .upvote{
     position: absolute;
-    left: 1em;
-    top: 0em;
+    left: 0.7em;
+    top: 0.3em;
     font-size: 2em;
     line-height: 1em;
+    height: 100%;
    
     .count{
-       margin-bottom: 0.5em;
+       margin-bottom: 0;
+       text-align: center;
     }
 
     button{
