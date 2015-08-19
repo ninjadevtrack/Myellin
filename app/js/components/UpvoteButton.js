@@ -70,46 +70,44 @@ var UpvoteButton = React.createClass({
     newUpvoteData[ this.props.this_type + '_id' ] = this.props.this_id;
     newUpvoteData['timestamp'] = Firebase.ServerValue.TIMESTAMP;
 
-    this.refUpvote.transaction(function(currentUpvote) {
+    this.refUpvote.once('value', function(dataSnapshot) {
 
-      // No data yet set value to this_id
-      if (currentUpvote === null)
-        return newUpvoteData;
-      
-      // If voting for same thing again do nothing
-      if (currentUpvote[ this.props.this_type + '_id' ] === this.props.this_id){
-        console.log('This user already voted for ' + this.props.this_type + ' with id: ' + this.props.this_id);
+      var currentUpvote = dataSnapshot.val();
+      var upvoteCountPathNew = this.getUpvoteCountPath(this.props.this_id);
+
+      // If voting for same thing again then remove vote
+      if (currentUpvote && currentUpvote[ this.props.this_type + '_id' ] === this.props.this_id){
+
+        // Update vote
+        this.refUpvote.set(null);
+        // De-increment vote count
+        firebase.child( upvoteCountPathNew ).transaction(function(currentValue) {
+          return currentValue - 1;
+        });
+
         return;
       }
 
-      // Get the Firebase path to the upvote_count
-      // Path depends on whether we are upvoting a playlist or option
-      var upvoteCountPath = this.getUpvoteCountPath( currentUpvote[this.props.this_type + '_id'] );
-
-      // De-increment upvote_count for thing user previously voted for
-      firebase.child(upvoteCountPath).transaction(function(currentValue) {
-        return currentValue - 1;
+      // Update vote
+      this.refUpvote.set(newUpvoteData);
+      // Increment vote count
+      firebase.child( upvoteCountPathNew ).transaction(function(currentValue) {
+        return currentValue + 1;
       });
 
-      return newUpvoteData;
-    
-    }.bind(this), function(error, committed, snapshot) {
-      if (error) {
-        console.log('Transaction failed abnormally!', error);
-      } else if (!committed) {
-        console.log('We aborted the transaction (because vote already exists).');
-      } else {
-
-        console.log('Vote added!');
-
-        firebase.child( this.getUpvoteCountPath(this.props.this_id) ).transaction(function(currentValue) {
-          return currentValue + 1;
+      // De-increment vote count for thing user previously voted for
+      // We do this here rather than callback because we won't know previous value in callback
+      if (currentUpvote) {
+        var upvoteCountPathPrevious = this.getUpvoteCountPath( currentUpvote[this.props.this_type + '_id'] );
+        firebase.child( upvoteCountPathPrevious ).transaction(function(currentValue) {
+          return currentValue - 1;
         });
       }
-      console.log("Vote data: ", snapshot.val());
+      
     }.bind(this));
 
   },
+
 
   render: function () {
 
