@@ -7,13 +7,14 @@ var Outcomes = require('../components/Outcomes');
 var SearchBar = require('../components/SearchBar');
 var SearchBarPlaylist = require('../components/SearchBarPlaylist');
 var Grid = require('react-bootstrap').Grid;
-var Col = require('react-bootstrap').Col;
+//var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
 var ColumnManager = require('../components/ColumnManager');
+var Column = require('../components/Column');
 
 var MainPage = React.createClass({
 
@@ -37,23 +38,23 @@ var MainPage = React.createClass({
 
             <ColumnManager>
 
-              <Col>
+              <Column>
                 <SearchBar />
                 <Outcomes selected_outcome_id={outcome_id} />
-              </Col>
+              </Column>
 
               { outcome_id &&
-                <Col>
+                <Column>
                   <SearchBarPlaylist />
                   <PlaylistsMultiple outcome_id={outcome_id} selected_suboutcome_id={suboutcome_id} />
-                </Col>
+                </Column>
               }
 
               { suboutcome_id &&
-                <Col>
+                <Column>
                   <SearchBarPlaylist />
                   <OptionsMultiple suboutcome_id={suboutcome_id} />
-                </Col>
+                </Column>
               }
 
             </ColumnManager>

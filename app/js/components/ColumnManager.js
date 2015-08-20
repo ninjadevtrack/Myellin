@@ -1,12 +1,14 @@
 'use strict';
 
 var React = require('react/addons');
-var Col = require('react-bootstrap').Col;
+var Column = require('../components/Column');
 
 var ColumnManager = React.createClass({
 
   getInitialState: function(){
-    return {}
+    return {
+      hoveredColumn: null
+    }
   },
 
   getColumnCount: function(){
@@ -28,26 +30,32 @@ var ColumnManager = React.createClass({
 
     switch (column_count){
       case 1:
-        return 12; // 100%
+        return '100%';
       case 2:
-        if (column_num === 0){
-          return 5;
-        }else{
-          return 7
+        if (column_num === 1){
+          return '40%';
+        }else  if (column_num === 2){
+          return '60%'
         }
       case 3:
-        if (column_num === 0){
-          return 2;
-        }else if (column_num === 1){
-          return 5;
-        }else{
-          return 5;
+        if (column_num === 1){
+          return '26%';
+        }else if (column_num === 2){
+          return '34%';
+        }else if (column_num === 3){
+          return '40%';
         }
     }
   },
 
   childIsValidColumn: function(child){
-    return (child && child.type === Col.type);
+    return (child && child.type === Column.type);
+  },
+
+  onHoverChange: function(column_num, isHovering){
+    this.setState({
+      hoveredColumn: (isHovering ? column_num : null)
+    });
   },
 
   updateColumnsWithProps: function(){
@@ -56,15 +64,22 @@ var ColumnManager = React.createClass({
 
     var columns = React.Children.map(this.props.children, function (child, i) {
 
+      var column_num = i + 1; // Start at 1 to avoid confusion
+
       if (!this.childIsValidColumn(child))
         return false;
 
-      var column_width = this.getColumnWidth(i, column_count);
+      var column_width = this.getColumnWidth(column_num, column_count);
+
+      var isHovered = (this.state.hoveredColumn === column_num ? true : false);
 
       return React.addons.cloneWithProps(child, {
-        sm: column_width,
-        md: column_width,
-        lg: column_width
+        number: column_num,
+        width: column_width,
+        active: (column_num === column_count ? true : false),
+        isHovered: isHovered,
+        siblingIsHovered: ((this.state.hoveredColumn && isHovered === false) ? true : false), // In case this is useful for styling
+        onHoverChange: this.onHoverChange
       });
 
     }.bind(this))

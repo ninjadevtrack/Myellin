@@ -67,11 +67,12 @@ var Option = React.createClass({
 
     return (
       <div className="option-container">
-         <div style={{ float: 'right'}}>
- <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-        <MenuItem eventKey='1' onClick={this.chooseOption}>Switch</MenuItem>
-      </DropdownButton>
-      </div>
+        <div style={{ float: 'right'}}>
+          <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+            <MenuItem eventKey='1' onClick={this.chooseOption}>Switch</MenuItem>
+          </DropdownButton>
+        </div>
+        
         <AuthorName id={this.state.data.author_id} />
 
         <div className="upvote">
@@ -83,20 +84,16 @@ var Option = React.createClass({
             this_id={this.state.data.id} 
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
-
-          {/* For testing */}
-         
         </div>
- <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
-        {optionContent}
-</div>
+        
+        <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
+          {optionContent}
+        </div>
       </div>
     );
         
   },
 
-  // For testing purposes
-  // Will set this option as the default option displayed under parent suboutcome
   chooseOption: function(){
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);

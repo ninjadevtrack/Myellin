@@ -1,0 +1,17 @@
+.column {
+  opacity: 0.4;
+  border-left: 1px solid #ccc;
+}
+
+.column.column-1 {
+  border-left: none;
+}
+
+.column.hovered, .column.active {
+  opacity: 1;
+}
+
+// Style .active column differently if another column is hovered
+.column.active.sibling-is-hovered {
+  //opacity: 0.8;
+}
