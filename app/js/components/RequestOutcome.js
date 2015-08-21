@@ -27,8 +27,8 @@ var RequestOutcome = React.createClass({
     return (
 
       <section className="requestoutcome">
-      <Button onClick={this.handleToggle} bsStyle='link'><h4><i className="s s-glyph04 s-outcome"></i></h4></Button>
-    </section>
+        <Button onClick={this.handleToggle} bsStyle='link'><h4><i className="s s-glyph04 s-outcome"></i></h4></Button>
+      </section>
 
     );
   },

@@ -14,12 +14,13 @@ var HomePage = React.createClass({
 
   render: function() {
     return (
-<DocumentTitle title="Home">
-<section className="home-page">
+      <DocumentTitle title="Home">
+        <section className="home-page">
+
           <div>
             <Link to="Search"></Link>
           </div>
-
+          
         </section>
       </DocumentTitle>
     );
