@@ -45,6 +45,16 @@ var ColumnManager = React.createClass({
         }else if (column_num === 3){
           return '40%';
         }
+      case 4:
+        if (column_num === 1){
+          return '10%';
+        }else if (column_num === 2){
+          return '20%';
+        }else if (column_num === 3){
+          return '30%';
+        }else if (column_num === 4){
+          return '40%';
+        }
     }
   },
 
@@ -62,18 +72,17 @@ var ColumnManager = React.createClass({
 
     var column_count = this.getColumnCount();
 
-    var columns = React.Children.map(this.props.children, function (child, i) {
-
-      var column_num = i + 1; // Start at 1 to avoid confusion
+    var column_num = 1;
+    var columns = React.Children.map(this.props.children, function (child) {
 
       if (!this.childIsValidColumn(child))
-        return false;
+        return null;
 
       var column_width = this.getColumnWidth(column_num, column_count);
 
       var isHovered = (this.state.hoveredColumn === column_num ? true : false);
 
-      return React.addons.cloneWithProps(child, {
+      var column = React.addons.cloneWithProps(child, {
         number: column_num,
         width: column_width,
         active: (column_num === column_count ? true : false),
@@ -81,6 +90,10 @@ var ColumnManager = React.createClass({
         siblingIsHovered: ((this.state.hoveredColumn && isHovered === false) ? true : false), // In case this is useful for styling
         onHoverChange: this.onHoverChange
       });
+
+      column_num++;
+
+      return column;
 
     }.bind(this))
 

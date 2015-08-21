@@ -23,6 +23,8 @@ module.exports = (
 
     <Route name='Options' path='mainpage/:outcome_id/:suboutcome_id' handler={MainPage} />
 
+    <Route name='Create' path='mainpage/:outcome_id/:suboutcome_id/:create' handler={MainPage} />
+
     /*
      * If none of the above routes matched, then load the MainPage component.
      * The outcomes will take the full width of the screen.

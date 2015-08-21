@@ -13,6 +13,7 @@ var DocumentTitle = require('react-document-title');
 var ReactFireMixin = require('reactfire');
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
+var CreatePlaylist = require('../components/CreatePlaylist');
 var ColumnManager = require('../components/ColumnManager');
 var Column = require('../components/Column');
 
@@ -24,11 +25,17 @@ var MainPage = React.createClass({
     currentUser: React.PropTypes.object.isRequired
   },
 
+  getInitialState: function(){
+    return {
+
+    };
+  },
 
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
     var suboutcome_id = this.getParams().suboutcome_id;
+    var create = this.getParams().create;
 
     return (
       <DocumentTitle title="MainPage">
@@ -38,12 +45,14 @@ var MainPage = React.createClass({
 
             <ColumnManager>
 
-              <Column>
-                <SearchBar />
-                <Outcomes selected_outcome_id={outcome_id} />
-              </Column>
+              { !create && 
+                <Column>
+                  <SearchBar />
+                  <Outcomes selected_outcome_id={outcome_id} />
+                </Column>
+              }
 
-              { outcome_id &&
+              { outcome_id  &&
                 <Column>
                   <SearchBarPlaylist />
                   <PlaylistsMultiple outcome_id={outcome_id} selected_suboutcome_id={suboutcome_id} />
@@ -57,13 +66,19 @@ var MainPage = React.createClass({
                 </Column>
               }
 
+              { create &&
+                <Column>
+                  <br/><br/><br/>
+                  <CreatePlaylist outcome_id={outcome_id} />
+                </Column>
+              }
+
             </ColumnManager>
 
           </Grid>
 
           <RequestOutcome />
-
-          
+    
         </section>
       </DocumentTitle>
     );
