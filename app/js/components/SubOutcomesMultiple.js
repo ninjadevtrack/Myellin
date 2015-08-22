@@ -3,11 +3,13 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var PanelGroup = require('react-bootstrap').PanelGroup;
+var SubOutcome = require('./SubOutcome');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
-var SubOutcome = require('./SubOutcome');
+var ReactDnD = require('react-dnd');
+var HTML5Backend = require('react-dnd/modules/backends/HTML5');
 
 var SubOutcomesMultiple = React.createClass({
 
@@ -22,6 +24,12 @@ var SubOutcomesMultiple = React.createClass({
 
   componentWillMount: function() {
     this.bindFirebaseRefs();
+  },
+
+  componentDidUpdate: function(prevProps, nextState) {
+    if (this.props.playlist_id !== prevProps.playlist_id){
+      this.bindFirebaseRefs(true);
+    }
   },
 
   bindFirebaseRefs: function(rebind){
@@ -41,6 +49,28 @@ var SubOutcomesMultiple = React.createClass({
     this.setState({ activeKey });
   },
 
+  compare: function(suboutcome_1, suboutcome_2){
+    return suboutcome_1.order - suboutcome_2.order;
+  },
+
+  handleMove: function (id1, id2) {
+
+    var suboutcomes = this.state.data;
+
+    var suboutcome_1 = suboutcomes.filter(function(c){return c.suboutcome_id === id1})[0];
+    var suboutcome_2 = suboutcomes.filter(function(c){return c.suboutcome_id=== id2})[0];
+
+    var suboutcome_1_order = suboutcome_1.order;
+    suboutcome_1.order = suboutcome_2.order;
+    suboutcome_2.order = suboutcome_1_order;
+
+    suboutcomes.sort(this.compare);
+
+    this.setState({
+      data: suboutcomes
+    });
+  },
+
   render: function () {
 
     // Setup SubOutcome components
@@ -52,7 +82,13 @@ var SubOutcomesMultiple = React.createClass({
 
       relationData.parent_playlist_id = parseInt(this.props.playlist_id);
       return (
-        <SubOutcome optionsShown={optionsShown} eventKey={relationData.suboutcome_id} relationData={relationData} key={relationData.suboutcome_id}/>
+        <SubOutcome 
+          optionsShown={optionsShown}
+          eventKey={relationData.suboutcome_id}
+          relationData={relationData}
+          sortable={this.props.sortable}
+          onMove={this.handleMove}
+          key={relationData.suboutcome_id}/>
       );
     }.bind(this));
 
@@ -66,4 +102,5 @@ var SubOutcomesMultiple = React.createClass({
 
 });
 
-module.exports = SubOutcomesMultiple;
+//module.exports = SubOutcomesMultiple;
+module.exports = ReactDnD.DragDropContext(HTML5Backend)(SubOutcomesMultiple);

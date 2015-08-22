@@ -47,6 +47,18 @@ var Playlist = React.createClass({
     this.bindAsObject(this.refPlaylist, 'data');
   },
 
+  menuOnSelect: function(eventKey){
+    switch (eventKey){
+      case 'edit':
+        this.edit();
+        break;
+    }
+  },
+
+  edit: function(){
+    this.props.onEditPlaylist(this.props.relationData.playlist_id, this.props.relationData.parent_outcome_id);
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -54,14 +66,16 @@ var Playlist = React.createClass({
 
     return (
       <div className="playlist-container">
-       <div>
-        <div style={{ float: 'right'}}>
- <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-        <MenuItem eventKey='1'>Edit</MenuItem>
-        <MenuItem eventKey='2'>Delete</MenuItem>
-         <MenuItem eventKey='3'>Report Spam</MenuItem>
-      </DropdownButton>
-      </div>
+        <div>
+
+          <div style={{ float: 'right'}}>
+            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+              <MenuItem eventKey='edit'>Edit</MenuItem>
+              <MenuItem eventKey='delete'>Delete</MenuItem>
+              <MenuItem eventKey='report'>Report Spam</MenuItem>
+            </DropdownButton>
+          </div>
+
           <AuthorName id={this.state.data.author_id} />
 
           <p>{this.state.data.description}</p>
@@ -78,9 +92,11 @@ var Playlist = React.createClass({
           
           </div>
         </div>
+
         <div className="suboutcome-border">
-        <SubOutcomesMultiple playlist_id={this.state.data.id} />
+          <SubOutcomesMultiple playlist_id={this.state.data.id} />
         </div>
+
       </div>
     );
   }

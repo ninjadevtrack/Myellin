@@ -23,7 +23,7 @@ module.exports = (
 
     <Route name='Options' path='mainpage/:outcome_id/:suboutcome_id' handler={MainPage} />
 
-    <Route name='Create' path='mainpage/:outcome_id/:suboutcome_id/:create' handler={MainPage} />
+    <Route name='EditPlaylist' path='mainpage/:outcome_id/:suboutcome_id/:edit_playlist_id' handler={MainPage} />
 
     /*
      * If none of the above routes matched, then load the MainPage component.

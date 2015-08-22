@@ -6,19 +6,12 @@ var Glyphicon = require('react-bootstrap').Glyphicon;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
-var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
-var MenuItem = require('react-bootstrap').MenuItem;
-var DropdownButton = require('react-bootstrap').DropdownButton;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var AuthorName = require('./AuthorName');
 var SubOutcomesMultiple = require('./SubOutcomesMultiple');
-var UpvoteButton = require('./UpvoteButton');
-
-var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
-
 
 var CreatePlaylist = React.createClass({
 
@@ -38,20 +31,46 @@ var CreatePlaylist = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  bindFirebaseRefs: function(){
+  componentDidUpdate: function(prevProps, nextState) {
+    if (this.props.playlist_id !== prevProps.playlist_id){
+      console.log('BIND EDIT PLAYLIST');
+      this.bindFirebaseRefs(true);
+    }
+  },
+
+  bindFirebaseRefs: function(rebind){
+
+    if (rebind)
+      this.unbind('data');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    //this.refPlaylist = firebase.child('playlists/' + this.props.relationData.playlist_id);
-    //this.bindAsObject(this.refPlaylist, 'data');
+    this.refPlaylist = firebase.child('playlists/' + this.props.playlist_id);
+    this.bindAsObject(this.refPlaylist, 'data');
   },
 
   render: function () {
 
+    if (!this.state.data)
+      return false;
+
     return (
-      <div className="create-playlist-container">
-        Create a playlist for "How to cook perfect scrambled eggs" outcome. 
+      <div className="playlist-container">
+        <div>
+
+          <AuthorName id={this.state.data.author_id} />
+
+          <textarea rows="10" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+            {this.state.data.description}
+          </textarea>
+          
+        </div>
+
+        <SubOutcomesMultiple 
+          sortable={true}
+          playlist_id={this.state.data.id} />
+       
       </div>
     );
   }

@@ -19,7 +19,16 @@ var AuthorName = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  bindFirebaseRefs: function(){
+  componentDidUpdate: function(prevProps, nextState) {
+    if (this.props.id !== prevProps.id){
+      this.bindFirebaseRefs(true);
+    }
+  },
+
+  bindFirebaseRefs: function(rebind){
+
+    if (rebind)
+      this.unbind('data');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);

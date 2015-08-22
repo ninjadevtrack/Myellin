@@ -2,14 +2,34 @@
 
 var React = require('react/addons');
 var Panel = require('react-bootstrap').Panel; 
+var cx = require('classnames');
 var Glyphicon = require('react-bootstrap').Glyphicon; 
 var Router = require('react-router');
 var Option = require('./Option');
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
+var DragSource = require('react-dnd').DragSource;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
+
+var ReactDnD = require('react-dnd');
+
+var DndSource = {
+  beginDrag: function(props) {
+    return { id: props.relationData.suboutcome_id };
+  }
+};
+
+var DndTarget = {
+  hover: function(props, monitor) {
+    var draggedId = monitor.getItem().id;
+
+    if (draggedId !== props.relationData.suboutcome_id) {
+      props.onMove(draggedId, props.relationData.suboutcome_id);
+    }
+  }
+};
 
 var SubOutcome = React.createClass({
 
@@ -42,6 +62,9 @@ var SubOutcome = React.createClass({
     var PanelHeader = (
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
+          {this.props.sortable &&
+            <span className="moveIcon" style={{marginRight: '1em', color: '#CCC'}}>(drag)</span>
+          }
           {this.state.data.title}
         </div>
         <div className="clearfix"></div>
@@ -64,9 +87,14 @@ var SubOutcome = React.createClass({
     if (this.props.optionsShown)
       containerClassNames += ' options-shown';
 
-    return (
+    var classes = cx('suboutcome-container', {
+      'options-shown': this.props.optionsShown,
+      'is-dragging': this.props.isDragging // Injected by React Dnd
+    });
+
+    return this.props.connectDragSource(this.props.connectDropTarget(
       
-      <div className={containerClassNames}>
+      <div className={classes}>
         <Panel 
           header={PanelHeader}
           collapsible={true} 
@@ -92,7 +120,7 @@ var SubOutcome = React.createClass({
         </Panel>
       </div>
 
-    );
+    ));
 
   },
 
@@ -116,4 +144,26 @@ var SubOutcome = React.createClass({
 
 });
 
-module.exports = SubOutcome;
+var DragSourceDecorator = ReactDnD.DragSource('suboutcome', DndSource,
+  function(connect, monitor) {
+    return {
+      connectDragSource: connect.dragSource(),
+      isDragging: monitor.isDragging()
+    };
+  }
+);
+
+var DropTargetDecorator = ReactDnD.DropTarget('suboutcome', DndTarget,
+  function(connect) {
+    return {
+      connectDropTarget: connect.dropTarget()
+    };
+  }
+);
+
+
+//module.exports = SubOutcome;
+
+// Export the wrapped component:
+module.exports = DropTargetDecorator(DragSourceDecorator(SubOutcome));
+

@@ -64,7 +64,10 @@ var PlaylistsMultiple = React.createClass({
       relationData.parent_outcome_id = parseInt(this.props.outcome_id);
 
       return (
-        <Playlist relationData={relationData} key={relationData.playlist_id}/>
+        <Playlist 
+          relationData={relationData} 
+          onEditPlaylist={this.props.onEditPlaylist}
+          key={relationData.playlist_id}/>
       );
     }.bind(this));
 

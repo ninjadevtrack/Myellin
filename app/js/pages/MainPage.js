@@ -13,7 +13,7 @@ var DocumentTitle = require('react-document-title');
 var ReactFireMixin = require('reactfire');
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
-var CreatePlaylist = require('../components/CreatePlaylist');
+var EditPlaylist = require('../components/EditPlaylist');
 var ColumnManager = require('../components/ColumnManager');
 var Column = require('../components/Column');
 
@@ -27,15 +27,25 @@ var MainPage = React.createClass({
 
   getInitialState: function(){
     return {
-
+      editPlaylist: null
     };
+  },
+
+  editPlaylist: function(playlist_id, outcome_id){
+    console.log('playlist_id: ' + playlist_id);
+    console.log('outcome_id: ' + outcome_id);
+
+    this.setState({ editPlaylist: {
+      playlist_id: playlist_id,
+      outcome_id: outcome_id
+    }});
   },
 
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
     var suboutcome_id = this.getParams().suboutcome_id;
-    var create = this.getParams().create;
+    var edit_playlist_id = this.getParams().edit_playlist_id;
 
     return (
       <DocumentTitle title="MainPage">
@@ -45,31 +55,46 @@ var MainPage = React.createClass({
 
             <ColumnManager>
 
-              { !create && 
-                <Column>
-                  <SearchBar />
-                  <Outcomes selected_outcome_id={outcome_id} />
-                </Column>
-              }
+          
+              <Column>
+                <SearchBar />
+
+                <Outcomes 
+                  selected_outcome_id={outcome_id} />
+
+              </Column>
+           
 
               { outcome_id  &&
                 <Column>
                   <SearchBarPlaylist />
-                  <PlaylistsMultiple outcome_id={outcome_id} selected_suboutcome_id={suboutcome_id} />
+
+                  <PlaylistsMultiple 
+                    outcome_id={outcome_id} 
+                    selected_suboutcome_id={suboutcome_id}
+                    onEditPlaylist={this.editPlaylist} />
+
                 </Column>
               }
 
               { suboutcome_id &&
                 <Column>
                   <SearchBarPlaylist />
-                  <OptionsMultiple suboutcome_id={suboutcome_id} />
+
+                  <OptionsMultiple 
+                    suboutcome_id={suboutcome_id} />
+
                 </Column>
               }
 
-              { create &&
+              { this.state.editPlaylist &&
                 <Column>
-                  <br/><br/><br/>
-                  <CreatePlaylist outcome_id={outcome_id} />
+                  <SearchBarPlaylist />
+                
+                  <EditPlaylist 
+                    playlist_id={this.state.editPlaylist.playlist_id} 
+                    outcome_id={this.state.editPlaylist.outcome_id} />
+                  
                 </Column>
               }
 

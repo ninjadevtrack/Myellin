@@ -10,8 +10,12 @@
 }
 }
 
-.suboutcome-container {
+/* Hide if being dragged via React Dnd so that it leaves an empty space */
+.suboutcome-container.is-dragging{
+  opacity: 0;
+}
 
+.suboutcome-container {
 
     .upvote{
     text-align: center;
