@@ -56,12 +56,12 @@ var CreatePlaylist = React.createClass({
       return false;
 
     return (
-      <div className="playlist-container">
+      <div className="playlist-container" style={{position: 'fixed'}}>
         <div>
 
           <AuthorName id={this.state.data.author_id} />
 
-          <textarea rows="10" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+          <textarea rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
             {this.state.data.description}
           </textarea>
           

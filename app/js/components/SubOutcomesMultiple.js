@@ -49,22 +49,37 @@ var SubOutcomesMultiple = React.createClass({
     this.setState({ activeKey });
   },
 
-  compare: function(suboutcome_1, suboutcome_2){
-    return suboutcome_1.order - suboutcome_2.order;
-  },
+  // When dragging a suboutcome this will be passed two objects
+  // one: the object being dragged
+  // two: the object being hover over
+  // We swap their order values and then re-setstate
+  handleMove: function (one, two) {
 
-  handleMove: function (id1, id2) {
+    // Get suboutcomes (clone state.data)
+    var suboutcomes = this.state.data.slice(0);
 
-    var suboutcomes = this.state.data;
+    // Find both suboutcomes in data
+    var suboutcome_1 = suboutcomes.filter(function(c){return c.suboutcome_id === one.suboutcome_id})[0];
+    var suboutcome_2 = suboutcomes.filter(function(c){return c.suboutcome_id === two.suboutcome_id})[0];
 
-    var suboutcome_1 = suboutcomes.filter(function(c){return c.suboutcome_id === id1})[0];
-    var suboutcome_2 = suboutcomes.filter(function(c){return c.suboutcome_id=== id2})[0];
-
+    // If suboutcome_1 not found that means we are dragging it from a different list
+    // Add it to the suboutcomes array
+    if (!suboutcome_1){
+      suboutcome_1 = one;
+      // Make order number 1 higher than last item
+      suboutcome_1.order = suboutcomes[suboutcomes.length-1].order + 1;
+      suboutcomes.splice(0, 0, one);
+    }
+    
+    // Swap order
     var suboutcome_1_order = suboutcome_1.order;
     suboutcome_1.order = suboutcome_2.order;
     suboutcome_2.order = suboutcome_1_order;
 
-    suboutcomes.sort(this.compare);
+    // Re-sort by order
+    suboutcomes.sort(function(a, b){
+      return a.order - b.order;
+    });
 
     this.setState({
       data: suboutcomes
@@ -81,6 +96,7 @@ var SubOutcomesMultiple = React.createClass({
       var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 
       relationData.parent_playlist_id = parseInt(this.props.playlist_id);
+
       return (
         <SubOutcome 
           optionsShown={optionsShown}

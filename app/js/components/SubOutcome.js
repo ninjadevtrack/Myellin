@@ -17,16 +17,16 @@ var ReactDnD = require('react-dnd');
 
 var DndSource = {
   beginDrag: function(props) {
-    return { id: props.relationData.suboutcome_id };
+    return props.relationData;
   }
 };
 
 var DndTarget = {
   hover: function(props, monitor) {
-    var draggedId = monitor.getItem().id;
+    var draggedId = monitor.getItem().suboutcome_id;
 
-    if (draggedId !== props.relationData.suboutcome_id) {
-      props.onMove(draggedId, props.relationData.suboutcome_id);
+    if (monitor.getItem().suboutcome_id !== props.relationData.suboutcome_id) {
+      props.onMove(monitor.getItem(), props.relationData);
     }
   }
 };
@@ -156,7 +156,8 @@ var DragSourceDecorator = ReactDnD.DragSource('suboutcome', DndSource,
 var DropTargetDecorator = ReactDnD.DropTarget('suboutcome', DndTarget,
   function(connect) {
     return {
-      connectDropTarget: connect.dropTarget()
+      connectDropTarget: connect.dropTarget(),
+      isHeld: true
     };
   }
 );
