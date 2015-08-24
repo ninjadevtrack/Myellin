@@ -17,12 +17,15 @@ var Column = React.createClass({
 
     var style = {
       float: 'left',
-      width: this.props.width
+      width: this.props.width,
+      height: '100vh',
+      overflow: 'scroll',
+      
     };
 
     // See column.scss
     // Note: We may not want to style .column div at all and just use these classes to affect style of child elements
-    var classes = cx('column', 'column-' + this.props.number, {
+    var classes = cx('column', 'column-' + this.props.number, 'state-' + this.props.div, {
       'hovered': this.props.isHovered,
       // Just means it's the right-most column
       'active': this.props.active,
