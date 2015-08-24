@@ -45,7 +45,6 @@ var MainPage = React.createClass({
 
     var outcome_id = this.getParams().outcome_id;
     var suboutcome_id = this.getParams().suboutcome_id;
-    var edit_playlist_id = this.getParams().edit_playlist_id;
 
     return (
       <DocumentTitle title="MainPage">

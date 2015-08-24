@@ -54,6 +54,13 @@ var SubOutcome = React.createClass({
     this.bindAsObject(this.refSubOutcome, 'data');
   },
 
+  onDelete: function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.onDelete(this.props.relationData);
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -62,10 +69,10 @@ var SubOutcome = React.createClass({
     var PanelHeader = (
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
-          {this.props.sortable &&
-            <span className="moveIcon" style={{marginRight: '1em', color: '#CCC'}}>(drag)</span>
-          }
           {this.state.data.title}
+          {this.props.sortable &&
+            <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC',float: 'right'}}>delete</span>
+          }
         </div>
         <div className="clearfix"></div>
       </div>
