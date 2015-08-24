@@ -32,13 +32,17 @@ var MainPage = React.createClass({
   },
 
   editPlaylist: function(playlist_id, outcome_id){
-    console.log('playlist_id: ' + playlist_id);
-    console.log('outcome_id: ' + outcome_id);
+    this.setState({
+      editPlaylist: {
+        playlist_id: playlist_id,
+        outcome_id: outcome_id
+      }
+    });
+  },
 
-    this.setState({ editPlaylist: {
-      playlist_id: playlist_id,
-      outcome_id: outcome_id
-    }});
+  closeEditPlaylist: function(){
+
+    this.setState({ editPlaylist: null });
   },
 
   render: function () {
@@ -92,7 +96,8 @@ var MainPage = React.createClass({
                 
                   <EditPlaylist 
                     playlist_id={this.state.editPlaylist.playlist_id} 
-                    outcome_id={this.state.editPlaylist.outcome_id} />
+                    outcome_id={this.state.editPlaylist.outcome_id}
+                    onClose={this.closeEditPlaylist} />
                   
                 </Column>
               }

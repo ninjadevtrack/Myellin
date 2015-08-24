@@ -71,7 +71,7 @@ var SubOutcome = React.createClass({
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
           {this.props.sortable &&
-            <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC',float: 'right'}}>delete</span>
+            <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC',float: 'right'}}>x</span>
           }
         </div>
         <div className="clearfix"></div>

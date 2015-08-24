@@ -46,7 +46,7 @@ var CreatePlaylist = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refPlaylist = firebase.child('playlists/' + this.props.playlist_id);
+    this.refPlaylist = firebase.child('playlists/' + this.props.playlist_id).orderByChild('order');
     this.bindAsObject(this.refPlaylist, 'data');
   },
 
@@ -55,22 +55,9 @@ var CreatePlaylist = React.createClass({
 
     var title = React.findDOMNode(this.refs.createSuboutcome).value.trim();
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
-    var refSuboutcomes = firebase.child('suboutcomes');
+    this.refs.SubOutcomesMultiple.refs.child.add(title);
 
-    var newRef = refSuboutcomes.push({
-      title: title
-    });
-
-    var id = newRef.key();
-
-    var refPlaylistToSuboutcome = firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
-    refPlaylistToSuboutcome.child('suboutcome_' + id).set({
-      suboutcome_id: id,
-      order: 0
-    });
-    
+    // Clear input
     React.findDOMNode(this.refs.createSuboutcome).value = '';
   },
 
@@ -86,6 +73,20 @@ var CreatePlaylist = React.createClass({
 
     // Delete the suboutcome
     refSuboutcome.remove();
+  },
+
+  save: function(){
+
+    // Call SubOutcomesMultiple component's saveOrder method
+    // We must use SubOutcomesMultiple.refs.child to access because it's wrapped by React DnD
+    this.refs.SubOutcomesMultiple.refs.child.save();
+
+    this.close();
+  },
+
+  close: function(){
+
+    this.props.onClose();
   },
 
   render: function () {
@@ -108,12 +109,21 @@ var CreatePlaylist = React.createClass({
         <SubOutcomesMultiple 
           sortable={true}
           playlist_id={this.state.data.id}
-          onDelete={this.deleteItem} />
+          onDelete={this.deleteItem}
+          ref="SubOutcomesMultiple" />
 
         <form onSubmit={this.addItem}>
           <input ref="createSuboutcome" placeholder="Add suboutcome" type="text" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}} />
         </form>
        
+        <Button onClick={this.save} style={{marginTop:'2em'}}>
+          Save
+        </Button>
+
+        <Button onClick={this.close} style={{marginTop:'2em', marginLeft: '2em'}}>
+          Cancel
+        </Button>
+
       </div>
     );
   }

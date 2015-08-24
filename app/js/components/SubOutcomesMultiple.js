@@ -37,12 +37,13 @@ var SubOutcomesMultiple = React.createClass({
     if (rebind)
       this.unbind('data');
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    this.firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    this.firebase = new Firebase(this.firebaseRoot);
 
     // Fetch all suboutcomes that are in this playlist
-    this.refSubOutcomes = firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
-    this.bindAsArray(this.refSubOutcomes, 'data');
+    this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
+    this.refSubOutcomesQuery = this.refSubOutcomes.orderByChild('order');
+    this.bindAsArray(this.refSubOutcomesQuery, 'data');
   },
 
   handleSelect: function(activeKey) {
@@ -89,6 +90,50 @@ var SubOutcomesMultiple = React.createClass({
     this.setState({
       data: suboutcomes
     });
+  },
+
+  // Add a suboutcome to this playlist
+  add: function(title){
+
+    var id = this.create(title);
+
+    this.refSubOutcomes.child('suboutcome_' + id).set({
+      suboutcome_id: id,
+      order: Firebase.ServerValue.TIMESTAMP
+    });
+  },
+
+  // Create a new suboutcome
+  create: function(title){  
+    var refSuboutcomes = this.firebase.child('suboutcomes');
+    var newRef = refSuboutcomes.push({ title: title });
+    var id = newRef.key();
+    return id;
+  },
+
+  save: function(){
+
+    var suboutcomes = this.state.data.slice(0);
+
+    for (var i = 0; i < suboutcomes.length; i++) { 
+
+      /*
+
+      TODO: iterate through suboutcomes
+        - Create new ones
+        - Add existing (from other playlist) to relations table
+        - Update order
+        - If 3 need to be created, each one in this.state.data after created
+            - Once the total number that need to be created are created (keep track of count)
+              then call the next save function (create, add, then saveOrder)
+      */
+
+      var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id);
+
+      refPlaylistToSuboutcome.update({
+        order: i
+      });
+    }
   },
 
   render: function () {
