@@ -1,17 +1,106 @@
 .column {
-  opacity: 0.4;
-  border-left: 1px solid #ccc;
+  border-left: 2px solid #ECEBEC;
+  overflow: scroll;
+  height: 100vh;
 }
 
-.column.column-1 {
-  border-left: none;
-}
 
-.column.hovered, .column.active {
+/* ==========================================================================
+   State 1 - Homepage
+   ========================================================================== */
+.column.state-1.active {
+  margin-left: 15%;
+  border-left: 0px solid transparent;
+  width: 70%;
   opacity: 1;
 }
 
-// Style .active column differently if another column is hovered
-.column.active.sibling-is-hovered {
-  //opacity: 0.8;
+/* ==========================================================================
+   State 2 & 3 - Playlists open
+   ========================================================================== */
+.column.state-2 {
+	width: 50%;
 }
+
+.column.state-2.sibling-is-hovered {
+	width: 30%;
+
+.compensate-for-the-nav{
+	opacity: 0.1;
+}
+
+a.list-group-item {
+	  	opacity: 0.1;
+	  }
+	  a.list-group-item:hover, a.list-group-item:focus {
+	  	opacity: 1;
+	  }
+
+
+}
+
+
+.column.state-3 {
+	width: 50%;
+	opacity: 0.1;
+}
+
+.column.state-3.hovered {
+   width: 70%;
+   opacity: 1;
+}
+
+ /* ==========================================================================
+   State 4, 5 & 6 - Options open
+ ========================================================================== */
+
+
+.column.state-4 {
+	width: 10%;
+	opacity: 0.1;
+}
+
+.column.state-4.hovered {
+	width: 60%;
+	opacity: 1;
+}
+
+.column.state-5 {
+	width: 80%;
+	opacity: 0.1;
+}
+
+
+.column.state-5.hovered  {
+	width: 80%;
+	opacity: 1;
+}
+
+.column.state-5.sibling-is-hovered {
+	width: 30%;
+	opacity: 0.1;
+}
+
+.column.state-6 {
+	width: 10%;
+	opacity: 0.1;
+}
+
+.column.state-6.hovered {
+	width: 60%;
+	opacity: 1;
+}
+
+
+#column-1:hover {
+     > #column-3 {
+    	display: none;
+    }
+}
+
+
+
+
+
+
+

@@ -26,34 +26,34 @@ var ColumnManager = React.createClass({
 
   // Quick and dirty solution until we finalize how column widths should actually be computed
   // Returns the width that a column should be depending on column number and total number of columns 
-  getColumnWidth: function(column_num, column_count){
+  getColumnDiv: function(column_num, column_count){
 
     switch (column_count){
       case 1:
-        return '100%';
+        return '1';
       case 2:
         if (column_num === 1){
-          return '40%';
+          return '2';
         }else  if (column_num === 2){
-          return '60%'
+          return '3'
         }
       case 3:
         if (column_num === 1){
-          return '26%';
+          return '4';
         }else if (column_num === 2){
-          return '34%';
+          return '5';
         }else if (column_num === 3){
-          return '40%';
+          return '6';
         }
       case 4:
         if (column_num === 1){
-          return '10%';
+          return '7';
         }else if (column_num === 2){
-          return '20%';
+          return '8';
         }else if (column_num === 3){
-          return '30%';
+          return '9';
         }else if (column_num === 4){
-          return '40%';
+          return '10';
         }
     }
   },
@@ -78,13 +78,13 @@ var ColumnManager = React.createClass({
       if (!this.childIsValidColumn(child))
         return null;
 
-      var column_width = this.getColumnWidth(column_num, column_count);
+      var column_div = this.getColumnDiv(column_num, column_count);
 
       var isHovered = (this.state.hoveredColumn === column_num ? true : false);
 
       var column = React.addons.cloneWithProps(child, {
         number: column_num,
-        width: column_width,
+        div: column_div,
         active: (column_num === column_count ? true : false),
         isHovered: isHovered,
         siblingIsHovered: ((this.state.hoveredColumn && isHovered === false) ? true : false), // In case this is useful for styling
@@ -95,10 +95,14 @@ var ColumnManager = React.createClass({
 
       return column;
 
+
     }.bind(this))
+
 
     return columns;
   },
+
+   
 
   render: function() {
 

@@ -54,7 +54,6 @@ var MainPage = React.createClass({
       <DocumentTitle title="MainPage">
         <section className="mainpage">
 
-          <Grid fluid={true}>
 
             <ColumnManager>
 
@@ -104,9 +103,7 @@ var MainPage = React.createClass({
 
             </ColumnManager>
 
-          </Grid>
 
-          <RequestOutcome />
     
         </section>
       </DocumentTitle>
