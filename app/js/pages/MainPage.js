@@ -26,23 +26,7 @@ var MainPage = React.createClass({
   },
 
   getInitialState: function(){
-    return {
-      editPlaylist: null
-    };
-  },
-
-  editPlaylist: function(playlist_id, outcome_id){
-    this.setState({
-      editPlaylist: {
-        playlist_id: playlist_id,
-        outcome_id: outcome_id
-      }
-    });
-  },
-
-  closeEditPlaylist: function(){
-
-    this.setState({ editPlaylist: null });
+    return {};
   },
 
   render: function () {
@@ -86,18 +70,6 @@ var MainPage = React.createClass({
                   <OptionsMultiple 
                     suboutcome_id={suboutcome_id} />
 
-                </Column>
-              }
-
-              { this.state.editPlaylist &&
-                <Column>
-                  <SearchBarPlaylist />
-                
-                  <EditPlaylist 
-                    playlist_id={this.state.editPlaylist.playlist_id} 
-                    outcome_id={this.state.editPlaylist.outcome_id}
-                    onClose={this.closeEditPlaylist} />
-                  
                 </Column>
               }
 

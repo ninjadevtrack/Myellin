@@ -30,12 +30,20 @@ var Playlist = React.createClass({
 
   getInitialState: function(){
     return {
-      data: null
+      data: null,
+      editable: (this.props.editable || false)
     };
   },
 
   componentWillMount: function() {
     this.bindFirebaseRefs();
+  },
+
+  componentDidUpdate: function(prevProps, nextState) {
+    // Toggle editable state if editable prop changes
+    if (this.props.editable !== prevProps.editable){
+      this.toggleEdit();
+    }
   },
 
   bindFirebaseRefs: function(){
@@ -50,13 +58,59 @@ var Playlist = React.createClass({
   menuOnSelect: function(eventKey){
     switch (eventKey){
       case 'edit':
-        this.edit();
+        this.toggleEdit();
         break;
     }
   },
 
-  edit: function(){
-    this.props.onEditPlaylist(this.props.relationData.playlist_id, this.props.relationData.parent_outcome_id);
+  toggleEdit: function(){
+
+    this.setState({ editable: !this.state.editable });
+  },
+
+  addItemSubmit: function(e){
+    e.preventDefault();
+
+    this.addItem();
+  },
+
+  addItem: function(){
+
+    var title = React.findDOMNode(this.refs.createSuboutcome).value.trim();
+
+    if (!title)
+      return false;
+
+    this.refs.SubOutcomesMultiple.refs.child.add(title);
+
+    // Clear input
+    React.findDOMNode(this.refs.createSuboutcome).value = '';
+  },
+
+  deleteItem: function(relationData){
+
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    var firebase = new Firebase(firebaseRoot);
+    var refSuboutcome = firebase.child('suboutcomes/' + relationData.suboutcome_id);
+    var refPlaylistToSuboutcome = firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.relationData.playlist_id + '/suboutcome_' + relationData.suboutcome_id);
+
+    // Remove suboutcome from playlist
+    refPlaylistToSuboutcome.remove();
+
+    // Delete the suboutcome
+    refSuboutcome.remove();
+  },
+
+  save: function(){
+
+    // Create new suboutcome if text in input
+    this.addItem();
+
+    // Call SubOutcomesMultiple component's saveOrder method
+    // We must use SubOutcomesMultiple.refs.child to access because it's wrapped by React DnD
+    this.refs.SubOutcomesMultiple.refs.child.save();
+
+    this.toggleEdit();
   },
 
   render: function () {
@@ -68,18 +122,28 @@ var Playlist = React.createClass({
       <div className="playlist-container">
         <div>
 
-          <div style={{ float: 'right'}}>
-            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-              <MenuItem eventKey='edit'>Edit</MenuItem>
-              <MenuItem eventKey='delete'>Delete</MenuItem>
-              <MenuItem eventKey='report'>Report Spam</MenuItem>
-            </DropdownButton>
-          </div>
+          { !this.state.editable &&
+            <div style={{ float: 'right'}}>
+              <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+                <MenuItem eventKey='edit'>Edit</MenuItem>
+                <MenuItem eventKey='delete'>Delete</MenuItem>
+                <MenuItem eventKey='report'>Report Spam</MenuItem>
+              </DropdownButton>
+            </div>
+          }
 
           <AuthorName id={this.state.data.author_id} />
 
-          <p>{this.state.data.description}</p>
-          
+          { !this.state.editable &&
+            <p>{this.state.data.description}</p>
+          }
+
+          { this.state.editable &&
+            <textarea rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+              {this.state.data.description}
+            </textarea>
+          }
+
           <div className="upvote">
             <div className="count">{this.props.relationData.upvote_count}</div>
            
@@ -92,10 +156,30 @@ var Playlist = React.createClass({
           
           </div>
         </div>
+      
+        <SubOutcomesMultiple 
+          playlist_id={this.state.data.id} 
+          editable={this.state.editable}
+          onDelete={this.deleteItem}
+          ref="SubOutcomesMultiple" />
+  
+        { this.state.editable &&
+          <div>
+            <form onSubmit={this.addItemSubmit}>
+              <input ref="createSuboutcome" placeholder="Add suboutcome" type="text" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}} />
+            </form>
+           
+            <Button onClick={this.save} style={{marginTop:'2em'}}>
+              Save
+            </Button>
 
-        <div className="suboutcome-border">
-          <SubOutcomesMultiple playlist_id={this.state.data.id} />
-        </div>
+            <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
+              Cancel
+            </Button>
+          </div>
+        }
+
+        <div className="playlist-bottom-border"></div>
 
       </div>
     );

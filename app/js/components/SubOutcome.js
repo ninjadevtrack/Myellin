@@ -70,7 +70,7 @@ var SubOutcome = React.createClass({
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
-          {this.props.sortable &&
+          {this.props.editable &&
             <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC',float: 'right'}}>x</span>
           }
         </div>

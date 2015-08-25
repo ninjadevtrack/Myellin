@@ -56,9 +56,9 @@ var SubOutcomesMultiple = React.createClass({
   // We swap their order values and then re-setstate
   handleMove: function (one, two) {
 
-    // Don't allow sorting if no sortable prop
-    // They will still be able to drag and drop into another playlist that is sortable  
-    if (!this.props.sortable)
+    // Don't allow sorting if no editable prop
+    // They will still be able to drag and drop into another playlist that is editable 
+    if (!this.props.editable)
       return false;
 
     // Get suboutcomes (clone state.data)
@@ -152,7 +152,7 @@ var SubOutcomesMultiple = React.createClass({
           optionsShown={optionsShown}
           eventKey={relationData.suboutcome_id}
           relationData={relationData}
-          sortable={this.props.sortable}
+          editable={this.props.editable}
           onMove={this.handleMove}
           onDelete={this.props.onDelete}
           key={relationData.suboutcome_id} />

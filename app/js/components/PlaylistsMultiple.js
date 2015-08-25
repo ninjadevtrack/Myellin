@@ -10,6 +10,7 @@ require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var Playlist = require('./Playlist');
+var EditPlaylist = require('../components/EditPlaylist');
 
 var PlaylistsMultiple = React.createClass({
 
@@ -65,10 +66,10 @@ var PlaylistsMultiple = React.createClass({
 
       return (
         <Playlist 
-          relationData={relationData} 
-          onEditPlaylist={this.props.onEditPlaylist}
+          relationData={relationData}
           key={relationData.playlist_id}/>
       );
+
     }.bind(this));
 
     return (
