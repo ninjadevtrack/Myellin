@@ -82,12 +82,15 @@ var ColumnManager = React.createClass({
 
       var isHovered = (this.state.hoveredColumn === column_num ? true : false);
 
+      var siblingIsHovered = ((this.state.hoveredColumn && isHovered == false) ? true : false);
+
       var column = React.addons.cloneWithProps(child, {
         number: column_num,
         div: column_div,
         active: (column_num === column_count ? true : false),
         isHovered: isHovered,
-        siblingIsHovered: ((this.state.hoveredColumn && isHovered === false) ? true : false), // In case this is useful for styling
+        siblingIsHovered: siblingIsHovered, // In case this is useful for styling
+        siblingHoveredNumber: (siblingIsHovered ? this.state.hoveredColumn : null),
         onHoverChange: this.onHoverChange
       });
 

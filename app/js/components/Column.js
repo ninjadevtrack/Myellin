@@ -24,9 +24,11 @@ var Column = React.createClass({
 
     var generateid = ['column-' + this.props.number];
 
+    var siblingHoveredClass = (this.props.siblingHoveredNumber ? 'column-' + this.props.siblingHoveredNumber + '-hovered' : null);
+
     // See column.scss
     // Note: We may not want to style .column div at all and just use these classes to affect style of child elements
-    var classes = cx('column', 'state-' + this.props.div, {
+    var classes = cx('column', 'state-' + this.props.div, siblingHoveredClass, {
       'hovered': this.props.isHovered,
       // Just means it's the right-most column
       'active': this.props.active,
