@@ -9,7 +9,8 @@ var UrlEmbed = React.createClass({
 
   getDefaultProps: function() {
     return {
-      iframelyKey: '4dcff1ef2f24f1790e6a3f4aa73016e8'
+      iframelyKey: '4dcff1ef2f24f1790e6a3f4aa73016e8',
+      service: 'iframely'
     };
   },
 
@@ -24,10 +25,21 @@ var UrlEmbed = React.createClass({
         
         <div className="urlembed-container">
           <div className="urlembed-inner">
-            <iframe src={iframeSrc}
-                    frameborder="0" 
-                    allowfullscreen>
-            </iframe>
+
+            { this.props.service === 'iframely' &&
+              <iframe src={iframeSrc}
+                      frameborder="0" 
+                      allowfullscreen>
+              </iframe>
+            }
+
+            { this.props.service === 'embedly' &&
+              <div>
+                <a class="embedly-card" href="http://www.seriouseats.com/2014/10/how-to-crack-eggs-like-a-badass.html">How to Crack Eggs Like a Badass</a>
+                <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+              </div>
+            }
+
           </div>
         </div>
 
