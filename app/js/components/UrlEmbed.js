@@ -18,7 +18,7 @@ var UrlEmbed = React.createClass({
 
     var url = encodeURIComponent(this.props.url);
 
-    var iframeSrc = '//cdn.iframe.ly/api/iframe?url=' + url + '&key=' + this.props.iframelyKey + '&summary=true';
+    var iframeSrc = '//cdn.iframe.ly/api/iframe?url=' + url + '&key=' + this.props.iframelyKey;
  
     return (
       <div>
