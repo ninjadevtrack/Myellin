@@ -10,7 +10,6 @@ require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var Playlist = require('./Playlist');
-var EditPlaylist = require('../components/EditPlaylist');
 
 var PlaylistsMultiple = React.createClass({
 

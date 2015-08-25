@@ -13,7 +13,6 @@ var DocumentTitle = require('react-document-title');
 var ReactFireMixin = require('reactfire');
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
-var EditPlaylist = require('../components/EditPlaylist');
 var ColumnManager = require('../components/ColumnManager');
 var Column = require('../components/Column');
 
