@@ -26,21 +26,22 @@ var SubOutcomesMultiple = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  componentDidUpdate: function(prevProps, nextState) {
-    if (this.props.playlist_id !== prevProps.playlist_id){
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.props.playlist_id !== prevProps.playlist_id)
       this.bindFirebaseRefs(true);
-    }
   },
 
   bindFirebaseRefs: function(rebind){
 
-    if (rebind)
+    if (rebind){
       this.unbind('data');
+    }
 
     this.firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     this.firebase = new Firebase(this.firebaseRoot);
 
     // Fetch all suboutcomes that are in this playlist
+    //var refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id).orderByChild('order');
     this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
     this.refSubOutcomesQuery = this.refSubOutcomes.orderByChild('order');
     this.bindAsArray(this.refSubOutcomesQuery, 'data');

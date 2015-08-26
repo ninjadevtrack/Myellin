@@ -170,7 +170,8 @@ var Playlist = React.createClass({
           playlist_id={this.state.data.id} 
           editable={this.state.editable}
           onDelete={this.deleteItem}
-          ref="SubOutcomesMultiple" />
+          ref="SubOutcomesMultiple"
+          key={this.props.relationData.playlist_id} />
 
         { this.state.editable &&
           <div>

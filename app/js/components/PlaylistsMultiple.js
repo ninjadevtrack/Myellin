@@ -17,7 +17,9 @@ var PlaylistsMultiple = React.createClass({
 
   getInitialState: function(){
     return {
-      playlists: []
+      data: [],
+      outcome: null,
+      didCallCallback: false
     };
   },
 
@@ -25,21 +27,35 @@ var PlaylistsMultiple = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  componentDidUpdate: function(prevProps, nextState) {
+  componentDidUpdate: function(prevProps, prevState) {
+
     // If outcome_id or author_id changes we need to bind to new Firebase paths
-    if (this.props.outcome_id !== prevProps.outcome_id ||
-              this.props.author_id !== prevProps.author_id ){
+    if (this.props.outcome_id !== prevProps.outcome_id || this.props.author_id !== prevProps.author_id )
       this.bindFirebaseRefs(true);
-    }
+
+    // Pass any data we need back up the chain
+    // Currently we just need title for NavBar component
+    if (this.state.outcome && this.state.didCallCallback === false ){
+      this.setState({ didCallCallback: true }, 
+        function(){
+          this.props.loadedCallback({ title: this.state.outcome.title });
+      });
+    } 
   },
 
   bindFirebaseRefs: function(rebind){
 
-    if (rebind)
+    if (rebind){
       this.unbind('data');
+      this.unbind('outcome');
+    }
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
+
+    // Load data for outcome
+    var refOutcome = new Firebase(firebaseRoot + '/outcomes/' + this.props.outcome_id);
+    this.bindAsObject(refOutcome, 'outcome');
 
     // Fetch all playlists that are in this outcome
     if (this.props.outcome_id){

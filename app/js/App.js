@@ -31,8 +31,8 @@ var App = React.createClass({
     }
   },
 
-  componentWillMount: function () {
-    console.log('About to mount App');
+  sectionChangeHandler: function(data){
+    this.setState({ activeSection: data });
   },
 
   componentDidMount: function () {
@@ -43,10 +43,13 @@ var App = React.createClass({
   render: function () {
     return (
       <div>
-        <NavbarTop />
+        <NavbarTop section={this.state.activeSection} />
+
         <RouteHandler params={this.props.params}
                       query={this.props.query}
-                      currentUser={this.state.currentUser}/>
+                      currentUser={this.state.currentUser}
+                      sectionChangeHandler={this.sectionChangeHandler} />
+
         <Footer />
       </div>
     );

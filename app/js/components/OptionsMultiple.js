@@ -17,7 +17,9 @@ var OptionsMultiple = React.createClass({
 
   getInitialState: function(){
     return {
-      data: []
+      data: [],
+      suboutcome: null,
+      didCallCallback: false
     };
   },
 
@@ -25,20 +27,35 @@ var OptionsMultiple = React.createClass({
     this.bindFirebaseRefs();
   },
 
-  componentDidUpdate: function(prevProps, nextState) {
-    // If outcome_id or author_id changes we need to bind to new Firebase paths
-    if (this.props.suboutcome_id !== prevProps.suboutcome_id){
+  componentDidUpdate: function(prevProps, prevState) {
+
+    if (this.props.suboutcome_id !== prevProps.suboutcome_id)
       this.bindFirebaseRefs(true);
-    }
+
+    // Pass any data we need back up the chain
+    // Currently we just need title for NavBar component
+    if (this.state.suboutcome && this.state.didCallCallback === false ){
+      this.setState({ didCallCallback: true }, 
+        function(){
+          this.props.loadedCallback({ title: this.state.suboutcome.title });
+      });
+    } 
+
   },
 
   bindFirebaseRefs: function(rebind){
 
-    if (rebind)
+    if (rebind){
       this.unbind('data');
+      this.unbind('suboutcome');
+    }
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
+
+    // Load data for suboutcome
+    var refSubOutcome = new Firebase(firebaseRoot + '/suboutcomes/' + this.props.suboutcome_id);
+    this.bindAsObject(refSubOutcome, 'suboutcome');
 
     // Fetch all options that are in this suboutcome
     this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id);

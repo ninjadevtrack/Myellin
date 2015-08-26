@@ -62,10 +62,13 @@ var ColumnManager = React.createClass({
     return (child && child.type === Column.type);
   },
 
-  onHoverChange: function(column_num, isHovering){
-    this.setState({
-      hoveredColumn: (isHovering ? column_num : null)
-    });
+  onHoverChange: function(column_num, columnChildData, isHovering){
+
+    var hoveredColumn = (isHovering ? column_num : null);
+    var hoveredColumnData = (isHovering ? columnChildData : null)
+
+    this.setState({ hoveredColumn: hoveredColumn });
+    this.props.sectionChangeHandler(hoveredColumnData);
   },
 
   updateColumnsWithProps: function(){
@@ -79,9 +82,7 @@ var ColumnManager = React.createClass({
         return null;
 
       var column_div = this.getColumnDiv(column_num, column_count);
-
       var isHovered = (this.state.hoveredColumn === column_num ? true : false);
-
       var siblingIsHovered = ((this.state.hoveredColumn && isHovered == false) ? true : false);
 
       var column = React.addons.cloneWithProps(child, {
@@ -99,7 +100,7 @@ var ColumnManager = React.createClass({
       return column;
 
 
-    }.bind(this))
+    }.bind(this));
 
 
     return columns;

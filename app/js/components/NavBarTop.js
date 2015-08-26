@@ -20,9 +20,12 @@ var icon = (
 var NavbarTop = React.createClass({
 
   render: function() {
+
+    var brand = (this.props.section ? this.props.section.title : icon);
+
     return (
       <div className='navbarhidemobilemenu'>
-        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
+        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={brand}>{/* This is the eventKey referenced */}
           <Nav navbar left>
             <DropdownButton eventKey={1} title={<i className="s s-glyph09 s-hamburger"></i>} className='marginleft' noCaret pullLeft>
               <MenuItem eventKey='1'>Home</MenuItem>

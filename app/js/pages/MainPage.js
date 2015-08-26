@@ -28,6 +28,11 @@ var MainPage = React.createClass({
     return {};
   },
 
+  sectionChangeHandler: function(data){
+
+    this.props.sectionChangeHandler(data);
+  },
+
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
@@ -37,10 +42,8 @@ var MainPage = React.createClass({
       <DocumentTitle title="MainPage">
         <section className="mainpage">
 
+            <ColumnManager sectionChangeHandler={this.sectionChangeHandler}>
 
-            <ColumnManager>
-
-          
               <Column>
                 <SearchBar />
 
@@ -49,7 +52,6 @@ var MainPage = React.createClass({
 
               </Column>
            
-
               { outcome_id  &&
                 <Column>
                   <SearchBarPlaylist />
@@ -57,7 +59,8 @@ var MainPage = React.createClass({
                   <PlaylistsMultiple 
                     outcome_id={outcome_id} 
                     selected_suboutcome_id={suboutcome_id}
-                    onEditPlaylist={this.editPlaylist} />
+                    onEditPlaylist={this.editPlaylist}
+                    key={outcome_id} />
 
                 </Column>
               }
@@ -67,15 +70,14 @@ var MainPage = React.createClass({
                   <SearchBarPlaylist />
 
                   <OptionsMultiple 
-                    suboutcome_id={suboutcome_id} />
+                    suboutcome_id={suboutcome_id}
+                    key={suboutcome_id} />
 
                 </Column>
               }
 
             </ColumnManager>
 
-
-    
         </section>
       </DocumentTitle>
     );
