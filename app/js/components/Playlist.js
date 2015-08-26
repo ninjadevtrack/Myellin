@@ -68,20 +68,20 @@ var Playlist = React.createClass({
     this.setState({ editable: !this.state.editable });
   },
 
-  addItemSubmit: function(e){
+  addSubOutcomeSubmit: function(e){
     e.preventDefault();
 
-    this.addItem();
+    this.addSubOutcome();
   },
 
-  addItem: function(){
+  addSubOutcome: function(){
 
     var title = React.findDOMNode(this.refs.createSuboutcome).value.trim();
 
     if (!title)
       return false;
 
-    this.refs.SubOutcomesMultiple.refs.child.add(title);
+    this.refs.SubOutcomesMultiple.refs.child.createThenAdd(title);
 
     // Clear input
     React.findDOMNode(this.refs.createSuboutcome).value = '';
@@ -98,13 +98,13 @@ var Playlist = React.createClass({
     refPlaylistToSuboutcome.remove();
 
     // Delete the suboutcome
-    refSuboutcome.remove();
+    //refSuboutcome.remove();
   },
 
   save: function(){
 
     // Create new suboutcome if text in input
-    this.addItem();
+    this.addSubOutcome();
 
     // Call SubOutcomesMultiple component's saveOrder method
     // We must use SubOutcomesMultiple.refs.child to access because it's wrapped by React DnD
@@ -165,7 +165,7 @@ var Playlist = React.createClass({
   
         { this.state.editable &&
           <div>
-            <form onSubmit={this.addItemSubmit}>
+            <form onSubmit={this.addSubOutcomeSubmit}>
               <input ref="createSuboutcome" placeholder="Add suboutcome" type="text" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}} />
             </form>
            

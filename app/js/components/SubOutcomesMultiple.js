@@ -75,6 +75,8 @@ var SubOutcomesMultiple = React.createClass({
       // Make order number 1 higher than last item
       suboutcome_1.order = suboutcomes[suboutcomes.length-1].order + 1;
       suboutcomes.splice(0, 0, one);
+
+      this.add(suboutcome_1.suboutcome_id, suboutcome_1.order);
     }
     
     // Swap order
@@ -93,13 +95,15 @@ var SubOutcomesMultiple = React.createClass({
   },
 
   // Add a suboutcome to this playlist
-  add: function(title){
+  add: function(id, order){
 
-    var id = this.create(title);
+    // Add to end if no order number set
+    if (!order && order !== 0)
+      order = this.state.data.length;
 
     this.refSubOutcomes.child('suboutcome_' + id).set({
       suboutcome_id: id,
-      order: Firebase.ServerValue.TIMESTAMP
+      order: order
     });
   },
 
@@ -109,6 +113,11 @@ var SubOutcomesMultiple = React.createClass({
     var newRef = refSuboutcomes.push({ title: title });
     var id = newRef.key();
     return id;
+  },
+
+  createThenAdd: function(title){
+    var id = this.create(title);
+    this.add(id);
   },
 
   save: function(){
