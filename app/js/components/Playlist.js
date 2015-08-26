@@ -40,13 +40,19 @@ var Playlist = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, nextState) {
+
+    if (prevProps.relationData.playlist_id !== this.props.relationData.playlist_id)
+      this.bindFirebaseRefs(true);
+
     // Toggle editable state if editable prop changes
-    if (this.props.editable !== prevProps.editable){
+    if (this.props.editable !== prevProps.editable)
       this.toggleEdit();
-    }
   },
 
-  bindFirebaseRefs: function(){
+  bindFirebaseRefs: function(rebind){
+
+    if (rebind)
+      this.unbind('data');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
@@ -124,7 +130,6 @@ var Playlist = React.createClass({
     return (
       <div className="playlist-container">
         <div>
-
           { !this.state.editable &&
             <div style={{ float: 'right'}}>
               <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
@@ -158,14 +163,15 @@ var Playlist = React.createClass({
               parent_id={this.props.relationData.parent_outcome_id} />
           
           </div>
+
         </div>
-      
+
         <SubOutcomesMultiple 
           playlist_id={this.state.data.id} 
           editable={this.state.editable}
           onDelete={this.deleteItem}
           ref="SubOutcomesMultiple" />
-  
+
         { this.state.editable &&
           <div>
             <form onSubmit={this.addSubOutcomeSubmit}>

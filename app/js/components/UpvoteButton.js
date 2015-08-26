@@ -28,11 +28,19 @@ var UpvoteButton = React.createClass({
     };
   },
 
+  componentDidUpdate: function(prevProps, nextState) {
+    if (prevProps.parent_id !== this.props.parent_id)
+      this.bindFirebaseRefs(true);
+  },
+
   componentWillMount: function() {
     this.bindFirebaseRefs();
   },
 
-  bindFirebaseRefs: function(){
+  bindFirebaseRefs: function(rebind){
+
+    if (rebind)
+      this.unbind('upvote');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);

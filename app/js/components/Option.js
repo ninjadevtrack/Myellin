@@ -22,7 +22,8 @@ var Option = React.createClass({
 
   getInitialState: function(){
     return {
-      data: null
+      data: null,
+      editable: (this.props.editable || false)
     };
   },
 
@@ -34,6 +35,10 @@ var Option = React.createClass({
   componentDidUpdate: function(prevProps, nextState) {
     if (this.props.id !== prevProps.id)
       this.bindFirebaseRefs(true);
+
+    // Toggle editable state if editable prop changes
+    if (this.props.editable !== prevProps.editable)
+      this.toggleEdit();
   },
 
   bindFirebaseRefs: function(rebind){
@@ -44,8 +49,24 @@ var Option = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
-    this.refOptions = firebase.child('options/' + this.props.id);
-    this.bindAsObject(this.refOptions, 'data');
+    this.refOption = firebase.child('options/' + this.props.id);
+    this.bindAsObject(this.refOption, 'data');
+  },
+
+  menuOnSelect: function(eventKey){
+    switch (eventKey){
+      case 'switch':
+        this.chooseOption();
+        break;
+      case 'edit':
+        this.toggleEdit();
+        break;
+    }
+  },
+
+  toggleEdit: function(){
+
+    this.setState({ editable: !this.state.editable });
   },
 
   getDescriptionParts: function(text){
@@ -71,6 +92,22 @@ var Option = React.createClass({
     console.log(partsWithType);
 
     return partsWithType;
+  },
+
+  chooseOption: function(){
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    var firebase = new Firebase(firebaseRoot);
+    firebase.child('suboutcomes' +
+                      '/' + this.props.relationData.parent_suboutcome_id + 
+                      '/chosen_option').set(this.state.data.id);
+  },
+
+  save: function(){
+
+    var description = React.findDOMNode(this.refs.description).value.trim();
+    this.refOption.update({ description: description });
+
+    this.toggleEdit();
   },
 
   render: function () {
@@ -104,11 +141,15 @@ var Option = React.createClass({
 
     return (
       <div className="option-container">
-        <div style={{ float: 'right'}}>
-          <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-            <MenuItem eventKey='1' onClick={this.chooseOption}>Switch</MenuItem>
-          </DropdownButton>
-        </div>
+
+        { !this.state.editable &&
+          <div style={{ float: 'right'}}>
+            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+              <MenuItem eventKey='edit'>Edit</MenuItem>
+              <MenuItem eventKey='switch'>Switch</MenuItem>
+            </DropdownButton>
+          </div>
+        }
         
         <AuthorName id={this.state.data.author_id} />
 
@@ -123,21 +164,36 @@ var Option = React.createClass({
             parent_id={this.props.relationData.parent_suboutcome_id} />
         </div>
         
-        <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
-          {optionContent}
-        </div>
+        { !this.state.editable &&
+          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
+            {optionContent}
+          </div>
+        }
+
+        { this.state.editable &&
+          <div>
+            <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+              {this.state.data.description}
+            </textarea>
+
+            <div>
+              <Button onClick={this.save} style={{marginTop:'2em'}}>
+                Save
+              </Button>
+
+              <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        }
+
       </div>
     );
         
-  },
-
-  chooseOption: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
-    firebase.child('suboutcomes' +
-                      '/' + this.props.relationData.parent_suboutcome_id + 
-                      '/chosen_option').set(this.state.data.id);
   }
+
+
  
 
 });
