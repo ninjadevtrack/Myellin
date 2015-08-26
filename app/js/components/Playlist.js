@@ -103,6 +103,9 @@ var Playlist = React.createClass({
 
   save: function(){
 
+    var description = React.findDOMNode(this.refs.description).value.trim();
+    this.refPlaylist.update({ description: description });
+
     // Create new suboutcome if text in input
     this.addSubOutcome();
 
@@ -139,7 +142,7 @@ var Playlist = React.createClass({
           }
 
           { this.state.editable &&
-            <textarea rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+            <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
               {this.state.data.description}
             </textarea>
           }
