@@ -44,12 +44,10 @@ var App = React.createClass({
     return (
       <div>
         <NavbarTop section={this.state.activeSection} />
-
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser}
                       sectionChangeHandler={this.sectionChangeHandler} />
-
         <Footer />
       </div>
     );

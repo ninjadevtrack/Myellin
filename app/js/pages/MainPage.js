@@ -16,6 +16,7 @@ var OptionsMultiple = require('../components/OptionsMultiple');
 var ColumnManager = require('../components/ColumnManager');
 var Column = require('../components/Column');
 
+
 var MainPage = React.createClass({
 
   mixins: [Router.State, ReactFireMixin],
@@ -54,7 +55,9 @@ var MainPage = React.createClass({
            
               { outcome_id  &&
                 <Column>
+
                   <SearchBarPlaylist />
+
 
                   <PlaylistsMultiple 
                     outcome_id={outcome_id} 

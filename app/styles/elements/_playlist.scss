@@ -75,8 +75,14 @@ p {
 }
 
 .playlist-bottom-border {
+  margin-top: 1em;
   border-bottom: 3px solid #000;
   text-align: left;
   padding-bottom: 1em;
 
 }
+
+.panel-group {
+    margin-bottom: 12px;
+}
+

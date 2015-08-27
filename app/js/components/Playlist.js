@@ -7,6 +7,7 @@ var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+var ButtonGroup = require('react-bootstrap').ButtonGroup;
 var MenuItem = require('react-bootstrap').MenuItem;
 var DropdownButton = require('react-bootstrap').DropdownButton;
 
@@ -148,7 +149,7 @@ var Playlist = React.createClass({
           }
 
           { this.state.editable &&
-            <textarea ref="description" rows="5" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', padding: '0em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
+            <textarea ref="description" rows="5" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
               {this.state.data.description}
             </textarea>
           }
@@ -177,16 +178,13 @@ var Playlist = React.createClass({
         { this.state.editable &&
           <div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" placeholder="Add a sub-outcome. Hit enter." type="text" style={{width:'100%', borderBottom: '3px solid #FBFBFB', paddingBottom: '0.4em', paddingTop: '2em',  fontSize: '20px',}} />
+              <input ref="createSuboutcome" placeholder="Add a sub outcome. Hit enter." type="text" style={{width:'100%', borderBottom: '1px solid #FBFBFB', paddingBottom: '0.7em', paddingTop: '0.5em', marginTop: '-4em'}} />
             </form>
-           
-            <Button onClick={this.save} bsStyle='link' style={{marginTop:'2em'}}>
-              save
-            </Button>
-
-            <Button onClick={this.toggleEdit} bsStyle='link' style={{marginTop:'2em', marginLeft: '2em'}}>
-              cancel
-            </Button>
+      
+          <ButtonGroup justified bsSize='medium' style={{marginTop: '3em', marginBottom: '-0.5em',}}>
+            <Button onClick={this.save}>SAVE</Button>
+            <Button onClick={this.toggleEdit} style={{borderLeft: 0}}>CANCEL</Button>
+          </ButtonGroup>
           </div>
         }
 
