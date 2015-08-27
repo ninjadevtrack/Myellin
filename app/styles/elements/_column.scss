@@ -18,11 +18,11 @@
 /* ==========================================================================
    State 2 & 3 - Playlists open
    ========================================================================== */
-.column.state-2 {
+.state-2 {
 	width: 50%;
 }
 
-.column.state-2.sibling-is-hovered {
+.state-2.column-2-hovered  {
 	width: 30%;
 
 .compensate-for-the-nav{
@@ -40,66 +40,122 @@ a.list-group-item {
 }
 
 
-.column.state-3 {
+.state-3 {
 	width: 50%;
 	opacity: 0.1;
 }
 
-.column.state-3.hovered {
+.state-3.hovered {
    width: 70%;
    opacity: 1;
 }
+
+
 
  /* ==========================================================================
    State 4, 5 & 6 - Options open
  ========================================================================== */
 
 
-.column.state-4 {
+.state-4 {
 	width: 10%;
 	opacity: 0.1;
 }
 
-.column.state-4.hovered {
-	width: 60%;
+.state-4.hovered {
+	width: 50%;
+	opacity: 1;
+
+	.list-group {
+	width: 100%;
+	margin-left: 0;
+	margin-top: 0;
+}
+.form-control {
+	display: block;
+}
+}
+
+.state-5 {
+	width: 80%;
 	opacity: 1;
 }
 
-.column.state-5 {
-	width: 80%;
-	opacity: 0.1;
-}
 
-
-.column.state-5.hovered  {
+.state-5.hovered  {
 	width: 80%;
 	opacity: 1;
 }
 
-.column.state-5.sibling-is-hovered {
-	width: 30%;
+.state-5.column-1-hovered {
+	width: 50%;
 	opacity: 0.1;
 }
 
-.column.state-6 {
+.state-5.column-3-hovered {
+	width: 40%;
+	opacity: 0.1;
+.upvote {
+	display: none;
+}
+}
+
+
+.state-6 {
 	width: 10%;
 	opacity: 0.1;
+
+.options-multiple {
+	width: 400%;
 }
 
-.column.state-6.hovered {
+.nomargin-playlist {
+	width: 400%;
+
+}
+	.panel-heading  {
+	opacity: 0;
+	}
+}
+
+.state-6.hovered {
 	width: 60%;
 	opacity: 1;
+
+.options-multiple {
+	width: 100%;
+}
+
+.nomargin-playlist {
+	width: 70%;
+
 }
 
 
-#column-1:hover {
-     > #column-3 {
-    	display: none;
-    }
+}
+
+
+.state-4.column-3-hovered {
+	display: none;
+}
+
+.state-4 {
+	.list-group {
+	width: 400%;
+	margin-left: -300%;
+	margin-top: 0.5em;
+}
+
+.form-control {
+	display: none;
+}
 }
 
 
 
+.state-6.column-1-hovered {
+	display: none;
+}
 
 
 

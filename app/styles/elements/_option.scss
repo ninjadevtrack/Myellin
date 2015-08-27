@@ -1,12 +1,13 @@
 .options-multiple { 
-  padding-right: 6em;
+  padding-right: 0em;
 }
 
 .option-container {
 
   position: relative;
   margin-bottom: 3em;
-  padding-left: 6em;
+  padding-left: 15%;
+  padding-right: 15%;
   margin-top: 2em;
 
 :focus {
@@ -19,11 +20,6 @@
   font-size: 2em;
  }
 
-.retweetstyle {
-  font-size: 0.8em;
-  text-align: center;
-  color: $gray-light;
-}
 
  .btn-success {
     margin: -0.3em 0 0 0.3em;
@@ -40,12 +36,11 @@
     color: $gray-dark;
     }
   .upvote{
-    position: absolute;
-    left: 0.7em;
-    top: 0.3em;
+     position: absolute;
+    margin-left: -2em;
+    top: 0.2em;
     font-size: 2em;
     line-height: 1em;
-    height: 100%;
    
     .count{
        margin-bottom: 0;
