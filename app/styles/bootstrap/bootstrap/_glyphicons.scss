@@ -48,7 +48,8 @@
 
 // Individual icons
 .glyphicon-ok-circle             { &:before { content: "\EA03"; } }
-.glyphicon-sort-by-attributes    { &:before { content: "\EA18"; } }
+.glyphicon-remove            { &:before { content: "\EA0A"; } }
+.glyphicon-sort-by-attributes    { &:before { content: "\EA18 "; } }
 .glyphicon-option-horizontal     { &:before { content: "\EA13"; } }
 .glyphicon-retweet     { &:before { content: "\EA16"; } }
 .glyphicon-option-vertical    { &:before { content: "\EA15"; } }

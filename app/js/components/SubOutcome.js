@@ -71,7 +71,7 @@ var SubOutcome = React.createClass({
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {this.state.data.title}
           {this.props.editable &&
-            <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC',float: 'right'}}>x</span>
+            <span onClick={this.onDelete} style={{marginLeft: '1em', color: '#CCC', right: '15%', position: 'absolute',}}><Glyphicon glyph='remove'/></span>
           }
         </div>
         <div className="clearfix"></div>

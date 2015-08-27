@@ -13,7 +13,7 @@ var LoginButton = require('./LoginButton');
 var icon = (
     <span class="logo">
       <a href="/">
-        <img src="/images/monogram.svg" height="30" width="34" alt="text here" /></a>
+        <img src="/images/monogram.svg" height="30" width="34" alt="Logo" /></a>
     </span>
   );
 

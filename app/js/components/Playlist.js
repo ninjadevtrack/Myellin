@@ -10,6 +10,7 @@ var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 var MenuItem = require('react-bootstrap').MenuItem;
 var DropdownButton = require('react-bootstrap').DropdownButton;
 
+
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
@@ -147,7 +148,7 @@ var Playlist = React.createClass({
           }
 
           { this.state.editable &&
-            <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+            <textarea ref="description" rows="5" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', padding: '0em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
               {this.state.data.description}
             </textarea>
           }
@@ -176,15 +177,15 @@ var Playlist = React.createClass({
         { this.state.editable &&
           <div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" placeholder="Add suboutcome" type="text" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}} />
+              <input ref="createSuboutcome" placeholder="Add a sub-outcome. Hit enter." type="text" style={{width:'100%', borderBottom: '3px solid #FBFBFB', paddingBottom: '0.4em', paddingTop: '2em',  fontSize: '20px',}} />
             </form>
            
-            <Button onClick={this.save} style={{marginTop:'2em'}}>
-              Save
+            <Button onClick={this.save} bsStyle='link' style={{marginTop:'2em'}}>
+              save
             </Button>
 
-            <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
-              Cancel
+            <Button onClick={this.toggleEdit} bsStyle='link' style={{marginTop:'2em', marginLeft: '2em'}}>
+              cancel
             </Button>
           </div>
         }
