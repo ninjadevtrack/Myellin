@@ -41,10 +41,8 @@ var SubOutcomesMultiple = React.createClass({
     this.firebase = new Firebase(this.firebaseRoot);
 
     // Fetch all suboutcomes that are in this playlist
-    //var refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id).orderByChild('order');
     this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
-    this.refSubOutcomesQuery = this.refSubOutcomes.orderByChild('order');
-    this.bindAsArray(this.refSubOutcomesQuery, 'data');
+    this.bindAsArray(this.refSubOutcomes, 'data');
   },
 
   handleSelect: function(activeKey) {
@@ -86,9 +84,10 @@ var SubOutcomesMultiple = React.createClass({
     suboutcome_2.order = suboutcome_1_order;
 
     // Re-sort by order
+    /*
     suboutcomes.sort(function(a, b){
       return a.order - b.order;
-    });
+    });*/
 
     this.setState({
       data: suboutcomes
@@ -148,10 +147,15 @@ var SubOutcomesMultiple = React.createClass({
 
   render: function () {
 
+    // Re-sort by order
+    var subOutcomes = this.state.data.sort(function(a, b){
+      return a.order - b.order;
+    });
+
     // Setup SubOutcome components
     // Note: eventKey prop is required by <PanelGroup> to control which panel is expanded ...
     // ... <PanelGroup> will pass props to <SubOutcome> which are then forwarded to <Panel> via {...this.props}
-    var subOutcomes = this.state.data.map(function (relationData) {
+    subOutcomes = subOutcomes.map(function (relationData) {
 
       var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 

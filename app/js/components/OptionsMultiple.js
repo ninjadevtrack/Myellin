@@ -58,8 +58,7 @@ var OptionsMultiple = React.createClass({
     this.bindAsObject(refSubOutcome, 'suboutcome');
 
     // Fetch all options that are in this suboutcome
-    this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id)
-                        .orderByChild('upvote_count');
+    this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id);
 
     this.bindAsArray(this.refOptions, 'data');
   },
