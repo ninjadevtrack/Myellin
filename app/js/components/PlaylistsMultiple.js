@@ -54,15 +54,12 @@ var PlaylistsMultiple = React.createClass({
     var firebase = new Firebase(firebaseRoot);
 
     // Load data for outcome
-    var refOutcome = new Firebase(firebaseRoot + '/outcomes/' + this.props.outcome_id);
-    this.bindAsObject(refOutcome, 'outcome');
+    this.refOutcome = new Firebase(firebaseRoot + '/outcomes/' + this.props.outcome_id);
+    this.bindAsObject(this.refOutcome, 'outcome');
 
     // Fetch all playlists that are in this outcome
     if (this.props.outcome_id){
       this.refPlaylists = firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
-
-      // TODO: Set priority equal to vote count so they get sorted correctly
-
     // Or by author_id
     }else{
       this.refPlaylists = firebase.child('playlists')

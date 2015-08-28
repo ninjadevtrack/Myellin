@@ -54,12 +54,11 @@ var OptionsMultiple = React.createClass({
     var firebase = new Firebase(firebaseRoot);
 
     // Load data for suboutcome
-    var refSubOutcome = new Firebase(firebaseRoot + '/suboutcomes/' + this.props.suboutcome_id);
-    this.bindAsObject(refSubOutcome, 'suboutcome');
+    this.refSubOutcome = new Firebase(firebaseRoot + '/suboutcomes/' + this.props.suboutcome_id);
+    this.bindAsObject(this.refSubOutcome, 'suboutcome');
 
     // Fetch all options that are in this suboutcome
     this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id);
-
     this.bindAsArray(this.refOptions, 'data');
   },
 

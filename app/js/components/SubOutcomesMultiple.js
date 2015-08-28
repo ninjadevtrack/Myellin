@@ -75,6 +75,7 @@ var SubOutcomesMultiple = React.createClass({
       suboutcome_1.order = suboutcomes[suboutcomes.length-1].order + 1;
       suboutcomes.splice(0, 0, one);
 
+      // Add suboutcome to this playlist
       this.add(suboutcome_1.suboutcome_id, suboutcome_1.order);
     }
     
@@ -82,12 +83,6 @@ var SubOutcomesMultiple = React.createClass({
     var suboutcome_1_order = suboutcome_1.order;
     suboutcome_1.order = suboutcome_2.order;
     suboutcome_2.order = suboutcome_1_order;
-
-    // Re-sort by order
-    /*
-    suboutcomes.sort(function(a, b){
-      return a.order - b.order;
-    });*/
 
     this.setState({
       data: suboutcomes
@@ -125,17 +120,6 @@ var SubOutcomesMultiple = React.createClass({
     var suboutcomes = this.state.data.slice(0);
 
     for (var i = 0; i < suboutcomes.length; i++) { 
-
-      /*
-
-      TODO: iterate through suboutcomes
-        - Create new ones
-        - Add existing (from other playlist) to relations table
-        - Update order
-        - If 3 need to be created, each one in this.state.data after created
-            - Once the total number that need to be created are created (keep track of count)
-              then call the next save function (create, add, then saveOrder)
-      */
 
       var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id);
 
