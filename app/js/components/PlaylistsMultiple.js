@@ -59,15 +59,16 @@ var PlaylistsMultiple = React.createClass({
 
     // Fetch all playlists that are in this outcome
     if (this.props.outcome_id){
-      this.refPlaylists = firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id).orderByChild('upvote_count');
+      this.refPlaylists = firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id)
+                            .orderByChild('upvote_count');
 
       // TODO: Set priority equal to vote count so they get sorted correctly
 
     // Or by author_id
     }else{
       this.refPlaylists = firebase.child('playlists')
-                              .orderByChild("author_id")
-                              .equalTo(parseInt(this.props.author_id));
+                            .orderByChild("author_id")
+                            .equalTo(parseInt(this.props.author_id));
     }
 
     this.bindAsArray(this.refPlaylists, 'data');
@@ -75,7 +76,11 @@ var PlaylistsMultiple = React.createClass({
 
   render: function () {
 
-    var playlists = this.state.data.reverse();
+    // Sort playlists by upvote_count
+    var playlists = this.state.data.sort(function(a, b){
+      return b.upvote_count - a.upvote_count;
+    });
+
     playlists = playlists.map(function (relationData) {
 
       relationData.parent_outcome_id = parseInt(this.props.outcome_id);
