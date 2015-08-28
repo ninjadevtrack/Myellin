@@ -76,7 +76,8 @@ var PlaylistsMultiple = React.createClass({
 
   render: function () {
 
-    // Sort playlists by upvote_count
+    // Sort playlists by upvote_count DESC order
+    // Our Firebase query sorts by upvote_count, but in ASC order (no easy solution for that)
     var playlists = this.state.data.sort(function(a, b){
       return b.upvote_count - a.upvote_count;
     });

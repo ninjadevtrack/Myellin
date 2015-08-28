@@ -58,14 +58,21 @@ var OptionsMultiple = React.createClass({
     this.bindAsObject(refSubOutcome, 'suboutcome');
 
     // Fetch all options that are in this suboutcome
-    this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id);
+    this.refOptions = firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id)
+                        .orderByChild('upvote_count');
 
     this.bindAsArray(this.refOptions, 'data');
   },
 
   render: function () {
 
-    var options = this.state.data.map(function (relationData) {
+    // Sort playlists by upvote_count DESC order
+    // Our Firebase query sorts by upvote_count, but in ASC order (no easy solution for that)
+    var options = this.state.data.sort(function(a, b){
+      return b.upvote_count - a.upvote_count;
+    });
+
+    options = options.map(function (relationData) {
 
       relationData.parent_suboutcome_id = parseInt(this.props.suboutcome_id);
 
