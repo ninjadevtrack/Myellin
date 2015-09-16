@@ -6,10 +6,11 @@ var Glyphicon = require('react-bootstrap').Glyphicon;
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
+var AuthMixin = require('./../mixins/AuthMixin.js');
 
 var UpvoteButton = React.createClass({
 
-  mixins: [ReactFireMixin],
+  mixins: [ReactFireMixin, AuthMixin],
 
   getDefaultProps: function(){
     return {
@@ -28,32 +29,69 @@ var UpvoteButton = React.createClass({
     };
   },
 
-  componentDidUpdate: function(prevProps, nextState) {
-    if (prevProps.parent_id !== this.props.parent_id)
-      this.bindFirebaseRefs(true);
-  },
+  /*
+  shouldComponentUpdate: function(nextProps, nextState){
+    if (
+      (nextState.upvote !== this.state.upvote) || // Upvote value changed
+      (nextProps.parent_id !== this.props.parent_id) || // Parent object changed
+      (nextState.user !== this.state.user) // Logged in status changed
+    ){
+      return true;
+    }
 
-  componentWillMount: function() {
+    return false;
+  },
+  */
+
+  componentDidUpdate: function(prevProps, prevState) {
+
     this.bindFirebaseRefs();
   },
 
-  bindFirebaseRefs: function(rebind){
+  componentDidMount: function() {
 
-    if (rebind)
-      this.unbind('upvote');
+    this.bindFirebaseRefs();
+  },
+
+  bindFirebaseRefs: function(){
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);
 
+    // Return if not logged in
+    if (!this.state.user){
+      this.unbindUpvote();
+      return;
+    }
+
     // Returns the path of the upvote data
     // Path depends on whether we are upvoting a playlist or suboutcome
-    // Assume user_id = 1 for now
-    this.refUpvote = firebase.child('upvotes'
+    this.newRefUpvote = firebase.child('upvotes'
                                       + '/' + this.props.this_type 
-                                      + '/user_1'
+                                      + '/' + this.state.user.id 
                                       + '/' + this.props.parent_type + '_' + this.props.parent_id);
-   
+
+    // Cancel if current ref path is same as new ref path
+    // So we don't accidently create endless loops by triggering ...
+    // bindFirebaseRefs() -> rerender -> bindFirebaseRefs() -> rerender -> etc
+    if (this.refUpvote && this.refUpvote.toString() === this.newRefUpvote.toString()){
+      return;
+    }
+
+    this.unbindUpvote();
+
+    this.refUpvote = this.newRefUpvote;
     this.bindAsObject(this.refUpvote, 'upvote');
+  },
+
+  // Unbind this.state.upvote from Firebase path
+  // This must be called prior to binding to a new Firebase path
+  // This should also be called when we want to set this.state.upvote to null (such as when logging out)
+  unbindUpvote: function(){
+    if (this.refUpvote){ // If already bound ...
+      this.unbind('upvote'); // Unbind
+      this.refUpvote = null;
+    }
   },
 
   // Returns the Firebase path to the upvote_count
@@ -70,6 +108,11 @@ var UpvoteButton = React.createClass({
 
   handleUpvote: function(e){
     e.preventDefault();
+
+    if (!this.state.user){
+      alert('You must login to upvote.');
+      return;
+    }
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     var firebase = new Firebase(firebaseRoot);

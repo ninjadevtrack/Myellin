@@ -1,46 +1,21 @@
 'use strict';
 
 var React = require('react/addons');
+var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
 var LoginButton = React.createClass({
 
-    mixins: [ReactFireMixin],
+    mixins: [ReactFireMixin, AuthMixin],
 
     getInitialState: function () {
         return {
-            hover: false,
-            user: null
+            hover: false
         };
     },
 
-    componentWillMount: function(){
-
-        var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-        this.firebase = new Firebase(firebaseRoot);
-
-        //var authData = ref.getAuth(); // Synchronous method
-    
-        this.firebase.onAuth(function(authData){
-            if (authData) {
-                console.log("User " + authData.uid + " is logged in with " + authData.provider);
-
-                if (this.refUser)
-                    this.unbind('user');
-
-                this.refUser = this.firebase.child('users/' + authData.uid);
-                this.bindAsObject(this.refUser, 'user');
-
-            }else{
-                console.log("User is logged out");
-
-                this.setState({ user: null });
-            }
-        }.bind(this));
-    },
-    
     mouseOver: function () {
         this.setState({hover: true});
     },
