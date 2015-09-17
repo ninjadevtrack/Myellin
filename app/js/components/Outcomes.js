@@ -33,13 +33,11 @@ var Outcomes = React.createClass({
       return false;
 
     var newRef = this.refOutcomes.push({ title: title });
-    var id = newRef.key();
+    var outcomeId = newRef.key();
 
     // Clear input
     React.findDOMNode(this.refs.createOutcome).value = '';
   },
-
-
 
   render: function () {
 

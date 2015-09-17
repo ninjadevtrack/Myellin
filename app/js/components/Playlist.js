@@ -125,7 +125,7 @@ var Playlist = React.createClass({
   },
 
   getUpvoteButtonKey: function(){
-    return 'playlist_' + this.state.data.id + '_outcome_' + this.props.relationData.parent_outcome_id;
+    return 'playlist_' + this.state.data['.key'] + '_outcome_' + this.props.relationData.parent_outcome_id;
   },
 
   render: function () {
@@ -164,7 +164,7 @@ var Playlist = React.createClass({
             <UpvoteButton 
               label={<Glyphicon glyph='ok-circle'/>}
               this_type="playlist"
-              this_id={this.state.data.id} 
+              this_id={this.state.data['.key']} 
               parent_type="outcome"
               parent_id={this.props.relationData.parent_outcome_id}
               key={this.getUpvoteButtonKey()} />
@@ -174,7 +174,7 @@ var Playlist = React.createClass({
         </div>
 
         <SubOutcomesMultiple 
-          playlist_id={this.state.data.id} 
+          playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
           onDelete={this.deleteItem}
           ref="SubOutcomesMultiple"
