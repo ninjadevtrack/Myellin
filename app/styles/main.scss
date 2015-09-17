@@ -14,3 +14,11 @@ $icon-font-path: "../fonts/";
 @import "elements/authorname";
 @import "elements/suboutcome";
 @import "elements/column";
+
+a.list-group-item.create-outcome input{
+	outline: none;
+}
+
+a.list-group-item.create-outcome:hover{
+	background: transparent;
+}

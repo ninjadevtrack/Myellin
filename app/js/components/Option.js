@@ -88,8 +88,8 @@ var Option = React.createClass({
       partsWithType.push({ type: type, content: parts[i] });
     }
 
-    console.log('partsWithType ...');
-    console.log(partsWithType);
+    //console.log('partsWithType ...');
+    //console.log(partsWithType);
 
     return partsWithType;
   },
