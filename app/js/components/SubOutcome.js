@@ -117,13 +117,16 @@ var SubOutcome = React.createClass({
             </div>
           }
 
-          <div style={{borderBottom: '2px solid #ECEBEC' }} >
-            <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
-              { this.state.data.chosen_option >= 0 && 
-                <Option contentOnly={true} id={this.state.data.chosen_option} />
-              }
+          { this.state.expanded && 
+            <div style={{borderBottom: '2px solid #ECEBEC' }} >
+              <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
+                { this.state.data.chosen_option >= 0 && 
+                  <Option contentOnly={true} id={this.state.data.chosen_option} />
+                }
+              </div>
             </div>
-          </div>
+          }
+
         </Panel>
       </div>
 
