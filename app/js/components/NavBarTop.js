@@ -9,17 +9,27 @@ var NavItem = require('react-bootstrap').NavItem;
 var MenuItem = require('react-bootstrap').MenuItem;
 var Button = require('react-bootstrap').Button;
 var LoginButton = require('./LoginButton');
+var Router = require('react-router');
 
-var icon = (
-    <span class="logo">
-      <a href="/">
-        <img src="/images/monogram.svg" height="30" width="34" alt="Logo" /></a>
-    </span>
-  );
 
 var NavbarTop = React.createClass({
 
+   mixins: [Router.Navigation],
+
+  _handleBrandClick: function(e) {
+    e.preventDefault();
+    this.context.router.transitionTo('app');
+  },
+
   render: function() {
+
+    var icon = (
+      <span className="logo">
+        <a href="#" onClick={this._handleBrandClick}>
+          <img src="/images/monogram.svg" height="30" width="34" alt="Logo" />
+        </a>
+      </span>
+    );
 
     var brand = (this.props.section ? this.props.section.title : icon);
 
