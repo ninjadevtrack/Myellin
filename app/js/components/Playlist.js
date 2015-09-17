@@ -63,7 +63,7 @@ var Playlist = React.createClass({
     this.bindAsObject(this.refPlaylist, 'data');
   },
 
-  menuOnSelect: function(eventKey){
+  menuOnSelect: function(event, eventKey){
     switch (eventKey){
       case 'edit':
         this.toggleEdit();

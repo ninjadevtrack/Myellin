@@ -1,0 +1,14 @@
+
+/* React Bootsrap annoyingly focuses on first menu item. Over-ride focus style so not obvious. */
+.dropdown-menu > li > a:focus {
+  background: transparent;
+  border: none;
+  color: #4D4747;
+  outline: none;
+}
+
+/* Give focused menu item (see above) back its hover style */
+.dropdown-menu > li > a:focus:hover{
+  background-color: #ECEBEC;
+  color: #8e8e8e;
+}

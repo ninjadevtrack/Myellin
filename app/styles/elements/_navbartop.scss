@@ -13,7 +13,6 @@
 }
 
 .marginleft {
-
   margin-left: 15px;
 }
 
@@ -34,7 +33,35 @@
   .navbar-right {
     float: right!important;
   }
-  
+}
+
+.navbar-collapse.collapse {
+  display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: -15px !important;
+}
+
+.navbar-right {
+  float: right!important;
+}
+
+/* Set brand z-index so it's clickable */
+/* Set width so that it doesn't prevent left/right navbar items from being clickable */
+.navbar-default .logo.navbar-brand {
+  z-index: 9999;
+  width: 34px;
+  left: 50%;
+  padding-right: 17; /* half of width */
+}
+
+.navbar-default .navbar-brand:hover {
+  background: transparent;
 }
 
 
