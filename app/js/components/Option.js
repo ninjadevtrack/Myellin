@@ -99,7 +99,7 @@ var Option = React.createClass({
     var firebase = new Firebase(firebaseRoot);
     firebase.child('suboutcomes' +
                       '/' + this.props.relationData.parent_suboutcome_id + 
-                      '/chosen_option').set(this.state.data.id);
+                      '/chosen_option').set(this.state.data['.key']);
   },
 
   save: function(){
@@ -159,7 +159,7 @@ var Option = React.createClass({
           <UpvoteButton 
             label={<Glyphicon glyph='ok-circle'/>}
             this_type="option"
-            this_id={this.state.data.id} 
+            this_id={this.state.data['.key']} 
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
         </div>

@@ -85,7 +85,7 @@ var SubOutcome = React.createClass({
             this_type="option"
             this_id={this.state.data.chosen_option}
             parent_type="suboutcome"
-            parent_id={this.state.data.id} />
+            parent_id={this.state.data['.key']} />
         </div>
       </div>
     );
