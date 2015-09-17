@@ -3,11 +3,10 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var RequestOutcome = require('../components/RequestOutcome');
-var Outcomes = require('../components/Outcomes');
+var OutcomesMultiple = require('../components/OutcomesMultiple');
 var SearchBar = require('../components/SearchBar');
 var SearchBarPlaylist = require('../components/SearchBarPlaylist');
 var Grid = require('react-bootstrap').Grid;
-//var Col = require('react-bootstrap').Col;
 var DocumentTitle = require('react-document-title');
 
 var ReactFireMixin = require('reactfire');
@@ -48,7 +47,7 @@ var MainPage = React.createClass({
               <Column>
                 <SearchBar />
 
-                <Outcomes 
+                <OutcomesMultiple 
                   selected_outcome_id={outcome_id} />
 
               </Column>

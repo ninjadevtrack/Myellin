@@ -5,11 +5,12 @@ var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Badge = require('react-bootstrap').Badge;
 var Router = require('react-router');
+var Outcome = require('./Outcome');
 
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
-var Outcomes = React.createClass({
+var OutcomesMultiple = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
@@ -51,10 +52,7 @@ var Outcomes = React.createClass({
 
     var elements = this.state.outcomes.map(function (outcome) {
       return (
-        <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, outcome['.key'])} key={outcome['.key']}>
-          {outcome.title}
-          <Badge>{outcome.playlist_count}</Badge>
-        </ListGroupItem>
+        <Outcome data={outcome} />
       );
     }.bind(this));
 
@@ -72,4 +70,4 @@ var Outcomes = React.createClass({
 
 });
 
-module.exports = Outcomes;
+module.exports = OutcomesMultiple;
