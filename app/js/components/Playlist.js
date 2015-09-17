@@ -124,6 +124,10 @@ var Playlist = React.createClass({
     this.toggleEdit();
   },
 
+  getUpvoteButtonKey: function(){
+    return 'playlist_' + this.state.data.id + '_outcome_' + this.props.relationData.parent_outcome_id;
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -162,7 +166,8 @@ var Playlist = React.createClass({
               this_type="playlist"
               this_id={this.state.data.id} 
               parent_type="outcome"
-              parent_id={this.props.relationData.parent_outcome_id} />
+              parent_id={this.props.relationData.parent_outcome_id}
+              key={this.getUpvoteButtonKey()} />
           
           </div>
 
