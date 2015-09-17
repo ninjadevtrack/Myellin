@@ -29,20 +29,6 @@ var UpvoteButton = React.createClass({
     };
   },
 
-  /*
-  shouldComponentUpdate: function(nextProps, nextState){
-    if (
-      (nextState.upvote !== this.state.upvote) || // Upvote value changed
-      (nextProps.parent_id !== this.props.parent_id) || // Parent object changed
-      (nextState.user !== this.state.user) // Logged in status changed
-    ){
-      return true;
-    }
-
-    return false;
-  },
-  */
-
   componentDidUpdate: function(prevProps, prevState) {
 
     this.bindFirebaseRefs();
@@ -88,10 +74,11 @@ var UpvoteButton = React.createClass({
   // This must be called prior to binding to a new Firebase path
   // This should also be called when we want to set this.state.upvote to null (such as when logging out)
   unbindUpvote: function(){
-    if (this.refUpvote){ // If already bound ...
-      this.unbind('upvote'); // Unbind
-      this.refUpvote = null;
-    }
+    try {
+      this.unbind('upvote');
+    }catch(e){}
+
+    this.refUpvote = null;
   },
 
   // Returns the Firebase path to the upvote_count
