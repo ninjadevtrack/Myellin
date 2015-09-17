@@ -52,7 +52,7 @@ var OutcomesMultiple = React.createClass({
 
     var elements = this.state.outcomes.map(function (outcome) {
       return (
-        <Outcome data={outcome} />
+        <Outcome data={outcome} key={outcome['.key']} />
       );
     }.bind(this));
 
@@ -63,10 +63,6 @@ var OutcomesMultiple = React.createClass({
       </ListGroup>
     );
   },
-
-  _handleClick: function (id) {
-    this.context.router.transitionTo('Outcomes', {outcome_id: id});
-  }
 
 });
 

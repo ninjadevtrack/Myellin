@@ -13,6 +13,12 @@ var Outcome = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
+  // No need for this component to ever update currently
+  // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
+  shouldComponentUpdate: function(){
+    return false;
+  },
+
   render: function () {
 
     return (
