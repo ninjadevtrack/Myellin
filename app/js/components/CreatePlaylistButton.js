@@ -36,7 +36,8 @@ var CreatePlaylisteButton = React.createClass({
 
     var playlistId = newPlaylistRef.key();
 
-    this.refOutcomeToPlaylist.child('playlist_' + playlistId).set({ 
+    this.refOutcomeToPlaylist.child('playlist_' + playlistId).set({
+      parent_outcome_id: this.props.outcome_id,
       playlist_id: playlistId,
       upvote_count: 0
     });
