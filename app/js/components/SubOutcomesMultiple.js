@@ -115,6 +115,18 @@ var SubOutcomesMultiple = React.createClass({
     this.add(id);
   },
 
+  delete: function(relationData){
+
+    var refSuboutcome = this.firebase.child('suboutcomes/' + relationData.suboutcome_id);
+    var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + relationData.suboutcome_id);
+
+    // Remove suboutcome from playlist
+    refPlaylistToSuboutcome.remove();
+
+    // Delete the suboutcome
+    //refSuboutcome.remove();
+  },
+
   save: function(){
 
     var suboutcomes = this.state.data.slice(0);
@@ -152,7 +164,7 @@ var SubOutcomesMultiple = React.createClass({
           relationData={relationData}
           editable={this.props.editable}
           onMove={this.handleMove}
-          onDelete={this.props.onDelete}
+          onDelete={this.delete}
           key={relationData.suboutcome_id} />
       );
     }.bind(this));

@@ -96,20 +96,6 @@ var Playlist = React.createClass({
     React.findDOMNode(this.refs.createSuboutcome).value = '';
   },
 
-  deleteItem: function(relationData){
-
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
-    var refSuboutcome = firebase.child('suboutcomes/' + relationData.suboutcome_id);
-    var refPlaylistToSuboutcome = firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.relationData.playlist_id + '/suboutcome_' + relationData.suboutcome_id);
-
-    // Remove suboutcome from playlist
-    refPlaylistToSuboutcome.remove();
-
-    // Delete the suboutcome
-    //refSuboutcome.remove();
-  },
-
   save: function(){
 
     var description = React.findDOMNode(this.refs.description).value.trim();
@@ -203,7 +189,6 @@ var Playlist = React.createClass({
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
-          onDelete={this.deleteItem}
           ref="SubOutcomesMultiple"
           key={this.props.relationData.playlist_id} />
 
