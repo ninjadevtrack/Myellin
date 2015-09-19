@@ -15,10 +15,17 @@ var OptionsMultiple = require('../components/OptionsMultiple');
 var ColumnManager = require('../components/ColumnManager');
 var Column = require('../components/Column');
 
+//var Modal = require('react-bootstrap').Modal; 
+var Button = require('react-bootstrap').Button; 
+var Playlist = require('../components/Playlist');
+var CreatePlaylistButton = require('../components/CreatePlaylistButton');
+var CreatePlaylistModal = require('../components/CreatePlaylistModal');
+var AuthMixin = require('../mixins/AuthMixin');
+
 
 var MainPage = React.createClass({
 
-  mixins: [Router.State, ReactFireMixin],
+  mixins: [Router.State, ReactFireMixin, AuthMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -33,6 +40,27 @@ var MainPage = React.createClass({
     this.props.sectionChangeHandler(data);
   },
 
+  showEditingPlaylist: function(){
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    this.firebase = new Firebase(firebaseRoot);
+    this.refUser = this.firebase.child('users/' + this.state.user.id);
+    this.refUser.child('editing_playlist').update({ collapse: false });
+  },
+
+  hideEditingPlaylist: function(){
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    this.firebase = new Firebase(firebaseRoot);
+    this.refUser = this.firebase.child('users/' + this.state.user.id);
+    this.refUser.child('editing_playlist').update({ collapse: true });
+  },
+
+  onDoneEditingPlaylist: function(){
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    this.firebase = new Firebase(firebaseRoot);
+    this.refUser = this.firebase.child('users/' + this.state.user.id);
+    this.refUser.child('editing_playlist').remove();
+  },
+
   render: function () {
 
     var outcome_id = this.getParams().outcome_id;
@@ -42,6 +70,20 @@ var MainPage = React.createClass({
       <DocumentTitle title="MainPage">
         <section className="mainpage">
 
+            { this.state.user && this.state.user.editing_playlist && 
+              <CreatePlaylistModal 
+                collapse={this.state.user.editing_playlist.collapse}
+                onHide={this.hideEditingPlaylist}
+                onMouseOver={this.showEditingPlaylist}>
+
+                 <Playlist 
+                    relationData={this.state.user.editing_playlist} 
+                    editable={true}
+                    onDoneEditing={this.onDoneEditingPlaylist} />
+
+              </CreatePlaylistModal>
+            }
+        
             <ColumnManager sectionChangeHandler={this.sectionChangeHandler}>
 
               <Column>
@@ -57,7 +99,8 @@ var MainPage = React.createClass({
 
                   <SearchBarPlaylist />
 
-
+                  <CreatePlaylistButton outcome_id={outcome_id} />
+               
                   <PlaylistsMultiple 
                     outcome_id={outcome_id} 
                     selected_suboutcome_id={suboutcome_id}

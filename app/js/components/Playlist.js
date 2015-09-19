@@ -18,13 +18,13 @@ var ReactFireMixin = require('reactfire');
 var AuthorName = require('./AuthorName');
 var SubOutcomesMultiple = require('./SubOutcomesMultiple');
 var UpvoteButton = require('./UpvoteButton');
+var AuthMixin = require('./../mixins/AuthMixin.js');
 
 var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
 
-
 var Playlist = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   propTypes: {
     relationData: React.PropTypes.object.isRequired
@@ -38,6 +38,7 @@ var Playlist = React.createClass({
   },
 
   componentWillMount: function() {
+
     this.bindFirebaseRefs();
   },
 
@@ -122,10 +123,35 @@ var Playlist = React.createClass({
     this.refs.SubOutcomesMultiple.refs.child.save();
 
     this.toggleEdit();
+
+    if (this.props.onDoneEditing)
+      this.props.onDoneEditing();
+  },
+
+  cancel: function(){
+
+    this.toggleEdit();
+
+    if (this.props.onDoneEditing)
+      this.props.onDoneEditing();
+
   },
 
   getUpvoteButtonKey: function(){
     return 'playlist_' + this.state.data['.key'] + '_outcome_' + this.props.relationData.parent_outcome_id;
+  },
+
+  getAuthorId: function(){
+    if (this.state.data)
+      return this.state.data.author_id;
+
+    if (this.user)
+      return this.user.id;
+  },
+
+  getDescription: function(){
+    if (this.state.data)
+      return this.state.data.description;
   },
 
   render: function () {
@@ -146,18 +172,19 @@ var Playlist = React.createClass({
             </div>
           }
 
-          <AuthorName id={this.state.data.author_id} />
+          
+          <AuthorName id={this.getAuthorId()} />
 
           { !this.state.editable &&
-            <p>{this.state.data.description}</p>
+            <p>{this.getDescription()}</p>
           }
 
           { this.state.editable &&
             <textarea ref="description" rows="5" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
-              {this.state.data.description}
+              {this.getDescription()}
             </textarea>
           }
-
+       
           <div className="upvote">
             <div className="count">{this.props.relationData.upvote_count}</div>
            
@@ -170,7 +197,7 @@ var Playlist = React.createClass({
               key={this.getUpvoteButtonKey()} />
           
           </div>
-
+          
         </div>
 
         <SubOutcomesMultiple 
@@ -186,10 +213,10 @@ var Playlist = React.createClass({
               <input ref="createSuboutcome" placeholder="Add a sub outcome. Hit enter." type="text" style={{width:'100%', borderBottom: '1px solid #FBFBFB', paddingBottom: '0.7em', paddingTop: '0.5em', marginTop: '-4em'}} />
             </form>
       
-          <ButtonGroup justified bsSize='medium' style={{marginTop: '3em', marginBottom: '-0.5em',}}>
-            <Button onClick={this.save}>SAVE</Button>
-            <Button onClick={this.toggleEdit} style={{borderLeft: 0}}>CANCEL</Button>
-          </ButtonGroup>
+            <ButtonGroup justified bsSize='medium' style={{marginTop: '3em', marginBottom: '-0.5em',}}>
+              <Button onClick={this.save}>SAVE</Button>
+              <Button onClick={this.cancel} style={{borderLeft: 0}}>CANCEL</Button>
+            </ButtonGroup>
           </div>
         }
 

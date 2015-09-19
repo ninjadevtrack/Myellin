@@ -15,7 +15,7 @@ var Outcome = React.createClass({
 
   // No need for this component to ever update currently
   // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
-  shouldComponentUpdate: function(){
+  shouldComponentUpdate: function(nextProps, nextState){
     return false;
   },
 
