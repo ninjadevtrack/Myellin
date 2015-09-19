@@ -40,7 +40,9 @@ var AuthorName = React.createClass({
   render: function() {
 
     if (this.state.data) {
-      var name = this.state.data.full_name + ' | ' + this.state.data.title;
+      var name = this.state.data.full_name;
+      if (this.state.data.title) 
+        name += ' | ' + this.state.data.title;
     }else{
       var name = '•••';
     }
