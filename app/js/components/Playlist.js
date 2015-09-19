@@ -58,9 +58,9 @@ var Playlist = React.createClass({
       this.unbind('data');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    this.firebase = new Firebase(firebaseRoot);
 
-    this.refPlaylist = firebase.child('playlists/' + this.props.relationData.playlist_id);
+    this.refPlaylist = this.firebase.child('playlists/' + this.props.relationData.playlist_id);
     this.bindAsObject(this.refPlaylist, 'data');
   },
 
@@ -69,12 +69,27 @@ var Playlist = React.createClass({
       case 'edit':
         this.toggleEdit();
         break;
+      case 'delete':
+        this.delete();
+        break;
     }
   },
 
   toggleEdit: function(){
 
     this.setState({ editable: !this.state.editable });
+  },
+
+  delete: function(){
+    
+    var refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.relationData.parent_outcome_id + '/playlist_' + this.props.relationData.playlist_id);
+   
+    // Remove suboutcome from playlist
+    refOutcomeToPlaylist.remove();
+
+    // Delete the suboutcome
+    this.refPlaylist.remove();
+
   },
 
   addSubOutcomeSubmit: function(e){

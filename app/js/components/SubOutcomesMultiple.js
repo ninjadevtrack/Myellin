@@ -124,7 +124,7 @@ var SubOutcomesMultiple = React.createClass({
     refPlaylistToSuboutcome.remove();
 
     // Delete the suboutcome
-    //refSuboutcome.remove();
+    refSuboutcome.remove();
   },
 
   save: function(){
