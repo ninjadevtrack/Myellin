@@ -81,7 +81,7 @@ var Playlist = React.createClass({
   },
 
   delete: function(){
-    
+
     var refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.relationData.parent_outcome_id + '/playlist_' + this.props.relationData.playlist_id);
    
     // Remove suboutcome from playlist
@@ -181,7 +181,7 @@ var Playlist = React.createClass({
           }
 
           { this.state.editable &&
-            <textarea ref="description" rows="5" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
+            <textarea ref="description" rows="5" placeholder="Add a description" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
               {this.getDescription()}
             </textarea>
           }
