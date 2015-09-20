@@ -10,6 +10,8 @@ var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var DragSource = require('react-dnd').DragSource;
 
+var AuthMixin = require('./../mixins/AuthMixin.js');
+
 require('firebase');
 var ReactFireMixin = require('reactfire');
 
@@ -33,7 +35,7 @@ var DndTarget = {
 
 var SubOutcome = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   getInitialState: function(){
     return {
@@ -46,11 +48,27 @@ var SubOutcome = React.createClass({
     this.bindFirebaseRefs();
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+
+    // If isDragging prop (injected by reactDnD) changes ...
+    if (this.props.isDragging !== nextProps.isDragging){
+      console.log('is dragging: ' + nextProps.isDragging);
+
+      // If we're editing a playlist, toggle show/collapse on drag/drop, by updating in Firebase
+      // It's a bit rediculous to write to the DB to toggle but this is the easiest way currently ...
+      // ... since we don't yet have a good way for these components to talk to eachother
+      if (this.state.user.editing_playlist){
+        this.refUser = this.firebase.child('users/' + this.state.user.id);
+        this.refUser.child('editing_playlist').update({ collapse: !nextProps.isDragging });
+      }
+    }
+  },
+
   bindFirebaseRefs: function(){
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    this.firebase = new Firebase(firebaseRoot);
 
-    this.refSubOutcome = firebase.child('suboutcomes/' + this.props.relationData.suboutcome_id);
+    this.refSubOutcome = this.firebase.child('suboutcomes/' + this.props.relationData.suboutcome_id);
     this.bindAsObject(this.refSubOutcome, 'data');
   },
 
@@ -102,6 +120,7 @@ var SubOutcome = React.createClass({
     return this.props.connectDragSource(this.props.connectDropTarget(
       
       <div className={classes}>
+
         <Panel 
           header={PanelHeader}
           collapsible={true} 
