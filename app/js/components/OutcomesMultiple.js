@@ -27,20 +27,18 @@ var OutcomesMultiple = React.createClass({
     this.addOutcome();
   },
 
-  // No need for this component to ever update currently
-  // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
   shouldComponentUpdate: function(nextProps, nextState){
 
     //console.log('Firebase array length ...');
     //console.log('this.state:' + this.state.outcomes.length);
     //console.log('nextState:' + nextState.outcomes.length);
 
+    // Only update if number of outcomes changes (outcome added or deleted)
     if ( this.state.outcomes && this.state.outcomes.length !== nextState.outcomes.length ){
       return true;
     }
 
-    //return false;
-    return true;
+    return false;
   },
 
   addOutcome: function(){
