@@ -1,7 +1,8 @@
 'use strict';
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var AuthMixin = {
 

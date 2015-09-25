@@ -13,7 +13,8 @@ var DropdownButton = require('react-bootstrap').DropdownButton;
 
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var AuthorName = require('./AuthorName');
 var SubOutcomesMultiple = require('./SubOutcomesMultiple');

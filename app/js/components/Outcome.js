@@ -7,7 +7,8 @@ var Badge = require('react-bootstrap').Badge;
 var Router = require('react-router');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var Outcome = React.createClass({
 

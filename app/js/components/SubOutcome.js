@@ -13,7 +13,8 @@ var DragSource = require('react-dnd').DragSource;
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var ReactDnD = require('react-dnd');
 

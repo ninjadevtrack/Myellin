@@ -3,7 +3,8 @@
 var React = require('react/addons');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var UrlEmbed = React.createClass({
 

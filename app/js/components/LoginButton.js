@@ -4,7 +4,8 @@ var React = require('react/addons');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var LoginButton = React.createClass({
 

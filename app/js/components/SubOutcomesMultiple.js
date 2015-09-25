@@ -6,7 +6,8 @@ var PanelGroup = require('react-bootstrap').PanelGroup;
 var SubOutcome = require('./SubOutcome');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var ReactDnD = require('react-dnd');
 var HTML5Backend = require('react-dnd/modules/backends/HTML5');

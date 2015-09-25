@@ -5,7 +5,9 @@ var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon;
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
+
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 var UpvoteButton = React.createClass({

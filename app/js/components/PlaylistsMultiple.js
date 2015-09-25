@@ -7,7 +7,8 @@ var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var Playlist = require('./Playlist');
 

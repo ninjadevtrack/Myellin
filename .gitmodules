@@ -1,1 +1,4 @@
 
+[submodule "submodules/reactfire"]
+	path = submodules/reactfire
+	url = https://github.com/gragland/reactfire.git

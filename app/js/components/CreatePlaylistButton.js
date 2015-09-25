@@ -4,7 +4,9 @@ var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
+
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 var CreatePlaylisteButton = React.createClass({

@@ -9,7 +9,9 @@ var SearchBarPlaylist = require('../components/SearchBarPlaylist');
 var Grid = require('react-bootstrap').Grid;
 var DocumentTitle = require('react-document-title');
 
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
+
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
 var ColumnManager = require('../components/ColumnManager');

@@ -8,7 +8,8 @@ var Router = require('react-router');
 var Outcome = require('./Outcome');
 
 require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var OutcomesMultiple = React.createClass({
 
@@ -30,9 +31,9 @@ var OutcomesMultiple = React.createClass({
   // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
   shouldComponentUpdate: function(nextProps, nextState){
 
-    console.log('Firebase array length ...');
-    console.log('this.state:' + this.state.outcomes.length);
-    console.log('nextState:' + nextState.outcomes.length);
+    //console.log('Firebase array length ...');
+    //console.log('this.state:' + this.state.outcomes.length);
+    //console.log('nextState:' + nextState.outcomes.length);
 
     if ( this.state.outcomes && this.state.outcomes.length !== nextState.outcomes.length ){
       return true;
