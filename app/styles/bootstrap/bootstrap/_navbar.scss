@@ -164,13 +164,13 @@
   position: absolute;
   width: 100%;
   text-align: center;
+  color: #575757;
   margin: auto;
   padding: 14px 0;
-  font-size: 18px;
+  font-size: 1.15em;
   z-index: -1;
   line-height: $line-height-computed;
   height: $navbar-height;
-  font-family: 'Akkurat-Light';
 
   &:hover,
   &:focus {

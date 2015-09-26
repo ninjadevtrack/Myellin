@@ -164,31 +164,11 @@ var Playlist = React.createClass({
     return (
       <div className="playlist-container">
         <div>
-          { !this.state.editable &&
-            <div style={{ float: 'right'}}>
-              <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-                <MenuItem eventKey='edit'>Edit</MenuItem>
-                <MenuItem eventKey='delete'>Delete</MenuItem>
-                <MenuItem eventKey='report'>Report Spam</MenuItem>
-              </DropdownButton>
-            </div>
-          }
-
-          
-          <AuthorName id={this.getAuthorId()} />
-
-          { !this.state.editable &&
-            <p>{this.getDescription()}</p>
-          }
-
-          { this.state.editable &&
-            <textarea ref="description" rows="5" placeholder="Add a description" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
-              {this.getDescription()}
-            </textarea>
-          }
-       
+        
+          <div className="upvotediv">
+<div className="count">{this.props.relationData.upvote_count}</div>
           <div className="upvote">
-            <div className="count">{this.props.relationData.upvote_count}</div>
+        
            
             <UpvoteButton 
               label={<Glyphicon glyph='ok-circle'/>}
@@ -201,6 +181,20 @@ var Playlist = React.createClass({
           </div>
           
         </div>
+          </div>
+          <AuthorName id={this.getAuthorId()} />
+
+          { !this.state.editable &&
+            <p>{this.getDescription()}</p>
+          }
+
+          { this.state.editable &&
+            <textarea ref="description" rows="5" placeholder="Add a description" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
+              {this.getDescription()}
+            </textarea>
+          }
+       
+
 
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
@@ -220,13 +214,21 @@ var Playlist = React.createClass({
             </ButtonGroup>
           </div>
         }
-
-        <div className="playlist-bottom-border"></div>
-
+        
+{ !this.state.editable &&
+            <div style={{ float: 'right'}}>
+              <DropdownButton style={{margin: '0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='medium' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+                <MenuItem eventKey='edit'>Edit</MenuItem>
+                <MenuItem eventKey='delete'>Delete</MenuItem>
+                <MenuItem eventKey='report'>Report Spam</MenuItem>
+              </DropdownButton>
+            </div>
+          }
+          <div className="playlist-bottom-border"></div>
       </div>
+
     );
   }
-
 });
 
 module.exports = Playlist;

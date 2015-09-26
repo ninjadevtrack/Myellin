@@ -20,19 +20,32 @@
 /* ==========================================================================
    State 2 & 3 - Playlists open
    ========================================================================== */
-.state-2 {
-	width: 40%;
-}
 
-.state-2.column-2-hovered  {
-	width: 10%;
+.state-2.hovered {
+	margin-top: 50px;
+	width: 40%;
+	opacity: 1;
 
 	.list-group {
-	width: 400%;
-	margin-left: -300%;
-	margin-top: 0.5em;
+	width: 100%;
+	margin-left: 0;
+}
 }
 
+.state-2  {
+	margin-top: 50px;
+	width: 7%;
+	opacity: 0.1;
+
+	.list-group {
+	width: 600%;
+	margin-left: -500%;
+	margin-top: 0.5em;
+	}
+
+}
+
+/*
 .compensate-for-the-nav{
 	opacity: 0.1;
 }
@@ -46,18 +59,16 @@ a.list-group-item {
 
 
 }
+*/
 
+.state-3.column-1-hovered {
+	width: 60%;
+}
 
 .state-3 {
-	width: 60%;
-	opacity: 1;
-}
+   width: 93%;
 
-.state-3.hovered {
-   width: 90%;
-   opacity: 1;
 }
-
 
 
  /* ==========================================================================
