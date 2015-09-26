@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
+var Glyphicon = require('react-bootstrap').Glyphicon; 
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -58,9 +59,11 @@ var CreateOptionButton = React.createClass({
 
   render: function () {
     return (
-      <Button onClick={this.createOption}>
-        Create Option
-      </Button>
+      <div className="createoptionbutton">
+        <Button onClick={this.createOption} style={{fontSize: '4em', margin: '0', padding: '0'}}  bsStyle='link'>
+          <Glyphicon glyph='pencil' className='createicon' />
+        </Button>
+      </div>
     );
   }
 });
