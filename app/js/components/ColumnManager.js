@@ -67,8 +67,12 @@ var ColumnManager = React.createClass({
     var hoveredColumn = (isHovering ? column_num : null);
     var hoveredColumnData = (isHovering ? columnChildData : null)
 
-    this.setState({ hoveredColumn: hoveredColumn });
-    this.props.sectionChangeHandler(hoveredColumnData);
+    console.log('hovered column: '+ hoveredColumn);
+
+    if (this.state.hoveredColumn !== hoveredColumn) {
+      this.setState({ hoveredColumn: hoveredColumn });
+      this.props.sectionChangeHandler(hoveredColumnData);
+    }
   },
 
   updateColumnsWithProps: function(){

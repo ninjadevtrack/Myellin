@@ -11,11 +11,11 @@ var Column = React.createClass({
     }
   },
 
-  onMouseOver: function(){
+  onMouseEnter: function(){
     this.props.onHoverChange(this.props.number, this.state.childData, true);
   },
 
-  onMouseOut: function(){
+  onMouseLeave: function(){
     this.props.onHoverChange(this.props.number, this.state.childData, false);
   },
 
@@ -59,8 +59,8 @@ var Column = React.createClass({
     return (
       <div className={classes} 
           style={style} 
-          onMouseOver={this.onMouseOver}
-          onMouseOut={this.onMouseOut}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
           id={generateid}>
 
         {children}
