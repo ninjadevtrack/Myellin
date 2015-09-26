@@ -78,7 +78,16 @@ var Playlist = React.createClass({
 
   toggleEdit: function(){
 
-    this.setState({ editable: !this.state.editable });
+    //this.setState({ editable: !this.state.editable });
+
+    this.firebase.child('users/' + this.state.user.id).update({
+      editing_playlist: {
+        parent_outcome_id: this.props.relationData.parent_outcome_id,
+        playlist_id: this.props.relationData.playlist_id,
+        collapse: false
+      }
+    });
+
   },
 
   delete: function(){
