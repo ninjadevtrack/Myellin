@@ -122,7 +122,7 @@ $font-family-serif:       "Akkurat-Regular", Georgia, Times, serif !default;
 $font-family-monospace:   "Akkurat-Regular", Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          15px !default;
+$font-size-base:          17px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-huge:         ceil(($font-size-base * 1.5)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
@@ -853,7 +853,7 @@ $badge-active-color:          #111 !default;
 $badge-active-bg:             #111 !default;
 
 $badge-font-weight:           400 !default;
-$badge-line-height:           1 !default;
+$badge-line-height:           1.2 !default;
 $badge-border-radius:         10px !default;
 
 

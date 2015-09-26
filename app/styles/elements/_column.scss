@@ -9,9 +9,11 @@
    State 1 - Homepage
    ========================================================================== */
 .column.state-1.active {
-  margin-left: 15%;
+  margin-top: 60px;
+  padding-left: 20%;
+  padding-right: 20%;
   border-left: 0px solid transparent;
-  width: 70%;
+  width: 100%;
   opacity: 1;
 }
 
@@ -19,11 +21,17 @@
    State 2 & 3 - Playlists open
    ========================================================================== */
 .state-2 {
-	width: 50%;
+	width: 40%;
 }
 
 .state-2.column-2-hovered  {
-	width: 30%;
+	width: 10%;
+
+	.list-group {
+	width: 400%;
+	margin-left: -300%;
+	margin-top: 0.5em;
+}
 
 .compensate-for-the-nav{
 	opacity: 0.1;
@@ -41,12 +49,12 @@ a.list-group-item {
 
 
 .state-3 {
-	width: 50%;
-	opacity: 0.1;
+	width: 60%;
+	opacity: 1;
 }
 
 .state-3.hovered {
-   width: 70%;
+   width: 90%;
    opacity: 1;
 }
 

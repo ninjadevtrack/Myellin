@@ -60,7 +60,7 @@ var OutcomesMultiple = React.createClass({
     var createOutcome = (
       <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create">
        <form onSubmit={this.addOutcomeSubmit}>
-          <input ref="createOutcome" placeholder="Add an outcome. Hit enter." type="text" style={{width:'100%'}} />
+          <input ref="createOutcome" placeholder="Add a how-to. Hit enter." type="text" style={{width:'100%'}} />
         </form>
       </ListGroupItem>
     );

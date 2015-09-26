@@ -1,10 +1,12 @@
 .compensate-for-the-nav {
-  margin-top: 70px;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 
 
   .form-group {
-    
+    margin-bottom: 8px;
+    margin-left: 25px;
   }
 
 .optiongreen {
@@ -30,7 +32,7 @@
 
   input[type=text]
 {
-    text-align: center;
+    text-align: left;
     font-size: 35px !important;
     line-height: 1.6 !important;
 
