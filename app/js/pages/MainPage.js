@@ -21,6 +21,7 @@ var Column = require('../components/Column');
 var Button = require('react-bootstrap').Button; 
 var Playlist = require('../components/Playlist');
 var CreatePlaylistButton = require('../components/CreatePlaylistButton');
+var CreateOptionButton = require('../components/CreateOptionButton');
 var CreatePlaylistModal = require('../components/CreatePlaylistModal');
 var AuthMixin = require('../mixins/AuthMixin');
 
@@ -115,6 +116,8 @@ var MainPage = React.createClass({
               { suboutcome_id &&
                 <Column>
                   <SearchBarPlaylist />
+
+                  <CreateOptionButton suboutcome_id={suboutcome_id} />
 
                   <OptionsMultiple 
                     suboutcome_id={suboutcome_id}
