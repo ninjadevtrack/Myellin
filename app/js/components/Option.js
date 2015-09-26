@@ -28,6 +28,18 @@ var Option = React.createClass({
     };
   },
 
+  /*
+  shouldComponentUpdate: function(nextProps, nextState){
+    if ( (!this.state.data && nextState.data) || // Got data 
+          (this.state.data && this.state.data.description !== nextState.data.description)){ // Description changed
+
+      return true;
+    }
+
+    return false;
+  },
+  */
+
   componentWillMount: function() {
     this.bindFirebaseRefs();
   },
@@ -48,13 +60,13 @@ var Option = React.createClass({
       this.unbind('data');
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    this.firebase = new Firebase(firebaseRoot);
 
-    this.refOption = firebase.child('options/' + this.props.id);
+    this.refOption = this.firebase.child('options/' + this.props.id);
     this.bindAsObject(this.refOption, 'data');
   },
 
-  menuOnSelect: function(eventKey){
+  menuOnSelect: function(event, eventKey){
     switch (eventKey){
       case 'switch':
         this.chooseOption();
@@ -96,9 +108,11 @@ var Option = React.createClass({
   },
 
   chooseOption: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
-    firebase.child('suboutcomes' +
+
+    //console.log('option relations ...');
+    //console.log(this.props.relationData);
+
+    this.firebase.child('suboutcomes' +
                       '/' + this.props.relationData.parent_suboutcome_id + 
                       '/chosen_option').set(this.state.data['.key']);
   },
@@ -115,6 +129,9 @@ var Option = React.createClass({
 
     if (!this.state.data)
       return false;
+
+    //console.log('option relations 1 ...');
+    //console.log(this.props.relationData);
 
     var descriptionParts = this.getDescriptionParts(this.state.data.description);
 

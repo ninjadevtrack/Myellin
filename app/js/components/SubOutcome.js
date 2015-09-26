@@ -130,7 +130,7 @@ var SubOutcome = React.createClass({
           key={this.props.key} 
           accordion>
 
-          { this.state.expanded && this.state.data.chosen_option >= 0 &&
+          { this.state.expanded && this.state.data.chosen_option &&
             <div className="optionsicondiv">
               <Glyphicon href="javascript:void(0)" onClick={this._handleOptionsClick} glyph='option-horizontal' className="options-icon"/>
               {VoteButton}
@@ -140,7 +140,7 @@ var SubOutcome = React.createClass({
           { this.state.expanded && 
             <div style={{borderBottom: '2px solid #ECEBEC' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
-                { this.state.data.chosen_option >= 0 && 
+                { this.state.data.chosen_option && 
                   <Option contentOnly={true} id={this.state.data.chosen_option} />
                 }
               </div>
