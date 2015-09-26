@@ -63,6 +63,15 @@ a.list-group-item {
 
 .state-3.column-1-hovered {
 	width: 60%;
+
+	.playlist-container {
+  margin-left: 10%;
+  min-width: 80%;
+  margin-right: 10%;
+ }
+ .createplaylistbutton {
+ 	display: none;
+ }
 }
 
 .state-3 {
@@ -98,13 +107,14 @@ a.list-group-item {
 .state-5 {
 	width: 80%;
 	opacity: 1;
+		.playlist-container {
+  margin-left: 20%;
+  min-width: 64%;
+  margin-right: 16%;
+ }
+
 }
 
-
-.state-5.hovered  {
-	width: 80%;
-	opacity: 1;
-}
 
 .state-5.column-1-hovered {
 	width: 50%;
@@ -114,15 +124,18 @@ a.list-group-item {
 .state-5.column-3-hovered {
 	width: 40%;
 	opacity: 0.1;
-.upvote {
-	display: none;
-}
+	.playlist-container {
+  margin-left: 5%;
+  min-width: 90%;
+  margin-right: 5%;
+ }
 }
 
 
 .state-6 {
 	width: 10%;
 	opacity: 0.1;
+	margin-top: 60px;
 
 .options-multiple {
 	width: 400%;
@@ -140,6 +153,7 @@ a.list-group-item {
 .state-6.hovered {
 	width: 60%;
 	opacity: 1;
+	margin-top: 60px;
 
 .options-multiple {
 	width: 100%;
