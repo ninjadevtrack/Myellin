@@ -7,6 +7,14 @@ margin-top: 50px;
 float: right;
 }
 
+.playlist-container.editing {
+  margin-left: 10%;
+  min-width: 54%;
+  margin-right: 10%;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
 .playlist-container {
 
   position: relative;

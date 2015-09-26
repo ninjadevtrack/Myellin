@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var cx = require('classnames');
 var ListGroupItem = require('react-bootstrap').ListGroupItem; 
 var Glyphicon = require('react-bootstrap').Glyphicon; 
 var ListGroup = require('react-bootstrap').ListGroup;
@@ -170,10 +171,15 @@ var Playlist = React.createClass({
     if (!this.state.data)
       return false;
 
+    var classes = cx('playlist-container', {
+      'editing': this.state.editable
+    });
+
     return (
-      <div className="playlist-container">
+      <div className={classes}>
         <div>
         
+        { !this.state.editable &&
           <div className="upvotediv">
 <div className="count">{this.props.relationData.upvote_count}</div>
           <div className="upvote">
@@ -188,8 +194,8 @@ var Playlist = React.createClass({
               key={this.getUpvoteButtonKey()} />
           
           </div>
-          
         </div>
+        }
           </div>
           <AuthorName id={this.getAuthorId()} />
 
@@ -225,6 +231,7 @@ var Playlist = React.createClass({
         }
         
 { !this.state.editable &&
+          <div>
             <div style={{ float: 'right'}}>
               <DropdownButton style={{margin: '0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='medium' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
                 <MenuItem eventKey='edit'>Edit</MenuItem>
@@ -232,8 +239,13 @@ var Playlist = React.createClass({
                 <MenuItem eventKey='report'>Report Spam</MenuItem>
               </DropdownButton>
             </div>
+
+            <div className="playlist-bottom-border"></div>
+
+            </div>
           }
-<div className="playlist-bottom-border"></div>
+  
+
       </div>
 
     );
