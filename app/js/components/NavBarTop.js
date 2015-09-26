@@ -28,7 +28,7 @@ var NavbarTop = React.createClass({
     var icon = (
       <span className="logo">
         <a href="#" onClick={this._handleBrandClick}>
-          <img src="/images/monogram.svg" height="30" width="34" alt="Logo" />
+          <img src="/images/monogram.svg" height="36" width="36" alt="Logo" />
         </a>
       </span>
     );

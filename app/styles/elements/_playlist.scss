@@ -10,9 +10,9 @@ float: right;
 .playlist-container {
 
   position: relative;
-  margin-left: 23%;
+  margin-left: 20%;
   min-width: 54%;
-  margin-right: 23%;
+  margin-right: 26%;
   margin-bottom: 5em;
   margin-top: 8em;
   line-height: 1.2;
@@ -94,8 +94,8 @@ p {
   padding-top: 10em;
   border-bottom: 1px solid #ECEBEC;
   padding-bottom: 1em;
-  width: 100%;
-  position: relative;
+  width: 100vw;
+  margin-left: -29vw;
 
 }
 

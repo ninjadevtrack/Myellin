@@ -224,11 +224,12 @@ var Playlist = React.createClass({
               </DropdownButton>
             </div>
           }
-          <div className="playlist-bottom-border"></div>
+<div className="playlist-bottom-border"></div>
       </div>
 
     );
   }
-});
+}
+);
 
 module.exports = Playlist;
