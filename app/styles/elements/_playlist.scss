@@ -1,4 +1,7 @@
-.playlists-multiple {  }
+.playlists-multiple {  
+margin-top: 50px;
+
+}
 
 .editbutton {
 float: right;
@@ -7,10 +10,11 @@ float: right;
 .playlist-container {
 
   position: relative;
-  padding-left: 15%;
-  padding-right: 15%;
+  margin-left: 20%;
+  min-width: 54%;
+  margin-right: 26%;
   margin-bottom: 5em;
-  margin-top: 3em;
+  margin-top: 8em;
   line-height: 1.2;
   text-align: justify;
   font-size: 16px;
@@ -29,23 +33,34 @@ float: right;
 p {
  font-family:"Akkurat-Light";
  color: $gray;
+ font-size: 1.1em; 
 
 }
 
 .panel-heading {
-  border-bottom: 1px solid $gray-lightest;
+  margin-bottom: 8px;
+  color: $gray-dark;
 }
 
-  .upvote{
-    position: absolute;
-    margin-left: -2em;
-    top: 0em;
-    font-size: 2em;
-    line-height: 1em;
-    text-align: center;
-   
-    .count{
+
+.upvotediv {
+
+  height: 80px;
+  border-bottom: 1px #FBFBFB solid;
+  padding-bottom: 5em;
+ 
+.count{
+    float: left;
+    font-size:3.7em;
+    font-family: Akkurat-Light;
+    color: $gray-dark;
     }
+
+  .upvote{
+    margin-top: 0.45em;
+    line-height: 1em;
+    font-size: 2.4em;
+    float: right;
 
 .btn {
   line-height: 0;
@@ -69,16 +84,18 @@ p {
   }
 
 }
+}
 
 .icon.icon-iframely {
     display: none;
 }
 
 .playlist-bottom-border {
-  margin-top: 1em;
-  border-bottom: 3px solid #000;
-  text-align: left;
+  padding-top: 10em;
+  border-bottom: 1px solid #ECEBEC;
   padding-bottom: 1em;
+  width: 100vw;
+  margin-left: -29vw;
 
 }
 

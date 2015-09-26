@@ -90,7 +90,6 @@ var MainPage = React.createClass({
             <ColumnManager sectionChangeHandler={this.sectionChangeHandler}>
 
               <Column>
-                <SearchBar />
 
                 <OutcomesMultiple 
                   selected_outcome_id={outcome_id} />
@@ -99,8 +98,6 @@ var MainPage = React.createClass({
            
               { outcome_id  &&
                 <Column>
-
-                  <SearchBarPlaylist />
 
                   <CreatePlaylistButton outcome_id={outcome_id} />
                
@@ -115,7 +112,6 @@ var MainPage = React.createClass({
 
               { suboutcome_id &&
                 <Column>
-                  <SearchBarPlaylist />
 
                   <CreateOptionButton suboutcome_id={suboutcome_id} />
 

@@ -1,10 +1,12 @@
 .compensate-for-the-nav {
-  margin-top: 70px;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 
 
   .form-group {
-    
+    margin-bottom: 8px;
+    padding-left: 29px;
   }
 
 .optiongreen {
@@ -23,17 +25,17 @@
 }
 .inputplaceholder {
   font-size: 30px;
-  ::-webkit-input-placeholder::before {  font-family: symbols; content:'\EA0D'; color: $gray-light}
-  ::-moz-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-light} /* firefox 19+ */
-  :-ms-input-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-light} /* ie */
-  input:-moz-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-light}
+  ::-webkit-input-placeholder::before {  font-family: symbols; content:'\EA0D'; color: $gray-dark}
+  ::-moz-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-dark} /* firefox 19+ */
+  :-ms-input-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-dark} /* ie */
+  input:-moz-placeholder::before  {  font-family: symbols; content:'\EA0D'; color: $gray-dark}
 
   input[type=text]
 {
-    text-align: center;
-    font-size: 35px !important;
-    line-height: 1.6 !important;
-
+    padding-top: 10px;
+    text-align: left;
+    font-size: 30px !important;
+    color: $gray-dark;
 
 }
  

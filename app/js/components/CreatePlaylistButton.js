@@ -2,12 +2,15 @@
 
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
+var Glyphicon = require('react-bootstrap').Glyphicon; 
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var AuthMixin = require('./../mixins/AuthMixin.js');
+
+var createbutton = (<Glyphicon glyph='pencil' className='createicon' />);
 
 var CreatePlaylisteButton = React.createClass({
 
@@ -55,9 +58,11 @@ var CreatePlaylisteButton = React.createClass({
 
   render: function () {
     return (
-      <Button onClick={this.createPlaylist}>
-        Create Playlist
+      <div className="createplaylistbutton">
+      <Button onClick={this.createPlaylist} style={{fontSize: '6em', margin: '0', padding: '0'}}  bsStyle='link'>
+      {createbutton}
       </Button>
+      </div>
     );
   }
 });

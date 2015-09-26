@@ -122,7 +122,7 @@ $font-family-serif:       "Akkurat-Regular", Georgia, Times, serif !default;
 $font-family-monospace:   "Akkurat-Regular", Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          15px !default;
+$font-size-base:          17px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-huge:         ceil(($font-size-base * 1.5)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
@@ -779,17 +779,17 @@ $list-group-link-heading-color: #333 !default;
 
 $panel-bg:                    #fff !default;
 $panel-body-padding:          10px 0px 10px 0px !default;
-$panel-heading-padding:       11px 0px !default;
+$panel-heading-padding:       20px 20px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-none !default;
 
 //** Border color for elements within panels
-$panel-inner-border:          #ddd !default;
+$panel-inner-border:          transparent !default;
 $panel-footer-bg:             #f5f5f5 !default;
 
 $panel-default-text:          $gray !default;
-$panel-default-border:        $gray-lighter  !default;
-$panel-default-heading-bg:    #fff !default;
+$panel-default-border:        transparent  !default;
+$panel-default-heading-bg:    #fdfdfd !default;
 
 $panel-primary-text:          #fff !default;
 $panel-primary-border:        $brand-primary !default;
@@ -853,7 +853,7 @@ $badge-active-color:          #111 !default;
 $badge-active-bg:             #111 !default;
 
 $badge-font-weight:           400 !default;
-$badge-line-height:           1 !default;
+$badge-line-height:           1.2 !default;
 $badge-border-radius:         10px !default;
 
 

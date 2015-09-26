@@ -55,9 +55,9 @@
 /* Set width so that it doesn't prevent left/right navbar items from being clickable */
 .navbar-default .logo.navbar-brand {
   z-index: 9999;
-  width: 34px;
+  width: 38px;
   left: 50%;
-  padding-right: 17; /* half of width */
+  padding-right: 19; /* half of width */
 }
 
 .navbar-default .navbar-brand:hover {
