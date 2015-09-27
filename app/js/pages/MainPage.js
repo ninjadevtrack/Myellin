@@ -44,6 +44,11 @@ var MainPage = React.createClass({
   },
 
   showEditingPlaylist: function(){
+
+    // Don't show on hover if already shown
+    if (this.state.user.editing_playlist.collapse === false)
+      return;
+
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     this.firebase = new Firebase(firebaseRoot);
     this.refUser = this.firebase.child('users/' + this.state.user.id);
@@ -77,7 +82,7 @@ var MainPage = React.createClass({
               <CreatePlaylistModal 
                 collapse={this.state.user.editing_playlist.collapse}
                 onHide={this.hideEditingPlaylist}
-                onMouseOver={this.showEditingPlaylist}>
+                onMouseEnter={this.showEditingPlaylist}>
 
                  <Playlist 
                     relationData={this.state.user.editing_playlist} 

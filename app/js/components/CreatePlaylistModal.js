@@ -21,7 +21,7 @@ mixins: [ReactFireMixin, AuthMixin],
   render: function () {
 
     return (
-       <div onMouseOver={this.props.onMouseOver} style={{ 
+       <div onMouseEnter={this.props.onMouseEnter} style={{ 
           position: (this.props.collapse ? 'fixed' : 'absolute'), 
           top: (this.props.collapse ? '90%' : '8em'), 
           backgroundColor: '#fff', 

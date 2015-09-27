@@ -31,15 +31,44 @@ var CreatePlaylisteButton = React.createClass({
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     this.firebase = new Firebase(firebaseRoot);
     this.refPlaylists = this.firebase.child('playlists');
-    this.refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
 
+    // Create playlist
     var newPlaylistRef = this.refPlaylists.push({ 
       author_id: this.state.user.id
     });
 
+    // Get new playlist ID
     var playlistId = newPlaylistRef.key();
 
-    this.refOutcomeToPlaylist.child('playlist_' + playlistId).set({
+    // Object that holds Firebase paths we want to update at same time
+    var playlistDataForFirebase = {};
+
+    // Populate object ...
+    // Add playlist to outcome (update relations table)
+    playlistDataForFirebase['relations/outcome_to_playlist/outcome_' + this.props.outcome_id + '/playlist_' + playlistId] = {
+      parent_outcome_id: this.props.outcome_id,
+      playlist_id: playlistId,
+      upvote_count: 0
+    };
+
+    // Populate object ..
+    // Add playlist to user's "editing_playlist" object so that edit playlist modal is displayed
+    playlistDataForFirebase['users/' + this.state.user.id + '/editing_playlist'] = {
+      parent_outcome_id: this.props.outcome_id,
+      playlist_id: playlistId,
+      collapse: false
+    };
+
+    // Update both firebase paths at same time
+    // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
+    this.firebase.update(playlistDataForFirebase, function(error) {
+      if (error) {
+        console.log("Error creating playlist:", error);
+      }
+    });
+
+    /*
+    this.refOutcomeToPlaylist.child('playlist_' + playlistId).({
       parent_outcome_id: this.props.outcome_id,
       playlist_id: playlistId,
       upvote_count: 0
@@ -52,6 +81,8 @@ var CreatePlaylisteButton = React.createClass({
         collapse: false
       }
     });
+    */
+
   },
 
   render: function () {
