@@ -9,6 +9,8 @@ var Option = require('./Option');
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var DragSource = require('react-dnd').DragSource;
+var AuthorName = require('./AuthorName');
+var Button = require('react-bootstrap').Button;
 
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
@@ -131,14 +133,16 @@ var SubOutcome = React.createClass({
           accordion>
 
           { this.state.expanded && this.state.data.chosen_option &&
+
             <div className="optionsicondiv">
-              <Glyphicon href="javascript:void(0)" onClick={this._handleOptionsClick} glyph='option-horizontal' className="options-icon"/>
               {VoteButton}
             </div>
           }
 
+ <div className="authorcolor"><AuthorName id={this.state.data.author_id } /></div>
+
           { this.state.expanded && 
-            <div style={{borderBottom: '2px solid #ECEBEC' }} >
+            <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
                 { this.state.data.chosen_option && 
                   <Option contentOnly={true} id={this.state.data.chosen_option} />
@@ -146,7 +150,7 @@ var SubOutcome = React.createClass({
               </div>
             </div>
           }
-
+<Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">options</Button>
         </Panel>
       </div>
 

@@ -17,9 +17,36 @@
 
 .suboutcome-container {
 
+.btn {
+  padding: 0;
+}
+
     .upvote{
     text-align: center;
     }
+    .author-name {
+  color: #CACACA;
+  padding-bottom: 0;
+}
+
+ .options-button {
+  font-size: 1.3em;
+  display: inline-block;
+  float: right;
+  color: #CACACA;
+  text-decoration: underline;
+  margin-top: 1.5em;
+
+
+  .btn-link {
+    margin: 0;
+    padding: 0;
+    margin: 0 0 0 0;
+    background: transparent;
+    box-shadow: 0 0 0;
+    }
+
+}
 }
 
 .suboutcome-body {
@@ -29,20 +56,22 @@ color: $gray;
 text-align: justify;
 
 }
+
+
 }
 
 .optionsicondiv {
 float: right;
 display: -webkit-flex;
-  display: flex;
-  margin-top: -20px;
+display: flex;
+margin-top: -16px;
 
 
 .btn-success {
     margin: 0;
     padding: 0;
     margin: 16px 0 0 0;
-    font-size: 1.3em;
+    font-size: 1.4em;
     background: transparent;
     color: #222;
     box-shadow: 0 0 0;
@@ -51,21 +80,11 @@ display: -webkit-flex;
     margin: 0;
     padding: 0;
     margin: 16px 0 0 0;
-    font-size: 1.3em;
+    font-size: 1.4em;
     background: transparent;
-    color: #222;
+    color: #9C9C9C;
     box-shadow: 0 0 0;
     }
-}
-
-  .options-icon {
-    display: -webkit-flex;
-  display: flex;
-    font-size: 60px;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
 }
 
 .smallvoteicon {
@@ -76,5 +95,8 @@ display: -webkit-flex;
   display: inline-block;
   width: 20px;
   height: 20px;
+  
 
 }
+
+
