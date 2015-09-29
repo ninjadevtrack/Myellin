@@ -204,7 +204,7 @@ var Playlist = React.createClass({
           }
 
           { this.state.editable &&
-            <textarea ref="description" rows="5" placeholder="Add a description" style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '1em', textAlign: 'justify', fontFamily: 'Akkurat-Light'}}>
+            <textarea ref="description" rows="7" className='inputdescription' placeholder="Edit playbook overview." style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}}>
               {this.getDescription()}
             </textarea>
           }
@@ -220,12 +220,12 @@ var Playlist = React.createClass({
         { this.state.editable &&
           <div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" placeholder="Add a sub outcome. Hit enter." type="text" style={{width:'100%', borderBottom: '1px solid #FBFBFB', paddingBottom: '0.7em', paddingTop: '0.5em', marginTop: '-4em'}} />
+              <input ref="createSuboutcome" className='inputchapter' placeholder="Add a playbook chapter. Hit enter." type="text" style={{width:'100%', backgroundColor: '#fdfdfd', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em', fontSize: '1.2em'}} />
             </form>
       
-            <ButtonGroup justified bsSize='medium' style={{marginTop: '3em', marginBottom: '-0.5em',}}>
-              <Button onClick={this.save}>SAVE</Button>
-              <Button onClick={this.cancel} style={{borderLeft: 0}}>CANCEL</Button>
+            <ButtonGroup justified bsSize='medium' style={{position: 'fixed', width: '35%', bottom: '30px', zIndex: '10'}}>
+              <Button onClick={this.save} style={{color: '#4A4A4A', fontFamily: 'Akkurat-Bold', backgroundColor:'#F9F9F9', border: '0px solid #fff', width:'49%'}}>save</Button>
+              <Button onClick={this.cancel} style={{marginLeft: '2%', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', backgroundColor:'#F9F9F9', border: '0px solid #fff', width:'49%'}}>cancel</Button>
             </ButtonGroup>
           </div>
         }
