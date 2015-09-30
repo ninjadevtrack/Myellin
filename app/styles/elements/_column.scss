@@ -1,4 +1,5 @@
 .column {
+margin-top: 60px;
   border-left: 2px solid #ECEBEC;
   overflow: scroll;
   height: 100vh;
@@ -9,7 +10,6 @@
    State 1 - Homepage
    ========================================================================== */
 .column.state-1.active {
-  margin-top: 60px;
   padding-left: 20%;
   padding-right: 20%;
   border-left: 0px solid transparent;
@@ -22,7 +22,6 @@
    ========================================================================== */
 
 .state-2.hovered {
-	margin-top: 50px;
 	width: 40%;
 	opacity: 1;
 
@@ -33,7 +32,6 @@
 }
 
 .state-2  {
-	margin-top: 50px;
 	width: 7%;
 	opacity: 0.1;
 
@@ -63,6 +61,7 @@ a.list-group-item {
 
 .state-3.column-1-hovered {
 	width: 60%;
+	margin-top: -20px;
 
 	.playlist-container {
   margin-left: 10%;
@@ -75,6 +74,7 @@ a.list-group-item {
 }
 
 .state-3 {
+	padding-top: -20px;
    width: 93%;
 
 }
@@ -91,7 +91,7 @@ a.list-group-item {
 }
 
 .state-4.hovered {
-	width: 50%;
+	width: 40%;
 	opacity: 1;
 
 	.list-group {
@@ -105,6 +105,7 @@ a.list-group-item {
 }
 
 .state-5 {
+		padding-top: -20px;
 	width: 80%;
 	opacity: 1;
 		.playlist-container {
@@ -117,11 +118,13 @@ a.list-group-item {
 
 
 .state-5.column-1-hovered {
-	width: 50%;
+		margin-top: -20px;
+	width: 60%;
 	opacity: 0.1;
 }
 
 .state-5.column-3-hovered {
+	padding-top: -20px;
 	width: 40%;
 	opacity: 0.1;
 	.playlist-container {
@@ -153,7 +156,6 @@ a.list-group-item {
 .state-6.hovered {
 	width: 60%;
 	opacity: 1;
-	margin-top: 60px;
 
 .options-multiple {
 	width: 100%;

@@ -38,7 +38,7 @@ var Column = React.createClass({
     var style = {
       float: 'left',
       height: '100vh',
-      overflow: 'scroll'
+      overflow: 'scroll',
     };
 
     var generateid = ['column-' + this.props.number];

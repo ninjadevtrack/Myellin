@@ -8,11 +8,19 @@ float: right;
 }
 
 .playlist-container.editing {
-  margin-left: 10%;
-  min-width: 54%;
-  margin-right: 10%;
+  margin-left: 25%;
+  min-width: 50%;
+  margin-right: 25%;
   margin-bottom: 2em;
-  margin-top: 2em;
+  margin-top: 5em;
+
+
+  .author-name {
+    display: none;
+  }
+
+
+
 }
 
 .playlist-container {
@@ -27,6 +35,39 @@ float: right;
   text-align: justify;
   font-size: 16px;
  
+
+.inputchapter::-webkit-input-placeholder {
+   line-height: 1.2em;
+}
+
+.inputchapter::-moz-placeholder {  /* Firefox 19+ */
+   line-height: 1.2em;
+}
+
+.inputchapter:-ms-input-placeholder {  
+   line-height: 1.2em;
+}
+
+.inputdescription::-webkit-input-placeholder {
+   height: 2em;
+   color: #4D4747;
+   font-family: 'Akkurat-Regular';
+}
+
+.inputdescription::-moz-placeholder {  /* Firefox 19+ */
+   height: 2em;
+   color: #4D4747;
+  font-family: 'Akkurat-Regular';
+}
+
+.inputdescription:-ms-input-placeholder {  
+   height: 2em;
+   color: #4D4747;
+  font-family: 'Akkurat-Regular';
+}
+
+
+
  .optionplaylist {
   color: $gray-dark;
   font-size: 2em;
@@ -102,8 +143,8 @@ p {
   padding-top: 10em;
   border-bottom: 1px solid #ECEBEC;
   padding-bottom: 1em;
-  width: 100vw;
-  margin-left: -29vw;
+  width: 150%;
+  margin-left: -25%;
 
 }
 
