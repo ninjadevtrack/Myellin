@@ -32,7 +32,16 @@ var Outcome = React.createClass({
   },
 
   _handleClick: function (id) {
-    this.context.router.transitionTo('Outcomes', {outcome_id: id});
+    if (this.props.data.slug){
+      this.context.router.transitionTo('PlaylistsSlug', {
+        outcome_id: id,
+        outcome_slug: this.props.data.slug
+      });
+    }else{
+      this.context.router.transitionTo('Playlists', {
+        outcome_id: id
+      });
+    }
   }
 
 });

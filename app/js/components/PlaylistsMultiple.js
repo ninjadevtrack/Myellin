@@ -18,57 +18,69 @@ var PlaylistsMultiple = React.createClass({
 
   getInitialState: function(){
     return {
-      data: [],
-      outcome: null,
-      didCallCallback: false
+      data: []
     };
   },
 
   componentWillMount: function() {
-    this.bindFirebaseRefs();
+
+    setTimeout(function(){
+      this.bindFirebaseRefs();
+    }.bind(this), 50);
+
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
+  shouldComponentUpdate: function(){
+    //console.log('componentShouldUpdate', this.state);
+    return true;
+  },
 
-    // If outcome_id or author_id changes we need to bind to new Firebase paths
-    if (this.props.outcome_id !== prevProps.outcome_id || this.props.author_id !== prevProps.author_id )
-      this.bindFirebaseRefs(true);
+  componentWillUpdate: function(nextProps, nextState) {
+
+    //this.bindFirebaseRefs(nextState);
 
     // Pass any data we need back up the chain
     // Currently we just need title for NavBar component
-    if (this.state.outcome && this.state.didCallCallback === false ){
-      this.setState({ didCallCallback: true }, 
-        function(){
-          this.props.loadedCallback({ title: this.state.outcome.title });
-      });
-    } 
+
   },
 
-  bindFirebaseRefs: function(rebind){
+  unbindRef: function(firebaseRef, bindVar){
+    try {
+      this.unbind(bindVar);
+    }catch(e){}
 
-    if (rebind){
-      this.unbind('data');
-      this.unbind('outcome');
+    delete this[firebaseRef];
+  },
+
+  _isset: function(variable){
+    if (typeof variable !== 'undefined'){
+      return true;
+    }else{
+      return false;
     }
+  },
+
+
+  bindFirebaseRefs: function(nextState){
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    this.firebase = new Firebase(firebaseRoot);
 
-    // Load data for outcome
-    this.refOutcome = new Firebase(firebaseRoot + '/outcomes/' + this.props.outcome_id);
-    this.bindAsObject(this.refOutcome, 'outcome');
+    this.newRefPlaylists = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
 
-    // Fetch all playlists that are in this outcome
-    if (this.props.outcome_id){
-      this.refPlaylists = firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
-    // Or by author_id
-    }else{
-      this.refPlaylists = firebase.child('playlists')
-                            .orderByChild("author_id")
-                            .equalTo(parseInt(this.props.author_id));
+    if (!this.refPlaylists || this.refPlaylists.toString() !== this.newRefPlaylists.toString()){ 
+      this.unbindRef('refPlaylists', 'data');
+      this.refPlaylists = this.newRefPlaylists;
+      this.bindAsArray(this.refPlaylists, 'data');
     }
 
-    this.bindAsArray(this.refPlaylists, 'data');
+    /*
+    else{ // Or by author_id
+      this.refPlaylists = this.firebase.child('playlists')
+                            .orderByChild("author_id")
+                            .equalTo(parseInt(this.props.author_id));
+    }*/
+  
   },
 
   render: function () {

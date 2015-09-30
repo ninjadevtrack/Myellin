@@ -19,7 +19,9 @@ module.exports = (
      * If this route is matched, the outcomes will be half of the width
      * and sub-outcomes the second half.
      */
-    <Route name='Outcomes' path='mainpage/:outcome_id' handler={MainPage} />
+    <Route name='Playlists' path='mainpage/:outcome_id' handler={MainPage} />
+
+    <Route name='PlaylistsSlug' path=':outcome_slug' handler={MainPage} />
 
     <Route name='Options' path='mainpage/:outcome_id/:suboutcome_id' handler={MainPage} />
 

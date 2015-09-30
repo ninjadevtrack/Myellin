@@ -41,6 +41,21 @@ var OutcomesMultiple = React.createClass({
     return false;
   },
 
+  // Very basic function for creating a url slug from outcome title
+  // TODO: remove special characters that don't belong in urls
+  createUrlSlug: function(title){
+
+    var slug_char_limit = 80;
+
+    return title
+        .toLowerCase()
+        .substring(0, slug_char_limit) // Shorten to our character limit
+        .trim() // Remove leading and trailing spaces
+        .replace(/ /g,'-') // Replace spaces with hyphens
+        .replace(/[-]+/g, '-') // Turn multiple sequential hyphens into one
+        .replace(/[^\w-]+/g,''); // Remove everything but standard characters
+  },
+
   addOutcome: function(){
 
     var title = React.findDOMNode(this.refs.createOutcome).value.trim();
@@ -48,7 +63,12 @@ var OutcomesMultiple = React.createClass({
     if (!title)
       return false;
 
-    var newRef = this.refOutcomes.push({ title: title });
+    var slug = this.createUrlSlug(title);
+
+    var newRef = this.refOutcomes.push({ 
+      title: title,
+      slug: slug
+    });
     var outcomeId = newRef.key();
 
     // Clear input

@@ -12,6 +12,7 @@ var DocumentTitle = require('react-document-title');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
+var OutcomePlaylists = require('../components/OutcomePlaylists');
 var PlaylistsMultiple = require('../components/PlaylistsMultiple');
 var OptionsMultiple = require('../components/OptionsMultiple');
 var ColumnManager = require('../components/ColumnManager');
@@ -71,8 +72,16 @@ var MainPage = React.createClass({
 
   render: function () {
 
+    console.log('rakt', this.getParams());
+
     var outcome_id = this.getParams().outcome_id;
+    var outcome_slug = this.getParams().outcome_slug;
     var suboutcome_id = this.getParams().suboutcome_id;
+
+    /*
+    if (outcome_slug){
+      alert('slug: ' + outcome_slug);
+    }*/
 
     return (
       <DocumentTitle title="MainPage">
@@ -101,16 +110,22 @@ var MainPage = React.createClass({
 
               </Column>
            
-              { outcome_id  &&
+              { (outcome_id || outcome_slug)  &&
                 <Column>
 
                   <CreatePlaylistButton outcome_id={outcome_id} />
-               
-                  <PlaylistsMultiple 
-                    outcome_id={outcome_id} 
-                    selected_suboutcome_id={suboutcome_id}
-                    onEditPlaylist={this.editPlaylist}
-                    key={outcome_id} />
+                
+                  <OutcomePlaylists 
+                    outcome_id={outcome_id}
+                    outcome_slug={outcome_slug}
+                    key={outcome_id + "_" + outcome_slug}>
+
+                    {/* Parent OutcomePlaylists component will fetch and then pass in outcome_id prop */}
+                    <PlaylistsMultiple 
+                      selected_suboutcome_id={suboutcome_id}
+                      onEditPlaylist={this.editPlaylist} />
+                   
+                  </OutcomePlaylists>
 
                 </Column>
               }
