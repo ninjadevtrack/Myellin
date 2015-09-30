@@ -113,12 +113,12 @@ var MainPage = React.createClass({
               { (outcome_id || outcome_slug)  &&
                 <Column>
 
-                  <CreatePlaylistButton outcome_id={outcome_id} />
-                
                   <OutcomePlaylists 
                     outcome_id={outcome_id}
                     outcome_slug={outcome_slug}
                     key={outcome_id + "_" + outcome_slug}>
+
+                    <CreatePlaylistButton />
 
                     {/* Parent OutcomePlaylists component will fetch and then pass in outcome_id prop */}
                     <PlaylistsMultiple 

@@ -93,7 +93,7 @@ var PlaylistsMultiple = React.createClass({
 
     playlists = playlists.map(function (relationData) {
 
-      relationData.parent_outcome_id = parseInt(this.props.outcome_id);
+      relationData.parent_outcome_id = this.props.outcome_id;
 
       return (
         <Playlist 

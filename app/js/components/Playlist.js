@@ -93,6 +93,10 @@ var Playlist = React.createClass({
 
   delete: function(){
 
+    if (!this.props.relationData.playlist_id){
+      alert('Cannot delete. Missing relationData.playlist_id value (value was not set for older test data). Delete manually from Firebase forge.');
+    }
+
     var refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.relationData.parent_outcome_id + '/playlist_' + this.props.relationData.playlist_id);
    
     // Remove suboutcome from playlist
@@ -100,7 +104,6 @@ var Playlist = React.createClass({
 
     // Delete the suboutcome
     this.refPlaylist.remove();
-
   },
 
   addSubOutcomeSubmit: function(e){
