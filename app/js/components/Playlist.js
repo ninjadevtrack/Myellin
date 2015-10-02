@@ -104,6 +104,14 @@ var Playlist = React.createClass({
 
     // Delete the suboutcome
     this.refPlaylist.remove();
+
+    // De-increment the outcome's playlist_count
+    this.firebase.child('outcomes/' + this.props.relationData.parent_outcome_id + '/playlist_count').transaction(function(currentValue) {
+      if (!currentValue)
+        return 0;
+
+      return currentValue - 1;
+    });
   },
 
   addSubOutcomeSubmit: function(e){

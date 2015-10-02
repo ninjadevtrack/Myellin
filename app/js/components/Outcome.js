@@ -17,6 +17,12 @@ var Outcome = React.createClass({
   // No need for this component to ever update currently
   // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
   shouldComponentUpdate: function(nextProps, nextState){
+
+    // Update component if outcome title or playlist_count changes
+    if (nextProps.data.title != this.props.data.title || 
+          nextProps.data.playlist_count != this.props.data.playlist_count) 
+      return true;
+
     return false;
   },
 

@@ -59,12 +59,28 @@ var CreatePlaylisteButton = React.createClass({
       collapse: false
     };
 
+      // Populate object ..
+    // Add playlist to user's "editing_playlist" object so that edit playlist modal is displayed
+    playlistDataForFirebase['users/' + this.state.user.id + '/editing_playlist'] = {
+      parent_outcome_id: this.props.outcome_id,
+      playlist_id: playlistId,
+      collapse: false
+    };
+
     // Update both firebase paths at same time
     // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
     this.firebase.update(playlistDataForFirebase, function(error) {
       if (error) {
         console.log("Error creating playlist:", error);
       }
+    });
+
+    
+    this.firebase.child('outcomes/' + this.props.outcome_id + '/playlist_count').transaction(function(currentValue) {
+      if (!currentValue)
+        currentValue = 0;
+
+      return currentValue + 1;
     });
 
     /*

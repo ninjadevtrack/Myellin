@@ -29,16 +29,22 @@ var OutcomesMultiple = React.createClass({
 
   shouldComponentUpdate: function(nextProps, nextState){
 
+    return true;
+
     //console.log('Firebase array length ...');
     //console.log('this.state:' + this.state.outcomes.length);
     //console.log('nextState:' + nextState.outcomes.length);
 
+    // Always update for now, since we want to update if any outcomes data changes
+    // TODO: Use immutable-js to do a deep check on data changes (if we hit performance problems)
+    /*
     // Only update if number of outcomes changes (outcome added or deleted)
     if ( this.state.outcomes && this.state.outcomes.length !== nextState.outcomes.length ){
       return true;
     }
 
     return false;
+    */
   },
 
   // Very basic function for creating a url slug from outcome title
