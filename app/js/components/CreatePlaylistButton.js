@@ -75,7 +75,7 @@ var CreatePlaylisteButton = React.createClass({
       }
     });
 
-    
+    // Increment the outcome's playlist_count
     this.firebase.child('outcomes/' + this.props.outcome_id + '/playlist_count').transaction(function(currentValue) {
       if (!currentValue)
         currentValue = 0;
