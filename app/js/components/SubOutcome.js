@@ -139,7 +139,9 @@ var SubOutcome = React.createClass({
             </div>
           }
 
- <div className="authorcolor"><AuthorName id={this.state.data.author_id } /></div>
+          {/*
+          <div className="authorcolor"><AuthorName id={this.state.data.author_id } /></div>
+          */}
 
           { this.state.expanded && 
             <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
@@ -169,10 +171,18 @@ var SubOutcome = React.createClass({
   },
 
   _handleOptionsClick: function () {
-    this.context.router.transitionTo('Options', {
-      outcome_id: this.getParams().outcome_id,
-      suboutcome_id: this.props.relationData.suboutcome_id
-    });
+
+    if (this.getParams().outcome_slug){
+      this.context.router.transitionTo('OptionsSlug', {
+        outcome_slug: this.getParams().outcome_slug,
+        suboutcome_id: this.props.relationData.suboutcome_id
+      });
+    }else{
+      this.context.router.transitionTo('Options', {
+        outcome_id: this.getParams().outcome_id,
+        suboutcome_id: this.props.relationData.suboutcome_id
+      });
+    }
   }
  
 

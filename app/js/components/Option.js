@@ -146,16 +146,16 @@ var Option = React.createClass({
     var optionContent = (
       <div>
         {description}
-
-        {/* Remove url field in the future and only parse out of description */}
-        {this.state.data.url && 
-          <UrlEmbed url={this.state.data.url} />
-        }
       </div>
     );
 
     if (this.props.contentOnly)
-      return optionContent;
+      return (
+        <div>
+          <AuthorName id={this.state.data.author_id} />
+          {optionContent}
+        </div>
+      );
 
     return (
       <div className="option-container">
