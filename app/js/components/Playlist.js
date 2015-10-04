@@ -127,7 +127,8 @@ var Playlist = React.createClass({
     if (!title)
       return false;
 
-    this.refs.SubOutcomesMultiple.refs.child.createThenAdd(title);
+    this.state.SubOutcomesMultipleRef.createThenAdd(title);
+    //this.refs.SubOutcomesMultiple.refs.child.createThenAdd(title);
 
     // Clear input
     React.findDOMNode(this.refs.createSuboutcome).value = '';
@@ -141,9 +142,13 @@ var Playlist = React.createClass({
     // Create new suboutcome if text in input
     this.addSubOutcome();
 
-    // Call SubOutcomesMultiple component's saveOrder method
-    // We must use SubOutcomesMultiple.refs.child to access because it's wrapped by React DnD
-    this.refs.SubOutcomesMultiple.refs.child.save();
+    //console.log(this.refs.SubOutcomesMultiple.state);
+
+    // Call SubOutcomesMultiple component's save method
+    // See storeReferenceToSubOutcomesMultiple() above for explanation
+    this.state.SubOutcomesMultipleRef.save();
+    //this.refs.SubOutcomesMultiple.refs.save();
+    //this.refs.SubOutcomesMultiple.refs.child.save();
 
     this.toggleEdit();
 
@@ -177,6 +182,14 @@ var Playlist = React.createClass({
       return this.state.data.description;
   },
 
+  // Callback we pass to child SubOutcomesMultiple component ...
+  // ... so that it can pass back a reference to itself
+  // We have to do this because ReactDnd is breaking our ability to access it via this.refs
+  // TODO: Remove this terrible hack as soon we can
+  storeReferenceToSubOutcomesMultiple: function(reference){
+    this.setState({ SubOutcomesMultipleRef : reference });
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -189,42 +202,43 @@ var Playlist = React.createClass({
     return (
       <div className={classes}>
         <div>
-        
-        { !this.state.editable &&
-          <div className="upvotediv">
-<div className="count">{this.props.relationData.upvote_count}</div>
-          <div className="upvote">
-        
-           
-            <UpvoteButton 
-              label={<Glyphicon glyph='ok-circle'/>}
-              this_type="playlist"
-              this_id={this.state.data['.key']} 
-              parent_type="outcome"
-              parent_id={this.props.relationData.parent_outcome_id}
-              key={this.getUpvoteButtonKey()} />
-          
-          </div>
-        </div>
-        }
-          </div>
-          <AuthorName id={this.getAuthorId()} />
 
+          {/* {this.state.data['.key']} */}
+        
           { !this.state.editable &&
-            <p>{this.getDescription()}</p>
+            <div className="upvotediv">
+              <div className="count">{this.props.relationData.upvote_count}</div>
+              <div className="upvote">
+          
+                <UpvoteButton 
+                  label={<Glyphicon glyph='ok-circle'/>}
+                  this_type="playlist"
+                  this_id={this.state.data['.key']} 
+                  parent_type="outcome"
+                  parent_id={this.props.relationData.parent_outcome_id}
+                  key={this.getUpvoteButtonKey()} />
+              
+              </div>
+            </div>
           }
+        </div>
 
-          { this.state.editable &&
-            <textarea ref="description" rows="7" className='inputdescription' placeholder="Edit playbook overview." style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}}>
-              {this.getDescription()}
-            </textarea>
-          }
+        <AuthorName id={this.getAuthorId()} />
+
+        { !this.state.editable &&
+          <p>{this.getDescription()}</p>
+        }
+
+        { this.state.editable &&
+          <textarea ref="description" rows="7" className='inputdescription' placeholder="Edit playbook overview." style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}}>
+            {this.getDescription()}
+          </textarea>
+        }
        
-
-
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
+          referenceCallback={this.storeReferenceToSubOutcomesMultiple}
           ref="SubOutcomesMultiple"
           key={this.props.relationData.playlist_id} />
 
@@ -241,7 +255,7 @@ var Playlist = React.createClass({
           </div>
         }
         
-{ !this.state.editable &&
+        { !this.state.editable &&
           <div>
             <div style={{ float: 'right'}}>
               <DropdownButton style={{margin: '0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='medium' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
@@ -253,8 +267,8 @@ var Playlist = React.createClass({
 
             <div className="playlist-bottom-border"></div>
 
-            </div>
-          }
+          </div>
+        }
   
 
       </div>

@@ -21,7 +21,7 @@ var UpvoteButton = React.createClass({
       parent_type: 'outcome', // outcome or suboutcome
       parent_id: null,
       size: 'medium',
-      label: [<Glyphicon glyph='ok-circle'/>]
+      //label: [<Glyphicon glyph='ok-circle'/>]
     };
   },
 
@@ -155,15 +155,15 @@ var UpvoteButton = React.createClass({
     // AND the value equals this_id, then vote button should show success state ...
     if (this.state.upvote && this.state.upvote[ this.props.this_type + '_id' ] === this.props.this_id){
       var bsStyle = 'success';
-      this.props.label =[<Glyphicon glyph='ok-sign'/>];
+      var label =[<Glyphicon glyph='ok-sign'/>];
     }else{
       var bsStyle = 'link';
-      this.props.label =[<Glyphicon glyph='ok-circle'/>];
+      var label =[<Glyphicon glyph='ok-circle'/>];
     }
 
     return (
       <Button bsSize={this.props.size} bsStyle={bsStyle} onClick={this.handleUpvote}>
-        {this.props.label}
+        {label}
       </Button>
     );
   }

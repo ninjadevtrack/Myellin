@@ -12,6 +12,10 @@ var SearchPage = require('./pages/SearchPage');
 var MainPage = require('./pages/MainPage');
 var Footer = require('./components/Footer');
 
+var ReactDnD = require('react-dnd');
+var HTML5Backend = require('react-dnd/modules/backends/HTML5');
+
+
 
 var App = React.createClass({
 
@@ -55,4 +59,6 @@ var App = React.createClass({
 
 });
 
-module.exports = App;
+module.exports = ReactDnD.DragDropContext(HTML5Backend)(App);
+
+//module.exports = App;

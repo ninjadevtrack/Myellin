@@ -12,6 +12,8 @@ var DragSource = require('react-dnd').DragSource;
 var AuthorName = require('./AuthorName');
 var Button = require('react-bootstrap').Button;
 
+var ComponentTypes = require('./ComponentTypes');
+
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
@@ -20,21 +22,6 @@ var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var ReactDnD = require('react-dnd');
 
-var DndSource = {
-  beginDrag: function(props) {
-    return props.relationData;
-  }
-};
-
-var DndTarget = {
-  hover: function(props, monitor) {
-    var draggedId = monitor.getItem().suboutcome_id;
-
-    if (monitor.getItem().suboutcome_id !== props.relationData.suboutcome_id) {
-      props.onMove(monitor.getItem(), props.relationData);
-    }
-  }
-};
 
 var SubOutcome = React.createClass({
 
@@ -61,8 +48,11 @@ var SubOutcome = React.createClass({
       // It's a bit rediculous to write to the DB to toggle but this is the easiest way currently ...
       // ... since we don't yet have a good way for these components to talk to eachother
       if (this.state.user.editing_playlist){
-        this.refUser = this.firebase.child('users/' + this.state.user.id);
-        this.refUser.child('editing_playlist').update({ collapse: !nextProps.isDragging });
+        setTimeout(function(){
+          this.refUser = this.firebase.child('users/' + this.state.user.id);
+          //this.refUser.child('editing_playlist').update({ collapse: !nextProps.isDragging });
+          this.refUser.child('editing_playlist').update({ collapse: false });
+        }.bind(this, nextProps), 300);
       }
     }
   },
@@ -82,6 +72,27 @@ var SubOutcome = React.createClass({
     this.props.onDelete(this.props.relationData);
   },
 
+  _toggleExpand: function(e){
+    e.preventDefault();
+
+    this.setState({expanded: !this.state.expanded});
+  },
+
+  _handleOptionsClick: function () {
+
+    if (this.getParams().outcome_slug){
+      this.context.router.transitionTo('OptionsSlug', {
+        outcome_slug: this.getParams().outcome_slug,
+        suboutcome_id: this.props.relationData.suboutcome_id
+      });
+    }else{
+      this.context.router.transitionTo('Options', {
+        outcome_id: this.getParams().outcome_id,
+        suboutcome_id: this.props.relationData.suboutcome_id
+      });
+    }
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -90,6 +101,7 @@ var SubOutcome = React.createClass({
     var PanelHeader = (
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
+          {/* {this.props.relationData.order} - */}
           {this.state.data.title}
           {this.props.editable &&
             <span onClick={this.onDelete} style={{ color: '#CCC', right: '-5%', position: 'absolute',}}><Glyphicon glyph='remove'/></span>
@@ -139,10 +151,6 @@ var SubOutcome = React.createClass({
             </div>
           }
 
-          {/*
-          <div className="authorcolor"><AuthorName id={this.state.data.author_id } /></div>
-          */}
-
           { this.state.expanded && 
             <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
@@ -152,43 +160,50 @@ var SubOutcome = React.createClass({
               </div>
             </div>
           }
-<Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">options</Button>
+          <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">options</Button>
         </Panel>
       </div>
 
     ));
 
-  },
-
-  _toggleExpand: function(e){
-    e.preventDefault();
-
-    this.setState({expanded: !this.state.expanded});
-  },
-
-  loadOptions: function(){
-    alert('load options');
-  },
-
-  _handleOptionsClick: function () {
-
-    if (this.getParams().outcome_slug){
-      this.context.router.transitionTo('OptionsSlug', {
-        outcome_slug: this.getParams().outcome_slug,
-        suboutcome_id: this.props.relationData.suboutcome_id
-      });
-    }else{
-      this.context.router.transitionTo('Options', {
-        outcome_id: this.getParams().outcome_id,
-        suboutcome_id: this.props.relationData.suboutcome_id
-      });
-    }
   }
- 
 
 });
 
-var DragSourceDecorator = ReactDnD.DragSource('suboutcome', DndSource,
+var DndSource = {
+
+  // Return data that should be made accessible to other components when this component is hovering
+  // The other component would access within DndTarget -> hover() -> monitor.getItem()
+  beginDrag: function(props) {
+    return props.relationData;
+  },
+
+  // NOT USED YET
+  // When this component is dropped
+  endDrag: function(props, monitor) {
+    // Data returned by beginDrag() above
+    var droppedItem = monitor.getItem();
+    // Data returned by Component this was dropped on
+    var dropResult = monitor.getDropResult();
+
+    if (dropResult) {
+        console.log("You dropped suboutcome_id " + droppedItem.suboutcome_id + 
+                      " into playlist_id "+ dropResult.playlist_id + "!");
+    }
+  }
+};
+
+var DndTarget = { 
+
+  // When a different SubOutcome is dragged over this SubOutcome
+  hover: function(props, monitor, component) {
+    var draggedItem = monitor.getItem();
+    props.onMove(draggedItem, props.relationData);
+  }
+
+};
+
+var DragSourceDecorator = ReactDnD.DragSource(ComponentTypes.SUBOUTCOME, DndSource,
   function(connect, monitor) {
     return {
       connectDragSource: connect.dragSource(),
@@ -197,18 +212,14 @@ var DragSourceDecorator = ReactDnD.DragSource('suboutcome', DndSource,
   }
 );
 
-var DropTargetDecorator = ReactDnD.DropTarget('suboutcome', DndTarget,
+var DropTargetDecorator = ReactDnD.DropTarget(ComponentTypes.SUBOUTCOME, DndTarget,
   function(connect) {
     return {
-      connectDropTarget: connect.dropTarget(),
-      isHeld: true
+      connectDropTarget: connect.dropTarget()
     };
   }
 );
 
-
-//module.exports = SubOutcome;
-
-// Export the wrapped component:
+// Export the wrapped component
 module.exports = DropTargetDecorator(DragSourceDecorator(SubOutcome));
 

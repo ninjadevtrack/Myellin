@@ -4,6 +4,7 @@ var React = require('react/addons');
 var Router = require('react-router');
 var PanelGroup = require('react-bootstrap').PanelGroup;
 var SubOutcome = require('./SubOutcome');
+var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -12,9 +13,11 @@ var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 var ReactDnD = require('react-dnd');
 var HTML5Backend = require('react-dnd/modules/backends/HTML5');
 
+var ComponentTypes = require('./ComponentTypes');
+
 var SubOutcomesMultiple = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   getInitialState: function(){
     return {
@@ -24,10 +27,21 @@ var SubOutcomesMultiple = React.createClass({
   },
 
   componentWillMount: function() {
+
     this.bindFirebaseRefs();
+
+    this._passBackReferenceToSelf();
+  },
+
+  _passBackReferenceToSelf: function(){
+
+    this.props.referenceCallback(this);
   },
 
   componentDidUpdate: function(prevProps, prevState) {
+
+    console.log('this.props.isOver: ' + this.props.isOver);
+
     if (this.props.playlist_id !== prevProps.playlist_id)
       this.bindFirebaseRefs(true);
   },
@@ -47,7 +61,32 @@ var SubOutcomesMultiple = React.createClass({
   },
 
   handleSelect: function(activeKey) {
+
     this.setState({ activeKey });
+  },
+
+  // Triggered when a SubOutcome is dragged over this (SubOutcomesMultiple)
+  handleDragOver: function(draggedSubOutcome){
+
+    // Do nothing if dragging SubOutcome over its own playlist
+    // We don't need to add it to the playlist 
+    if (this.props.playlist_id === draggedSubOutcome.parent_playlist_id)
+      return false;
+
+    // Do nothing if not in editable mode
+    if (!this.props.editable)
+      return false;
+
+    // Change order so it's appended to end of list
+    draggedSubOutcome.order = this.state.data.length;
+
+    // Add draggedSubOutcome to end of this.state.data
+    // The second it's added the handleMove() (see below) will take over
+    var suboutcomes = this.state.data.slice(0);
+    suboutcomes.push(draggedSubOutcome);
+    this.setState({ data: suboutcomes });
+
+    console.log('handleDragOver');
   },
 
   // When dragging a suboutcome this will be passed two objects
@@ -56,8 +95,11 @@ var SubOutcomesMultiple = React.createClass({
   // We swap their order values and then re-setstate
   handleMove: function (one, two) {
 
-    // Don't allow sorting if no editable prop
-    // They will still be able to drag and drop into another playlist that is editable 
+    // Ignore if dragging over self (dragged item is over original position)
+    if (one.suboutcome_id === two.suboutcome_id)
+      return false
+
+    // Do nothing if not editable
     if (!this.props.editable)
       return false;
 
@@ -68,26 +110,17 @@ var SubOutcomesMultiple = React.createClass({
     var suboutcome_1 = suboutcomes.filter(function(c){return c.suboutcome_id === one.suboutcome_id})[0];
     var suboutcome_2 = suboutcomes.filter(function(c){return c.suboutcome_id === two.suboutcome_id})[0];
 
-    // If suboutcome_1 not found that means we are dragging it from a different list
-    // Add it to the suboutcomes array
-    if (!suboutcome_1){
-      suboutcome_1 = one;
-      // Make order number 1 higher than last item
-      suboutcome_1.order = suboutcomes[suboutcomes.length-1].order + 1;
-      suboutcomes.splice(0, 0, one);
-
-      // Add suboutcome to this playlist
-      this.add(suboutcome_1.suboutcome_id, suboutcome_1.order);
-    }
+    // handleDragOver() (see above) should have added this suboutcome to data object
+    // So this shouldnt happen ...
+    if (!suboutcome_1)
+      return false;
     
     // Swap order
     var suboutcome_1_order = suboutcome_1.order;
     suboutcome_1.order = suboutcome_2.order;
     suboutcome_2.order = suboutcome_1_order;
 
-    this.setState({
-      data: suboutcomes
-    });
+    this.setState({ data: suboutcomes });
   },
 
   // Add a suboutcome to this playlist
@@ -125,9 +158,12 @@ var SubOutcomesMultiple = React.createClass({
     refPlaylistToSuboutcome.remove();
 
     // Delete the suboutcome
-    refSuboutcome.remove();
+    //refSuboutcome.remove();
   },
 
+  // This iterates through suboutcomes (this.state.data) and saves their order to Firebase
+  // This will also add any suboutcomes that aren't in the playlist (firebase) yet ... 
+  // ... such as ones dragged in from another playlist
   save: function(){
 
     var suboutcomes = this.state.data.slice(0);
@@ -137,12 +173,16 @@ var SubOutcomesMultiple = React.createClass({
       var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id);
 
       refPlaylistToSuboutcome.update({
-        order: i
+        order: i,
+        suboutcome_id: suboutcomes[i].suboutcome_id // In case it's not in the playlist (firebase) yet
       });
     }
   },
 
   render: function () {
+
+    // We can read whether something is being dragged over if we want to change style
+    //var over = (this.props.isOver ? 'OVER' : 'NOT OVER');
 
     // Re-sort by order
     var subOutcomes = this.state.data.sort(function(a, b){
@@ -156,7 +196,7 @@ var SubOutcomesMultiple = React.createClass({
 
       var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 
-      relationData.parent_playlist_id = parseInt(this.props.playlist_id);
+      relationData.parent_playlist_id = this.props.playlist_id;
 
       return (
         <SubOutcome 
@@ -167,18 +207,73 @@ var SubOutcomesMultiple = React.createClass({
           onMove={this.handleMove}
           onDelete={this.delete}
           key={relationData.suboutcome_id} />
+   
       );
     }.bind(this));
 
-    return (
-      <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
-        {subOutcomes}
-      </PanelGroup>
+    // Apply special style when the a SubOutcome is being dragged ...
+    // ... and it can be dropped on this SubOutcomeMultuple component
+    // See first parameter of DropTargetDecorator below which determines props.canDrop
+    var style = {};
+    if (this.props.canDrop){
+      style = {
+        border: '3px solid red',
+        minHeight: '4em'
+      }
+    }
+
+    return this.props.connectDropTarget(
+      <div style={style}>
+        <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
+          {subOutcomes}
+        </PanelGroup>
+      </div>
     );
   }
 
 
 });
 
-//module.exports = SubOutcomesMultiple;
-module.exports = ReactDnD.DragDropContext(HTML5Backend)(SubOutcomesMultiple);
+var DndTarget = {
+
+  // Return data that should be made accessible to other components that are dropped on this component
+  // The other component would access within DndSource -> endDrag() -> monitor.getDropResult()
+  drop: function(props) {
+    return { playlist_id: props.playlist_id };
+  },
+
+  // Handle when a SubOutcome is dragged over this SubOutcomesMultiple
+  hover: function(props, monitor, component) {
+
+    var draggedItem = monitor.getItem();
+
+    //console.log(props.playlist_id + ' | ' + draggedItem.parent_playlist_id);
+    component.handleDragOver(draggedItem);
+  }
+
+};
+
+var DropTargetDecorator = ReactDnD.DropTarget(
+  // Return array of types this Drop Target accepts
+  function(props){
+
+    // If not editable return empty array
+    if (!props.editable)
+      return [];
+
+    // Allow SUBOUTCOME type
+    return [ComponentTypes.SUBOUTCOME]; 
+  },
+  DndTarget,
+  function(connect, monitor) {
+    return {
+      connectDropTarget: connect.dropTarget(),
+      isOver: monitor.isOver(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
+      canDrop: monitor.canDrop()
+    };
+  }
+);
+
+
+module.exports = DropTargetDecorator(SubOutcomesMultiple);

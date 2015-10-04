@@ -149,13 +149,14 @@ var Option = React.createClass({
       </div>
     );
 
-    if (this.props.contentOnly)
+    if (this.props.contentOnly){
       return (
         <div>
           <AuthorName id={this.state.data.author_id} />
           {optionContent}
         </div>
       );
+    }
 
     return (
       <div className="option-container">
