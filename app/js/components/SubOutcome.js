@@ -79,18 +79,11 @@ var SubOutcome = React.createClass({
   },
 
   _handleOptionsClick: function () {
-
-    if (this.getParams().outcome_slug){
-      this.context.router.transitionTo('OptionsSlug', {
-        outcome_slug: this.getParams().outcome_slug,
-        suboutcome_id: this.props.relationData.suboutcome_id
-      });
-    }else{
-      this.context.router.transitionTo('Options', {
-        outcome_id: this.getParams().outcome_id,
-        suboutcome_id: this.props.relationData.suboutcome_id
-      });
-    }
+    this.context.router.transitionTo('Options', {
+      outcome_slug: this.getParams().outcome_slug,
+      playlist_id: this.props.relationData.parent_playlist_id,
+      suboutcome_id: this.props.relationData.suboutcome_id
+    });
   },
 
   render: function () {
@@ -116,7 +109,7 @@ var SubOutcome = React.createClass({
         <div>
           <UpvoteButton size="small" label={<Glyphicon glyph='ok-circle'/>} className="smallvoteicon"
             this_type="option"
-            this_id={this.state.data.chosen_option}
+            this_id={this.props.relationData.chosen_option}
             parent_type="suboutcome"
             parent_id={this.state.data['.key']} />
         </div>
@@ -144,7 +137,7 @@ var SubOutcome = React.createClass({
           key={this.props.key} 
           accordion>
 
-          { this.state.expanded && this.state.data.chosen_option &&
+          { this.state.expanded && this.props.relationData.chosen_option &&
 
             <div className="optionsicondiv">
               {VoteButton}
@@ -154,8 +147,8 @@ var SubOutcome = React.createClass({
           { this.state.expanded && 
             <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
-                { this.state.data.chosen_option && 
-                  <Option contentOnly={true} id={this.state.data.chosen_option} />
+                { this.props.relationData.chosen_option && 
+                  <Option contentOnly={true} id={this.props.relationData.chosen_option} />
                 }
               </div>
             </div>

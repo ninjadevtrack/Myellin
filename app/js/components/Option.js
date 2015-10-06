@@ -4,6 +4,7 @@ var React = require('react/addons');
 
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
+var Router = require('react-router');
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
@@ -19,7 +20,7 @@ var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />)
 
 var Option = React.createClass({
 
-  mixins: [ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin],
 
   getInitialState: function(){
     return {
@@ -109,12 +110,16 @@ var Option = React.createClass({
 
   chooseOption: function(){
 
-    //console.log('option relations ...');
-    //console.log(this.props.relationData);
-
-    this.firebase.child('suboutcomes' +
-                      '/' + this.props.relationData.parent_suboutcome_id + 
-                      '/chosen_option').set(this.state.data['.key']);
+    // Make this option the chosen_option for the parent suboutcome
+    // We store this in the relations table so that a different playlist/suboutcome pair ...
+    // ... can have a different chosen option
+    // Note: we get the playlist_id from the url, since we don't pass this down via props ...
+    // ... this is a bit hacky. Something to improve once we have a better system for accessing app state.
+    this.firebase.child('relations' +
+                          '/playlist_to_suboutcome' +
+                          '/playlist_' + this.getParams().playlist_id + 
+                          '/suboutcome_' + this.props.relationData.parent_suboutcome_id + 
+                          '/chosen_option').set(this.state.data['.key']);
   },
 
   save: function(){

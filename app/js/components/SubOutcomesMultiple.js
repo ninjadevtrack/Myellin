@@ -130,6 +130,7 @@ var SubOutcomesMultiple = React.createClass({
       order = this.state.data.length;
 
     this.refSubOutcomes.child('suboutcome_' + id).set({
+      parent_playlist_id: this.props.playlist_id,
       suboutcome_id: id,
       order: order
     });
@@ -172,8 +173,9 @@ var SubOutcomesMultiple = React.createClass({
       var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id);
 
       refPlaylistToSuboutcome.update({
-        order: i,
-        suboutcome_id: suboutcomes[i].suboutcome_id // In case it's not in the playlist (firebase) yet
+        parent_playlist_id: this.props.playlist_id,
+        suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
+        order: i
       });
     }
   },
@@ -195,6 +197,8 @@ var SubOutcomesMultiple = React.createClass({
 
       var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 
+      // NOT NEEDED once we clear out Firebase data
+      // We now include "parent_playlist_id" value when writing to Firebase
       relationData.parent_playlist_id = this.props.playlist_id;
 
       return (

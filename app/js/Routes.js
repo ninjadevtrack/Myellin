@@ -19,15 +19,9 @@ module.exports = (
      * If this route is matched, the outcomes will be half of the width
      * and sub-outcomes the second half.
      */
-    <Route name='Playlists' path='mainpage/:outcome_id' handler={MainPage} />
+    <Route name='Playlists' path=':outcome_slug' handler={MainPage} />
 
-    <Route name='PlaylistsSlug' path=':outcome_slug' handler={MainPage} />
-
-    <Route name='Options' path='mainpage/:outcome_id/:suboutcome_id' handler={MainPage} />
-
-    <Route name='OptionsSlug' path=':outcome_slug/:suboutcome_id' handler={MainPage} />
-
-    <Route name='EditPlaylist' path='mainpage/:outcome_id/:suboutcome_id/:edit_playlist_id' handler={MainPage} />
+    <Route name='Options' path=':outcome_slug/:playlist_id/:suboutcome_id' handler={MainPage} />
 
     /*
      * If none of the above routes matched, then load the MainPage component.
