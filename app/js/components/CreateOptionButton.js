@@ -41,8 +41,8 @@ var CreateOptionButton = React.createClass({
     var optionId = newOptionRef.key();
 
     this.refSuboutcomeToOption.child('option_' + optionId).set({
-      option_id: optionId,
       parent_suboutcome_id: this.props.suboutcome_id,
+      option_id: optionId,
       upvote_count: 0
     });
 

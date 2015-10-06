@@ -72,16 +72,9 @@ var MainPage = React.createClass({
 
   render: function () {
 
-    console.log('rakt', this.getParams());
-
     var outcome_id = this.getParams().outcome_id;
     var outcome_slug = this.getParams().outcome_slug;
     var suboutcome_id = this.getParams().suboutcome_id;
-
-    /*
-    if (outcome_slug){
-      alert('slug: ' + outcome_slug);
-    }*/
 
     return (
       <DocumentTitle title="MainPage">

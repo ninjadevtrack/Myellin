@@ -87,6 +87,7 @@ var OutcomesMultiple = React.createClass({
     var outcomeId = newRef.key();
 
     this.refOutcomes.child('outcome_' + outcomeId).update({
+      parent_section: 'home',
       outcome_id: outcomeId,
       order: order
     });
@@ -157,6 +158,8 @@ var OutcomesMultiple = React.createClass({
 
     var elements = outcomes.map(function (relationData) {
 
+      // NOT NEEDED once we clear out Firebase data
+      // We now include "parent_section" value when writing to Firebase
       relationData.parent_section = 'home';
 
       return (

@@ -72,11 +72,6 @@ var OptionsMultiple = React.createClass({
     });
 
     options = options.map(function (relationData) {
-
-      // We now include parent_suboutcome_id in object
-      // If we decide not too, uncomment this
-      //relationData.parent_suboutcome_id = parseInt(this.props.suboutcome_id);
-
       return (
         <div>
           <Option relationData={relationData} id={relationData.option_id} />
