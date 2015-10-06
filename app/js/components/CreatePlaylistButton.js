@@ -95,6 +95,9 @@ var CreatePlaylisteButton = React.createClass({
 
   render: function () {
 
+    if (!this.state.user)
+      return false;
+
     return (
       <div className="createplaylistbutton">
         <Button onClick={this.createPlaylist} style={{fontSize: '6em', margin: '0', padding: '0'}}  bsStyle='link'>

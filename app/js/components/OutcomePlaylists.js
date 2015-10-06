@@ -139,6 +139,11 @@ var OutcomePlaylists = React.createClass({
     // Pass outcome_id prop to child PlaylistMultiple component
     if (outcome_id){
       var children = React.Children.map(this.props.children, function (child) {
+
+        // Not needed currently
+        //if (!child) // Skip null children (such as {if xxxx && } wrapper)
+          //return false;
+
         return React.addons.cloneWithProps(child, {
           outcome_id: outcome_id
         });

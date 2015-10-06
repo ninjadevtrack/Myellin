@@ -58,6 +58,10 @@ var CreateOptionButton = React.createClass({
   },
 
   render: function () {
+    
+    if (!this.state.user)
+      return false;
+
     return (
       <div className="createoptionbutton">
         <Button onClick={this.createOption} style={{fontSize: '4em', margin: '0', padding: '0'}}  bsStyle='link'>
