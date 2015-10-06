@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "outcomes": {
+      ".indexOn": ["slug"],
+      ".read": true,
+      ".write": true
+    },
+    "relations": {
+      ".read": true,
+      ".write": true
+    },
+    "playlists": {
+      ".read": true,
+      ".write": true
+    },
+    "options": {
+      ".read": true,
+      ".write": true
+    },
+    "suboutcomes": {
+      ".read": true,
+      ".write": true
+    },
+    "users": {
+      ".read": true,
+      ".write": true
+    },
+    "upvotes": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
