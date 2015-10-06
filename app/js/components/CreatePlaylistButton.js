@@ -20,7 +20,7 @@ var CreatePlaylisteButton = React.createClass({
     return {};
   },
 
-  createPlaylist: function(e){
+  create: function(e){
     e.preventDefault();
 
     if (!this.state.user){
@@ -30,6 +30,30 @@ var CreatePlaylisteButton = React.createClass({
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     this.firebase = new Firebase(firebaseRoot);
+    this.userOutcomePlaylistRef = this.firebase.child('relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.outcome_id);
+
+    this.userOutcomePlaylistRef.once('value', function(snap) {
+      var playlist_id = snap.val();
+
+      if (playlist_id){ // We already have a playlist in this outcome
+        // Start editing it
+        this.firebase.child('users/' + this.state.user.id).update({
+          editing_playlist: {
+            parent_outcome_id: this.props.outcome_id,
+            playlist_id: playlist_id,
+            collapse: false
+          }
+        });
+      }else{
+        this.createPlaylist();
+      }
+
+    }.bind(this));
+
+  },
+
+  createPlaylist: function(){
+
     this.refPlaylists = this.firebase.child('playlists');
 
     // Create playlist
@@ -50,6 +74,10 @@ var CreatePlaylisteButton = React.createClass({
       playlist_id: playlistId,
       upvote_count: 0
     };
+
+    // So we can quickly lookup a playlist by user/outcome
+    // We need to do this to see if a given user has already created a playlist for an outcome
+    playlistDataForFirebase['relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.outcome_id] = playlistId;
 
     // Populate object ..
     // Add playlist to user's "editing_playlist" object so that edit playlist modal is displayed
@@ -100,7 +128,7 @@ var CreatePlaylisteButton = React.createClass({
 
     return (
       <div className="createplaylistbutton">
-        <Button onClick={this.createPlaylist} style={{fontSize: '6em', margin: '0', padding: '0'}}  bsStyle='link'>
+        <Button onClick={this.create} style={{fontSize: '6em', margin: '0', padding: '0'}}  bsStyle='link'>
           <Glyphicon glyph='pencil' className='createicon' />
         </Button>
       </div>

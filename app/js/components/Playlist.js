@@ -98,12 +98,17 @@ var Playlist = React.createClass({
     }
 
     var refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.relationData.parent_outcome_id + '/playlist_' + this.props.relationData.playlist_id);
-   
-    // Remove suboutcome from playlist
+
+    // Remove playlist from outcome
     refOutcomeToPlaylist.remove();
 
-    // Delete the suboutcome
+    // Delete the playlist
     this.refPlaylist.remove();
+
+    // Remove user_to_outcome_to_playlist relation
+    // So when we lookup whether user has a playlist for this outcome already it returns false
+    var userOutcomePlaylistRef = this.firebase.child('relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.relationData.parent_outcome_id);
+    userOutcomePlaylistRef.remove();
 
     // De-increment the outcome's playlist_count
     this.firebase.child('outcomes/' + this.props.relationData.parent_outcome_id + '/playlist_count').transaction(function(currentValue) {
