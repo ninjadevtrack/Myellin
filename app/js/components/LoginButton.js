@@ -38,7 +38,7 @@ var LoginButton = React.createClass({
                 newUserData.id = authData.uid;
                 newUserData.provider = authData.provider;
 
-                this.firebase.child("users").child(authData.uid).set(newUserData);
+                this.firebase.child("users").child(authData.uid).update(newUserData);
             }
 
         }.bind(this));

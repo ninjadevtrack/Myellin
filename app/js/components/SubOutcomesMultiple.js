@@ -21,7 +21,6 @@ var SubOutcomesMultiple = React.createClass({
 
   getInitialState: function(){
     return {
-      suboutcomes: [],
       activeKey: null
     };
   },

@@ -17,8 +17,10 @@ var OutcomesMultiple = React.createClass({
 
   componentWillMount: function() {
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.refOutcomes = new Firebase(firebaseRoot + '/outcomes');
-    this.bindAsArray(this.refOutcomes, 'outcomes');
+    this.firebase = new Firebase(firebaseRoot);
+    this.refOutcomes = this.firebase.child('relations/section_to_outcome/home');
+    
+    this.bindAsArray(this.refOutcomes, 'data');
   },
 
   addOutcomeSubmit: function(e){
@@ -32,14 +34,14 @@ var OutcomesMultiple = React.createClass({
     return true;
 
     //console.log('Firebase array length ...');
-    //console.log('this.state:' + this.state.outcomes.length);
-    //console.log('nextState:' + nextState.outcomes.length);
+    //console.log('this.state:' + this.state.data.length);
+    //console.log('nextState:' + nextState.data.length);
 
     // Always update for now, since we want to update if any outcomes data changes
     // TODO: Use immutable-js to do a deep check on data changes (if we hit performance problems)
     /*
     // Only update if number of outcomes changes (outcome added or deleted)
-    if ( this.state.outcomes && this.state.outcomes.length !== nextState.outcomes.length ){
+    if ( this.state.data && this.state.data.length !== nextState.data.length ){
       return true;
     }
 
@@ -62,7 +64,11 @@ var OutcomesMultiple = React.createClass({
         .replace(/[^\w-]+/g,''); // Remove everything but standard characters
   },
 
-  addOutcome: function(){
+  addOutcome: function(order){
+
+     // Add to end if no order number set
+    if (!order && order !== 0)
+      order = this.state.data.length;
 
     var title = React.findDOMNode(this.refs.createOutcome).value.trim();
 
@@ -71,17 +77,75 @@ var OutcomesMultiple = React.createClass({
 
     var slug = this.createUrlSlug(title);
 
-    var newRef = this.refOutcomes.push({ 
+    // Create outcome in Firebase
+    var newRef = this.firebase.child('outcomes').push({ 
       title: title,
-      slug: slug
+      slug: slug,
+      playlist_count: 0
     });
+
     var outcomeId = newRef.key();
+
+    this.refOutcomes.child('outcome_' + outcomeId).update({
+      outcome_id: outcomeId,
+      order: order
+    });
 
     // Clear input
     React.findDOMNode(this.refs.createOutcome).value = '';
   },
 
+
+  // When dragging an outcome this will be passed two objects
+  // one: the object being dragged
+  // two: the object being hover over
+  // We swap their order values and then re-setstate
+  handleMove: function (one, two) {
+
+    // Ignore if dragging over self (dragged item is over original position)
+    if (one.outcome_id === two.outcome_id)
+      return false
+
+    // Get suboutcomes (clone state.data)
+    var outcomes = this.state.data.slice(0);
+
+    // Find both suboutcomes in data
+    var outcome_1 = outcomes.filter(function(c){return c.outcome_id === one.outcome_id})[0];
+    var outcome_2 = outcomes.filter(function(c){return c.outcome_id === two.outcome_id})[0];
+
+    // Swap order
+    var outcome_1_order = outcome_1.order;
+    outcome_1.order = outcome_2.order;
+    outcome_2.order = outcome_1_order;
+
+    this.setState({ data: outcomes },function(){
+      this.saveOrder();
+    }.bind(this));
+
+  },
+
+  // Save the order to Firebase
+  saveOrder: function(outcomes){
+
+    var outcomes = this.state.data.slice(0);
+
+    for (var i = 0; i < outcomes.length; i++) { 
+
+      var refSectionToOutcome = this.refOutcomes.child('outcome_' + outcomes[i].outcome_id);
+
+      refSectionToOutcome.update({
+        order: i
+      });
+    }
+  },
+
+
   render: function () {
+
+    // Re-sort by order
+    var outcomes = this.state.data.sort(function(a, b){
+      return a.order - b.order;
+    });
 
     var createOutcome = (
       <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create">
@@ -91,9 +155,15 @@ var OutcomesMultiple = React.createClass({
       </ListGroupItem>
     );
 
-    var elements = this.state.outcomes.map(function (outcome) {
+    var elements = outcomes.map(function (relationData) {
+
+      relationData.parent_section = 'home';
+
       return (
-        <Outcome data={outcome} key={outcome['.key']} />
+        <Outcome 
+          relationData={relationData}
+          onMove={this.handleMove}
+          key={relationData.outcome_id} />
       );
     }.bind(this));
 
@@ -106,5 +176,7 @@ var OutcomesMultiple = React.createClass({
   },
 
 });
+
+
 
 module.exports = OutcomesMultiple;
