@@ -73,6 +73,11 @@ var Outcome = React.createClass({
     if (!this.state.data)
       return false;
 
+    // If an outcome is private only show if current user is in outcome.can_view
+    if (this.state.data.private && 
+        (!this.state.user || !this.state.data.can_view || !this.state.data.can_view[this.state.user.id]))
+      return false;
+
     var jsx = (
       <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, this.state.data['.key'])} key={this.state.data['.key']}>
         {this.state.data.title}
