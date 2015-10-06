@@ -175,6 +175,7 @@ var SubOutcomesMultiple = React.createClass({
       refPlaylistToSuboutcome.update({
         parent_playlist_id: this.props.playlist_id,
         suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
+        chosen_option: (suboutcomes[i].chosen_option || null), // Copy over chosen_option
         order: i
       });
     }
