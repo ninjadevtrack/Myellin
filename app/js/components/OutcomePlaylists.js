@@ -19,8 +19,6 @@ var OutcomePlaylists = React.createClass({
 
   componentWillMount: function() {
 
-    console.log('Lifecycle - componentWillMount ...');
-
     // If I don't wrap this in a setTimout then there are issues with ...
     // ... componentWillUpdate firing when browsing to a different outcome.
     // Looks like it might be a bug with reactFire. If the outcome data is cached then we are basically ...
@@ -31,30 +29,7 @@ var OutcomePlaylists = React.createClass({
 
   },
 
-  componentWillUnmount: function(){
-
-    console.log('Lifecycle - componentWillUnmount ...');
-  },
-
-  shouldComponentUpdate: function(){
-
-    console.log('Lifecycle - shouldComponentUpdate ...');
-    return true;
-  },
-
-  componentDidUpdate: function(){
-
-    console.log('Lifecycle - componentDidUpdate ...');
-  },
-
-  componentWillReceiveProps: function(){
-
-    console.log('Lifecycle - componentWillReceiveProps ...');
-  },
-
   componentWillUpdate: function(nextProps, nextState) {
-
-    console.log('Lifecycle - componentWillUpdate ...');
 
     // If we now have outcome data pass the title back up the chain
     // So we can populate the navbar
@@ -154,10 +129,6 @@ var OutcomePlaylists = React.createClass({
       <div>
         { outcome_id && 
           <div>
-
-            {/* <div style={{ marginTop: '5em'}}>
-              {outcome.title} ({outcome_id})
-            </div> */}
 
             {children}
 

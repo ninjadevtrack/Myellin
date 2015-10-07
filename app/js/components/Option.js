@@ -16,11 +16,13 @@ require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
+var AuthMixin = require('./../mixins/AuthMixin.js');
+
 var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
 
 var Option = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   getInitialState: function(){
     return {
@@ -65,6 +67,12 @@ var Option = React.createClass({
 
     this.refOption = this.firebase.child('options/' + this.props.id);
     this.bindAsObject(this.refOption, 'data');
+
+    // Fetch playlist data so we know if current user is owner of playlist
+    // ... in which case we show them "switch" in dropdown menu
+    // TODO: Better way to access app state without doing another Firebase query
+    this.refPlaylist = this.firebase.child('playlists/' + this.getParams().playlist_id);
+    this.bindAsObject(this.refPlaylist, 'playlist');    
   },
 
   menuOnSelect: function(event, eventKey){
@@ -135,9 +143,6 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
-    //console.log('option relations 1 ...');
-    //console.log(this.props.relationData);
-
     var descriptionParts = this.getDescriptionParts(this.state.data.description);
 
     var description = descriptionParts.map(function(part, i){
@@ -163,14 +168,19 @@ var Option = React.createClass({
       );
     }
 
+    var menuItems = [];
+    if (this.state.user && this.state.user.id === this.state.data.author_id)
+      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+    if (this.state.user && this.state.user.id === this.state.playlist.author_id)
+      menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
+
     return (
       <div className="option-container">
 
-        { !this.state.editable &&
+        { !this.state.editable && menuItems.length >= 1 &&
           <div style={{ float: 'right'}}>
             <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-              <MenuItem eventKey='edit'>Edit</MenuItem>
-              <MenuItem eventKey='switch'>Switch</MenuItem>
+              {menuItems}
             </DropdownButton>
           </div>
         }

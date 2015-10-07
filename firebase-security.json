@@ -15,7 +15,15 @@
     },
     "options": {
       ".read": true,
-      ".write": true
+      "$option": {
+          // Must be logged in AND either creating new data or updating existing data belonging to you
+         ".write": "auth != null && 
+                      (!data.exists() || data.child('author_id').val() == auth.uid)",
+          // Must include required children, author_id must match auth.id, and description must be a string
+         ".validate": "newData.hasChildren(['author_id', 'description']) && 
+                        newData.child('author_id').val() == auth.uid && 
+                          newData.child('description').isString()"
+      }
     },
     "suboutcomes": {
       ".read": true,
