@@ -74,7 +74,10 @@ var OptionsMultiple = React.createClass({
     options = options.map(function (relationData) {
       return (
         <div>
-          <Option relationData={relationData} id={relationData.option_id} />
+          <Option 
+            relationData={relationData} 
+            parent_playlist_id={this.props.playlist_id}
+            option_id={relationData.option_id} />
         </div>
       );
     }.bind(this));

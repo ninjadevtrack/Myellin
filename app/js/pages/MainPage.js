@@ -74,6 +74,7 @@ var MainPage = React.createClass({
 
     var outcome_id = this.getParams().outcome_id;
     var outcome_slug = this.getParams().outcome_slug;
+    var playlist_id = this.getParams().playlist_id;
     var suboutcome_id = this.getParams().suboutcome_id;
 
     return (
@@ -128,7 +129,8 @@ var MainPage = React.createClass({
 
                   <CreateOptionButton suboutcome_id={suboutcome_id} />
 
-                  <OptionsMultiple 
+                  <OptionsMultiple
+                    playlist_id={playlist_id}
                     suboutcome_id={suboutcome_id}
                     key={suboutcome_id} />
 

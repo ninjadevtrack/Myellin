@@ -148,7 +148,7 @@ var SubOutcome = React.createClass({
             <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
                 { this.props.relationData.chosen_option && 
-                  <Option contentOnly={true} id={this.props.relationData.chosen_option} />
+                  <Option contentOnly={true} option_id={this.props.relationData.chosen_option} />
                 }
               </div>
             </div>
@@ -168,7 +168,13 @@ var DndSource = {
   // Return data that should be made accessible to other components when this component is hovering
   // The other component would access within DndTarget -> hover() -> monitor.getItem()
   beginDrag: function(props) {
-    return props.relationData;
+    return {
+      type: ComponentTypes.SUBOUTCOME,
+      suboutcome_id: props.relationData.suboutcome_id,
+      parent_playlist_id: props.relationData.parent_playlist_id,
+      chosen_option: (props.relationData.chosen_option || null),
+      order: props.relationData.order
+    }
   },
 
   // NOT USED YET
@@ -205,7 +211,14 @@ var DragSourceDecorator = ReactDnD.DragSource(ComponentTypes.SUBOUTCOME, DndSour
   }
 );
 
-var DropTargetDecorator = ReactDnD.DropTarget(ComponentTypes.SUBOUTCOME, DndTarget,
+var DropTargetDecorator = ReactDnD.DropTarget(
+  // Return array of types this Drop Target accepts
+  function(props){
+
+    // Allow SUBOUTCOME and OPTION types
+    return [ComponentTypes.SUBOUTCOME, ComponentTypes.OPTION]; 
+  },
+  DndTarget,
   function(connect) {
     return {
       connectDropTarget: connect.dropTarget()

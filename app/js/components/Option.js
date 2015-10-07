@@ -70,9 +70,9 @@ var Option = React.createClass({
     }
   },
 
-  // Rebind Firebase refs if props.id changes so we fetch new data
+  // Rebind Firebase refs if props.option_id changes so we fetch new data
   componentDidUpdate: function(prevProps, nextState) {
-    if (this.props.id !== prevProps.id)
+    if (this.props.option_id !== prevProps.option_id)
       this.bindFirebaseRefs(true);
 
     // Toggle editable state if editable prop changes
@@ -80,15 +80,25 @@ var Option = React.createClass({
       this.toggleEdit();
   },
 
+  unbindRef: function(firebaseRef, bindVar){
+    try {
+      this.unbind(bindVar);
+    }catch(e){}
+
+    delete this[firebaseRef];
+  },
+
   bindFirebaseRefs: function(rebind){
 
-    if (rebind)
-      this.unbind('data');
+    if (rebind){
+      this.unbindRef('refOption', 'data');
+      this.unbindRef('refPlaylist', 'playlist');
+    }
 
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
     this.firebase = new Firebase(firebaseRoot);
 
-    this.refOption = this.firebase.child('options/' + this.props.id);
+    this.refOption = this.firebase.child('options/' + this.props.option_id);
     this.bindAsObject(this.refOption, 'data');
 
     // Fetch playlist data so we know if current user is owner of playlist
@@ -169,19 +179,20 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
-    //console.log('DESCRIPTION ...');
-    //console.log('suboutcome',this.props.relationData.parent_suboutcome_id);
-    //console.log(this.state.data);
+    console.log('OPTION: ', this.state.data);
 
-    var descriptionParts = this.getDescriptionParts(this.state.data.description);
+    var description = '';
+    if (this.state.data.description){
+      var descriptionParts = this.getDescriptionParts(this.state.data.description);
 
-    var description = descriptionParts.map(function(part, i){
-      if (part.type === 'url'){
-        return ( <UrlEmbed url={part.content} /> );
-      }else{
-        return part.content;
-      }
-    });
+      description = descriptionParts.map(function(part, i){
+        if (part.type === 'url'){
+          return ( <UrlEmbed url={part.content} /> );
+        }else{
+          return part.content;
+        }
+      });
+    }
 
     var optionContent = (
       <div>
@@ -267,7 +278,14 @@ var DndSource = {
   // Return data that should be made accessible to other components when this component is hovering
   // The other component would access within DndTarget -> hover() -> monitor.getItem()
   beginDrag: function(props) {
-    return props.relationData;
+    return {
+      type: ComponentTypes.OPTION,
+      option_id: props.relationData.option_id,
+      parent_suboutcome_id: props.relationData.parent_suboutcome_id,
+      // We pass "parent_playlist_id" as prop because we cant use this.getParams().playlist_id within DndSource
+      // TODO: Stop using this.getParams().playlist_id and use props.parent_playlist_id instead if we keep it this way
+      parent_playlist_id: props.parent_playlist_id
+    }
   }
 };
 

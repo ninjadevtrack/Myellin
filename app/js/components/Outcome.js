@@ -95,7 +95,11 @@ var DndSource = {
   // Return data that should be made accessible to other components when this component is hovering
   // The other component would access within DndTarget -> hover() -> monitor.getItem()
   beginDrag: function(props) {
-    return props.relationData;
+    return {
+      type: ComponentTypes.OUTCOME,
+      outcome_id: props.relationData.outcome_id,
+      order: props.relationData.order
+    }
   }
 };
 
