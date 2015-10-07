@@ -251,6 +251,17 @@ var DndTarget = {
 
     var draggedItem = monitor.getItem();
 
+    console.log('DRAGGED OVER ITEM:', draggedItem);
+
+    // If it's a valid suboutcome it will have "parent_playlist_id" value
+    // If it doesn't then it's likely an Option (which we aren't finished supporting yet)
+    // TODO: We need a consistent way to check what type of object is being fetched by monitor.getItem() ...
+    // ... and way to access other needed data (such as parent_playlist data for the Option)
+    if (!draggedItem.parent_playlist_id){
+      console.log('Not a valid suboutcome');
+      return false;
+    }
+
     //console.log(props.playlist_id + ' | ' + draggedItem.parent_playlist_id);
     component.handleDragOver(draggedItem);
   }
@@ -266,7 +277,7 @@ var DropTargetDecorator = ReactDnD.DropTarget(
       return [];
 
     // Allow SUBOUTCOME type
-    return [ComponentTypes.SUBOUTCOME]; 
+    return [ComponentTypes.SUBOUTCOME, ComponentTypes.OPTION]; 
   },
   DndTarget,
   function(connect, monitor) {

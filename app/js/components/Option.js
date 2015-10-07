@@ -16,7 +16,11 @@ require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
+var ComponentTypes = require('./ComponentTypes');
+
 var AuthMixin = require('./../mixins/AuthMixin.js');
+
+var ReactDnD = require('react-dnd');
 
 var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
 
@@ -47,6 +51,25 @@ var Option = React.createClass({
     this.bindFirebaseRefs();
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+
+    // If isDragging prop (injected by reactDnD) changes ...
+    if (this.props.isDragging !== nextProps.isDragging){
+      console.log('is dragging: ' + nextProps.isDragging);
+
+      // If we're editing a playlist, toggle show/collapse on drag/drop, by updating in Firebase
+      // It's a bit rediculous to write to the DB to toggle but this is the easiest way currently ...
+      // ... since we don't yet have a good way for these components to talk to eachother
+      if (this.state.user.editing_playlist){
+        setTimeout(function(){
+          this.refUser = this.firebase.child('users/' + this.state.user.id);
+          //this.refUser.child('editing_playlist').update({ collapse: !nextProps.isDragging });
+          this.refUser.child('editing_playlist').update({ collapse: false });
+        }.bind(this, nextProps), 300);
+      }
+    }
+  },
+
   // Rebind Firebase refs if props.id changes so we fetch new data
   componentDidUpdate: function(prevProps, nextState) {
     if (this.props.id !== prevProps.id)
@@ -72,7 +95,10 @@ var Option = React.createClass({
     // ... in which case we show them "switch" in dropdown menu
     // TODO: Better way to access app state without doing another Firebase query
     this.refPlaylist = this.firebase.child('playlists/' + this.getParams().playlist_id);
-    this.bindAsObject(this.refPlaylist, 'playlist');    
+    this.bindAsObject(this.refPlaylist, 'playlist');
+
+    //this.refSuboutcome = this.firebase.child('suboutcomes/' + this.props.relationData.parent_suboutcome_id);
+    //this.bindAsObject(this.refSuboutcome, 'suboutcome');     
   },
 
   menuOnSelect: function(event, eventKey){
@@ -143,6 +169,10 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
+    //console.log('DESCRIPTION ...');
+    //console.log('suboutcome',this.props.relationData.parent_suboutcome_id);
+    //console.log(this.state.data);
+
     var descriptionParts = this.getDescriptionParts(this.state.data.description);
 
     var description = descriptionParts.map(function(part, i){
@@ -169,12 +199,13 @@ var Option = React.createClass({
     }
 
     var menuItems = [];
-    if (this.state.user && this.state.user.id === this.state.data.author_id)
+    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id)
       menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-    if (this.state.user && this.state.user.id === this.state.playlist.author_id)
+    if (this.state.user && this.state.playlist && this.state.user.id === this.state.playlist.author_id)
       menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
 
-    return (
+
+    return this.props.connectDragSource(
       <div className="option-container">
 
         { !this.state.editable && menuItems.length >= 1 &&
@@ -232,4 +263,22 @@ var Option = React.createClass({
 
 });
 
-module.exports = Option;
+var DndSource = {
+  // Return data that should be made accessible to other components when this component is hovering
+  // The other component would access within DndTarget -> hover() -> monitor.getItem()
+  beginDrag: function(props) {
+    return props.relationData;
+  }
+};
+
+var DragSourceDecorator = ReactDnD.DragSource(ComponentTypes.OPTION, DndSource,
+  function(connect, monitor) {
+    return {
+      connectDragSource: connect.dragSource(),
+      isDragging: monitor.isDragging()
+    };
+  }
+);
+
+// Export the wrapped component
+module.exports = DragSourceDecorator(Option);

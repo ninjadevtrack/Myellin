@@ -1,4 +1,5 @@
 module.exports = {
   OUTCOME: 'outcome',
-  SUBOUTCOME: 'suboutcome'
+  SUBOUTCOME: 'suboutcome',
+  OPTION: 'option'
 };
