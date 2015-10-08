@@ -3,11 +3,25 @@
     "outcomes": {
       ".indexOn": ["slug"],
       ".read": true,
-      ".write": true
+      "$outcome": {
+          // Must be an admin to create an outcome
+         ".write": "auth != null && root.child('users/' + auth.uid + '/admin').val() === true"
+      }  
     },
     "relations": {
       ".read": true,
-      ".write": true
+      "section_to_outcome": {
+        "home": {
+          "$outcome": {
+            // Must be an admin to add an outcome to the homepage
+            ".write": "auth != null && root.child('users/' + auth.uid + '/admin').val() === true"
+          }
+        }
+      },
+      // Other paths are writeable by anyone for now
+      "$other": {
+        ".write": true
+      }
     },
     "playlists": {
       ".read": true,

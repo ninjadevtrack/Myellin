@@ -6,6 +6,7 @@ var ListGroup = require('react-bootstrap').ListGroup;
 var Badge = require('react-bootstrap').Badge;
 var Router = require('react-router');
 var Outcome = require('./Outcome');
+var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -13,7 +14,7 @@ var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var OutcomesMultiple = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   componentWillMount: function() {
     var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
@@ -148,13 +149,17 @@ var OutcomesMultiple = React.createClass({
       return a.order - b.order;
     });
 
-    var createOutcome = (
-      <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create">
-       <form onSubmit={this.addOutcomeSubmit}>
-          <input ref="createOutcome" placeholder="Add a how-to. Hit enter." type="text" style={{width:'100%'}} />
-        </form>
-      </ListGroupItem>
-    );
+    if (this.state.user && this.state.user.admin){
+      var createOutcome = (
+        <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create">
+         <form onSubmit={this.addOutcomeSubmit}>
+            <input ref="createOutcome" placeholder="Add a how-to. Hit enter." type="text" style={{width:'100%'}} />
+          </form>
+        </ListGroupItem>
+      );
+    }else{
+      var createOutcome = null;
+    }
 
     var elements = outcomes.map(function (relationData) {
 
