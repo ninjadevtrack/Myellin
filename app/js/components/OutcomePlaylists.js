@@ -33,12 +33,14 @@ var OutcomePlaylists = React.createClass({
 
     // If we now have outcome data pass the title back up the chain
     // So we can populate the navbar
+    /*
     if (!this.state.outcome && nextState.outcome){
       var outcome = this._getOutcome(nextState.outcome);
 
       if (outcome)
         this.props.loadedCallback({ title: outcome.title }); 
     }
+    */
     
   },
 
