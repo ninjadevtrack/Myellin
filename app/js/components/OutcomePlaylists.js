@@ -127,6 +127,13 @@ var OutcomePlaylists = React.createClass({
 
     return (
       <div>
+
+        { outcome && 
+          <div style={{padding: '50px', fontSize:'18px', backgroundColor: '#efefef'}}>
+            {outcome.title} ({outcome.playlist_count} playlists)
+          </div>
+        }
+
         { outcome_id && 
           <div>
 
