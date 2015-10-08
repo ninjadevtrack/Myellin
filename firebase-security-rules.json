@@ -4,21 +4,27 @@
       ".indexOn": ["slug"],
       ".read": true,
       "$outcome": {
-          // Only admins can create outcomes. Non-admins can update an existing playlist_count field by 1.
+        
+          // Only admins can create outcomes. Non-admins can increment or de-increment an existing playlist_count field by 1.
+          // We're using .validate instead of .write for "playlist_count" and "$other_fields" because Firebase ...
+          // ... isn't letting us do any writes without a .write rule declared at the top level (WTF).
+          // So we use .validate, which cascades, allowing us to limit non-admin writes to just the "playlist_count" field.
+          // Normally we'd only want to use .validate for actual data validation.
+          
+          ".write": "auth != null", // Must be logged in
+          
+          // Allow if admin OR if changing value by 1
           "playlist_count": {
-            ".write": "auth != null &&
-                        (
-                          // Must be an admin
+            ".validate": "// Admin
                           root.child('users/' + auth.uid + '/admin').val() === true ||
-                          // Or be incrementing/de-incrementing the value of playlist_count by 1 (this happens when they create/delete a playlist)
+                          // Or if changing the value by 1 (happens on creation and deletion of a playlist)
                           data.exists() && newData.val() === data.val() + 1 ||
-                          data.exists() && newData.val() === data.val() - 1
-                        )"
+                          data.exists() && newData.val() === data.val() - 1"
           },
+          
           // All other fields can only be written by admins
-         "$other": {
-            ".write": "auth != null && 
-                        root.child('users/' + auth.uid + '/admin').val() === true"
+         "$other_fields": {
+            ".validate": "root.child('users/' + auth.uid + '/admin').val() === true"
          }
       }  
     },
