@@ -33,11 +33,11 @@ var NavbarTop = React.createClass({
       </span>
     );
 
-    var brand = (this.props.section ? this.props.section.title : icon);
+
 
     return (
       <div className='navbarhidemobilemenu'>
-        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={brand}>{/* This is the eventKey referenced */}
+        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
           <Nav navbar left>
           <div className="compensate-for-the-nav">
             <div className="inputplaceholder">

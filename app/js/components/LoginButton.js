@@ -85,13 +85,13 @@ var LoginButton = React.createClass({
                                 </span>
                             </a>
                             <a href="#" onClick={this.authenticate.bind(this,'facebook')}>
-                                <span style={{margin: "0px -15px 0px 0px", color: "#222222"}}>
+                                <span style={{margin: "0px -5px 0px 10px", color: "#222222"}}>
                                     <i className="s s-glyph14 s-lock"></i>
                                 </span>
                             </a>
                         </div>
                         <div style={{display: (this.state.hover ? 'none' : 'inline')}}>
-                            <i className="s s-glyph01 s-lock"></i>
+                           <span style={{color: '#9B9B9B', lineHeight: '2.5em'}}> sign up&nbsp;&nbsp;|&nbsp;&nbsp;login</span>
                         </div>
                     </div>
                 }
