@@ -4,8 +4,22 @@
       ".indexOn": ["slug"],
       ".read": true,
       "$outcome": {
-          // Must be an admin to create an outcome
-         ".write": "auth != null && root.child('users/' + auth.uid + '/admin').val() === true"
+          // Only admins can create outcomes. Non-admins can update an existing playlist_count field by 1.
+          "playlist_count": {
+            ".write": "auth != null &&
+                        (
+                          // Must be an admin
+                          root.child('users/' + auth.uid + '/admin').val() === true ||
+                          // Or be incrementing/de-incrementing the value of playlist_count by 1 (this happens when they create/delete a playlist)
+                          data.exists() && newData.val() === data.val() + 1 ||
+                          data.exists() && newData.val() === data.val() - 1
+                        )"
+          },
+          // All other fields can only be written by admins
+         "$other": {
+            ".write": "auth != null && 
+                        root.child('users/' + auth.uid + '/admin').val() === true"
+         }
       }  
     },
     "relations": {
@@ -25,7 +39,10 @@
     },
     "playlists": {
       ".read": true,
-      ".write": true
+      ".write": true,
+      "$playlist": {
+        ".write": true
+      }
     },
     "options": {
       ".read": true,
@@ -41,7 +58,10 @@
     },
     "suboutcomes": {
       ".read": true,
-      ".write": true
+      "$option": {
+        // TODO: only let author edit/delete, but allow anyone to increment option_count by 1 (since other people can add options)
+        ".write": true
+      }
     },
     "users": {
       ".read": true,
