@@ -153,7 +153,9 @@ var SubOutcome = React.createClass({
               </div>
             </div>
           }
-          <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">options</Button>
+          <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
+            options ({this.state.data.option_count})
+          </Button>
         </Panel>
       </div>
 

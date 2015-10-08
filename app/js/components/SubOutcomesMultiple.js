@@ -174,7 +174,11 @@ var SubOutcomesMultiple = React.createClass({
   // Create a new suboutcome
   create: function(title){  
     var refSuboutcomes = this.firebase.child('suboutcomes');
-    var newRef = refSuboutcomes.push({ title: title });
+    var newRef = refSuboutcomes.push({ 
+      title: title,
+      option_count: 0
+    });
+    
     var id = newRef.key();
     return id;
   },

@@ -46,15 +46,13 @@ var CreateOptionButton = React.createClass({
       upvote_count: 0
     });
 
-    /*
-    this.refUser = this.firebase.child('users/' + this.state.user.id).update({
-      editing_playlist: {
-        parent_outcome_id: this.props.outcome_id,
-        playlist_id: playlistId,
-        collapse: false
-      }
+    // Increment the suboutcome's option_count
+    this.firebase.child('suboutcomes/' + this.props.suboutcome_id + '/option_count').transaction(function(currentValue) {
+      if (!currentValue)
+        currentValue = 0;
+
+      return currentValue + 1;
     });
-    */
   },
 
   render: function () {
