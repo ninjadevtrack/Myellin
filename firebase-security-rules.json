@@ -5,26 +5,24 @@
       ".read": true,
       "$outcome": {
         
-          // Only admins can create outcomes. Non-admins can increment or de-increment an existing playlist_count field by 1.
-          // We're using .validate instead of .write for "playlist_count" and "$other_fields" because Firebase ...
-          // ... isn't letting us do any writes without a .write rule declared at the top level (WTF).
-          // So we use .validate, which cascades, allowing us to limit non-admin writes to just the "playlist_count" field.
-          // Normally we'd only want to use .validate for actual data validation.
+          /* Only admins can create outcomes. Non-admins can increment or de-increment an existing playlist_count field by 1.
+             We're using .validate instead of .write for "playlist_count" and "$other_fields" because Firebase ...
+             ... won't let use write an object to "$outcome" without a .write rule there that equals true.
+             So we use .validate, which cascades, allowing us to limit non-admin writes to just the "playlist_count" field.
+             Normally we'd only want to use .validate for actual data validation. */
           
           ".write": "auth != null", // Must be logged in
           
-          // Allow if admin OR if changing value by 1
+          // Can only write if admin or changing value by 1 (happens on creation and deletion of a playlist)
           "playlist_count": {
-            ".validate": "// Admin
-                          root.child('users/' + auth.uid + '/admin').val() === true ||
-                          // Or if changing the value by 1 (happens on creation and deletion of a playlist)
-                          data.exists() && newData.val() === data.val() + 1 ||
-                          data.exists() && newData.val() === data.val() - 1"
+            ".validate": "root.child('users/' + auth.uid + '/admin').val() === true ||
+                          (data.exists() && newData.val() === data.val() + 1) ||
+                          (data.exists() && newData.val() === data.val() - 1)"
           },
           
           // All other fields can only be written by admins
-         "$other_fields": {
-            ".validate": "root.child('users/' + auth.uid + '/admin').val() === true"
+         "$other": {
+           ".validate": "root.child('users/' + auth.uid + '/admin').val() === true"
          }
       }  
     },
@@ -64,9 +62,21 @@
     },
     "suboutcomes": {
       ".read": true,
-      "$option": {
-        // TODO: only let author edit/delete, but allow anyone to increment option_count by 1 (since other people can add options)
-        ".write": true
+      "$suboutcome": {
+
+          ".write": "auth != null", // Must be logged in
+          
+          "option_count": {
+            ".validate": "(!data.parent().exists() && newData.val() === 0) || // If suboutcome is being created, option_count must be 0
+                          (data.exists() && newData.val() === data.val() + 1) || // If data exists already only allow increment
+                          (data.exists() && newData.val() === data.val() - 1)" // And de-increment
+          },
+          
+          // All other fields can only be written only if suboutcome is new OR if user is author
+         "$other": {
+           ".validate": "!data.parent().exists() || // Allow write if suboutcome is new
+                            data.parent().child('author_id').val() === auth.uid" // Or if user is author
+         }
       }
     },
     "users": {
