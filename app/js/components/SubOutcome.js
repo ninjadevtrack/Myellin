@@ -69,7 +69,7 @@ var SubOutcome = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.onDelete(this.props.relationData);
+    this.props.onDelete(this.props.relationData.suboutcome_id);
   },
 
   _toggleExpand: function(e){

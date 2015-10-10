@@ -174,29 +174,41 @@ var SubOutcomesMultiple = React.createClass({
   // Create a new suboutcome
   create: function(title){  
     var refSuboutcomes = this.firebase.child('suboutcomes');
-    var newRef = refSuboutcomes.push({ 
-      title: title,
-      option_count: 0
-    });
     
-    var id = newRef.key();
-    return id;
+    var newRef = refSuboutcomes.push({ 
+        title: title,
+        option_count: 0
+    }, 
+    // Callback
+    function(error){
+
+      if (error){
+        console.log('error: could not create suboutcome');
+        // Delete from relations table
+        // By inserting immediately after push and then rolling back on error ...
+        // ... we are able to have the playlist UI update immediately
+        var suboutcome_id = newRef.key();
+        this.delete(suboutcome_id)
+      }
+    }.bind(this));
+
+    var suboutcome_id = newRef.key();
+    return suboutcome_id;
   },
 
   createThenAdd: function(title){
-    var id = this.create(title);
-    this.add(id);
+    var suboutcome_id = this.create(title);
+    this.add(suboutcome_id);
   },
 
-  delete: function(relationData){
-
-    var refSuboutcome = this.firebase.child('suboutcomes/' + relationData.suboutcome_id);
-    var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + relationData.suboutcome_id);
+  delete: function(suboutcome_id){
 
     // Remove suboutcome from playlist
+    var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcome_id);
     refPlaylistToSuboutcome.remove();
 
     // Delete the suboutcome
+    //var refSuboutcome = this.firebase.child('suboutcomes/' + suboutcome_id);
     //refSuboutcome.remove();
   },
 
