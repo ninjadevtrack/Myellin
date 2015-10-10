@@ -202,6 +202,14 @@ var Playlist = React.createClass({
     if (!this.state.data)
       return false;
 
+    var menuItems = [];
+    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id){
+      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
+
+    //menuItems.push( <MenuItem eventKey='report'>Report Spam</MenuItem> );
+
     var classes = cx('playlist-container', {
       'editing': this.state.editable
     });
@@ -262,13 +270,11 @@ var Playlist = React.createClass({
           </div>
         }
         
-        { !this.state.editable &&
+        { !this.state.editable && menuItems.length >= 1 &&
           <div>
             <div style={{ float: 'right'}}>
               <DropdownButton style={{margin: '0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='medium' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-                <MenuItem eventKey='edit'>Edit</MenuItem>
-                <MenuItem eventKey='delete'>Delete</MenuItem>
-                <MenuItem eventKey='report'>Report Spam</MenuItem>
+                {menuItems}
               </DropdownButton>
             </div>
 
