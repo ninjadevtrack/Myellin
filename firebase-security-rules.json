@@ -58,8 +58,7 @@
                     // Or if user is the author
                     data.child('author_id').val() === auth.uid
                   )",
-        // TODO: Require description and write an empty description to Firebase when creating a playlist
-        ".validate": "newData.hasChildren(['author_id'])",
+        ".validate": "newData.hasChildren(['author_id', 'description'])",
         "author_id": {
           ".validate": "newData.val() === auth.uid"
         },
@@ -88,9 +87,7 @@
                     )
                   )",
         // Required fields
-        // TODO: add author_id once we start writing that to Firebase
-        // TODO: add option_count once we update myelin-gabe.firebaseapp.com
-        ".validate": "newData.hasChildren(['title'])", 
+        ".validate": "newData.hasChildren(['title', 'author_id', 'option_count'])", 
         "title": {
           ".validate": "newData.isString()"
         },
@@ -139,7 +136,7 @@
         }
       }
     },
-    // TODO: Check the author_id in a playlist before allowing user to add a suboutcome to it
+
     "relations": {
       "section_to_outcome": {
         "home": {

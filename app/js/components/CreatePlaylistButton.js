@@ -58,7 +58,8 @@ var CreatePlaylisteButton = React.createClass({
 
     // Create playlist
     var newPlaylistRef = this.refPlaylists.push({ 
-      author_id: this.state.user.id
+      author_id: this.state.user.id,
+      description: ''
     });
 
     // Get new playlist ID

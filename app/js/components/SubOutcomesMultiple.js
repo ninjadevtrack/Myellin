@@ -177,6 +177,7 @@ var SubOutcomesMultiple = React.createClass({
     
     var newRef = refSuboutcomes.push({ 
         title: title,
+        author_id: this.state.user.id,
         option_count: 0
     }, 
     // Callback
