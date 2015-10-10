@@ -20,7 +20,7 @@ var OptionsMultiple = React.createClass({
     return {
       data: [],
       suboutcome: null,
-      didCallCallback: false
+      //didCallCallback: false
     };
   },
 
@@ -35,12 +35,13 @@ var OptionsMultiple = React.createClass({
 
     // Pass any data we need back up the chain
     // Currently we just need title for NavBar component
+    /*
     if (this.state.suboutcome && this.state.didCallCallback === false ){
       this.setState({ didCallCallback: true }, 
         function(){
           this.props.loadedCallback({ title: this.state.suboutcome.title });
       });
-    } 
+    }*/
 
   },
 
@@ -77,7 +78,8 @@ var OptionsMultiple = React.createClass({
           <Option 
             relationData={relationData} 
             parent_playlist_id={this.props.playlist_id}
-            option_id={relationData.option_id} />
+            option_id={relationData.option_id}
+            key={relationData.option_id} />
         </div>
       );
     }.bind(this));
