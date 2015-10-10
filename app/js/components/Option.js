@@ -31,7 +31,7 @@ var Option = React.createClass({
   getInitialState: function(){
     return {
       data: null,
-      editable: (this.props.editable || false)
+      //editable: (this.props.editable || false)
     };
   },
 
@@ -76,8 +76,10 @@ var Option = React.createClass({
       this.bindFirebaseRefs(true);
 
     // Toggle editable state if editable prop changes
+    // No longer needed (we update option.editing in firebase instead)
+    /*
     if (this.props.editable !== prevProps.editable)
-      this.toggleEdit();
+      this.toggleEdit(); */
   },
 
   unbindRef: function(firebaseRef, bindVar){
@@ -119,12 +121,31 @@ var Option = React.createClass({
       case 'edit':
         this.toggleEdit();
         break;
+      case 'delete':
+        this.delete();
+        break;
     }
   },
 
   toggleEdit: function(){
 
-    this.setState({ editable: !this.state.editable });
+    if (this.state.data.editing){
+      this.refOption.child('editing').remove();
+    }else{
+      this.refOption.child('editing').set(true);
+    }
+  },
+
+  delete: function(){
+
+    // Remove option from suboutcome
+    var refSuboutcomeToOption = this.firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.relationData.parent_suboutcome_id  + '/option_' + this.props.option_id);
+    refSuboutcomeToOption.remove();
+
+    // TODO: Should probably remove this from chosen_option field (of playlist_to_suboutcome table) ...
+    // ... if it is the chosen_option. Should we allow that if they are not the owner of the subutcome? ...
+    // ... It would be weird to have a chosen_option that doesn't exist in the alternatives column though..
+    // ... Figure out the security rules needed for this action.
   },
 
   getDescriptionParts: function(text){
@@ -179,6 +200,13 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
+    var editable = false;
+    if (this.state.data.editing && 
+          this.state.user &&
+            this.state.user.id === this.state.data.author_id){
+      editable = true;
+    }
+
     console.log('OPTION: ', this.state.data);
 
     var description = '';
@@ -210,8 +238,11 @@ var Option = React.createClass({
     }
 
     var menuItems = [];
-    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id)
+    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id){
       menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
+
     if (this.state.user && this.state.playlist && this.state.user.id === this.state.playlist.author_id)
       menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
 
@@ -219,7 +250,7 @@ var Option = React.createClass({
     return this.props.connectDragSource(
       <div className="option-container">
 
-        { !this.state.editable && menuItems.length >= 1 &&
+        { !editable && menuItems.length >= 1 &&
           <div style={{ float: 'right'}}>
             <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
               {menuItems}
@@ -240,13 +271,13 @@ var Option = React.createClass({
             parent_id={this.props.relationData.parent_suboutcome_id} />
         </div>
         
-        { !this.state.editable &&
+        { !editable &&
           <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
             {optionContent}
           </div>
         }
 
-        { this.state.editable &&
+        { editable &&
           <div>
             <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
               {this.state.data.description}

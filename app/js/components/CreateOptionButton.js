@@ -35,7 +35,8 @@ var CreateOptionButton = React.createClass({
 
     var newOptionRef = this.refOptions.push({ 
       author_id: this.state.user.id,
-      description: 'testing... testing...'
+      description: '',
+      editing: true
     });
 
     var optionId = newOptionRef.key();
