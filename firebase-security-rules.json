@@ -4,88 +4,402 @@
       ".indexOn": ["slug"],
       ".read": true,
       "$outcome": {
-        
-          /* Only admins can create outcomes. Non-admins can increment or de-increment an existing playlist_count field by 1.
-             We're using .validate instead of .write for "playlist_count" and "$other_fields" because Firebase ...
-             ... won't let use write an object to "$outcome" without a .write rule there that equals true.
-             So we use .validate, which cascades, allowing us to limit non-admin writes to just the "playlist_count" field.
-             Normally we'd only want to use .validate for actual data validation. */
-          
-          ".write": "auth != null", // Must be logged in
-          
-          // Can only write if admin or changing value by 1 (happens on creation and deletion of a playlist)
-          "playlist_count": {
-            ".validate": "root.child('users/' + auth.uid + '/admin').val() === true ||
-                          (data.exists() && newData.val() === data.val() + 1) ||
-                          (data.exists() && newData.val() === data.val() - 1)"
-          },
-          
-          // All other fields can only be written by admins
-         "$other": {
-           ".validate": "root.child('users/' + auth.uid + '/admin').val() === true"
-         }
+        ".write": "auth != null &&
+                  (
+                    // Admins can write
+                    root.child('users/' + auth.uid + '/admin').val() === true ||
+                    (
+                      // If not admin, they can only write to playlist_count for existing data
+                      // Our validate rule for playlist_count ensures it can only be incremented and de-incremented
+                      data.exists() &&
+                      newData.hasChild('playlist_count') &&
+                      // Make sure they aren't changing any other fields
+                      data.child('slug').val() === newData.child('slug').val() && 
+                      data.child('title').val() === newData.child('title').val()
+                    )
+                  )",
+        // Required fields
+        ".validate": "newData.hasChildren(['title', 'slug', 'playlist_count'])",
+        "slug": {
+          ".validate": "newData.isString()"
+        },
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "playlist_count": {
+          ".validate": "newData.isNumber() &&
+                        // It's being initialized at 0
+                        (
+                          !data.exists() &&
+                          newData.val() === 0
+                        ) ||
+                        // Or it's being incremented / de-incremented
+                        (
+                          data.isNumber() && 
+                          (
+                              newData.val() === data.val() + 1 ||
+                              newData.val() === data.val() - 1
+                          )
+                        )"
+        },
+        // No other fields are allowed
+        "$other": {
+          ".validate": false
+        }              
       }  
-    },
-    "relations": {
-      ".read": true,
-      "section_to_outcome": {
-        "home": {
-          "$outcome": {
-            // Must be an admin to add an outcome to the homepage
-            ".write": "auth != null && root.child('users/' + auth.uid + '/admin').val() === true"
-          }
-        }
-      },
-      // Other paths are writeable by anyone for now
-      "$other": {
-        ".write": true
-      }
     },
     "playlists": {
       ".read": true,
-      ".write": true,
       "$playlist": {
-        ".write": true
-      }
-    },
-    "options": {
-      ".read": true,
-      "$option": {
-          // Must be logged in AND either creating new data or updating existing data belonging to you
-         ".write": "auth != null && 
-                      (!data.exists() || data.child('author_id').val() == auth.uid)",
-          // Must include required children, author_id must match auth.id, and description must be a string
-         ".validate": "newData.hasChildren(['author_id', 'description']) && 
-                        newData.child('author_id').val() == auth.uid && 
-                          newData.child('description').isString()"
+        ".write": "auth != null &&
+                  (
+                    // Can write if creating a new Playlist
+                    !data.exists() ||
+                    // Or if user is the author
+                    data.child('author_id').val() === auth.uid
+                  )",
+        // TODO: Require description and write an empty description to Firebase when creating a playlist
+        ".validate": "newData.hasChildren(['author_id'])",
+        "author_id": {
+          ".validate": "newData.val() === auth.uid"
+        },
+        "description": {
+          ".validate": "newData.isString()"
+        }
       }
     },
     "suboutcomes": {
       ".read": true,
       "$suboutcome": {
-
-          ".write": "auth != null", // Must be logged in
-          
-          "option_count": {
-            ".validate": "(!data.parent().exists() && newData.val() === 0) || // If suboutcome is being created, option_count must be 0
-                          (data.exists() && newData.val() === data.val() + 1) || // If data exists already only allow increment
-                          (data.exists() && newData.val() === data.val() - 1)" // And de-increment
-          },
-          
-          // All other fields can only be written only if suboutcome is new OR if user is author
-         "$other": {
-           ".validate": "!data.parent().exists() || // Allow write if suboutcome is new
-                            data.parent().child('author_id').val() === auth.uid" // Or if user is author
-         }
+        ".write": "auth != null &&
+                  (
+                    // Can write if creating a new Suboutcome
+                    !data.exists() ||
+                    // Or if user is the author
+                    data.child('author_id').val() === auth.uid ||
+                    (
+                      // If not author, they can only write to option_count for existing data
+                      // Our validate rule for option_count ensures ensures it can only be incremented and de-incremented
+                      data.exists() &&
+                      newData.hasChild('option_count') &&
+                      // Make sure they aren't changing any other fields
+                      data.child('title').val() === newData.child('title').val() &&
+                      data.child('author_id').val() === newData.child('author_id').val()
+                    )
+                  )",
+        // Required fields
+        // TODO: add author_id once we start writing that to Firebase
+        // TODO: add option_count once we update myelin-gabe.firebaseapp.com
+        ".validate": "newData.hasChildren(['title'])", 
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "option_count": {
+          ".validate": "newData.isNumber() &&
+                        // It's being initialized at 0
+                        (
+                          !data.exists() &&
+                          newData.val() === 0
+                        ) ||
+                        // Or it's being incremented / de-incremented
+                        (
+                          data.isNumber() && 
+                          (
+                            newData.val() === data.val() + 1 ||
+                            newData.val() === data.val() - 1
+                          )
+                        )"
+        },
+        "author_id": {
+          ".validate": "newData.val() === auth.uid"
+        },
+        // No other fields are allowed
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "options": {
+      ".read": true,
+      "$option": {
+        // Must be logged in
+        // Must be creating a new option OR be the author
+        ".write": "auth != null && 
+                  (
+                    !data.exists() || 
+                    data.child('author_id').val() === auth.uid
+                  )",      
+        // Required fields
+        ".validate": "newData.hasChildren(['author_id', 'description'])", 
+        "author_id": {
+          ".validate": "newData.val() === auth.uid"
+        },  
+        "description": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    // TODO: Check the author_id in a playlist before allowing user to add a suboutcome to it
+    "relations": {
+      "section_to_outcome": {
+        "home": {
+          ".read": true,
+          "$outcome": {
+            // Must be an admin to add an outcome to the homepage
+            ".write": "auth != null && 
+                      root.child('users/' + auth.uid + '/admin').val() === true"
+          }
+        }
+      },
+      "outcome_to_playlist": {
+        "$outcome": {
+          ".read": true,
+          "$playlist": {
+            ".write": "auth != null &&
+                      (
+                        ( 
+                          // If deleting and are the owner of the playlist
+                          !newData.exists() &&
+                           root.child('playlists/' + data.child('playlist_id').val() + '/author_id').val() === auth.uid
+                        ) || 
+                        // If writing and are owner of the playlist
+                        root.child('playlists/' + newData.child('playlist_id').val() + '/author_id').val() === auth.uid ||
+                        (
+                          // If not author, they can only write to upvote_count for existing data
+                          // Our validate rule for upvote_count ensures ensures it can only be incremented and de-incremented
+                          data.exists() &&
+                          newData.hasChild('upvote_count') &&
+                          // Make sure they aren't changing any other fields
+                          data.child('parent_outcome_id').val() === newData.child('parent_outcome_id').val() &&
+                          data.child('playlist_id').val() === newData.child('playlist_id').val()
+                        )
+                      )",
+            // Required fields
+            // And make sure parent object keys ($outcome and $playlist) are formatted correctly
+            ".validate": "newData.hasChildren(['parent_outcome_id', 'playlist_id', 'upvote_count']) &&
+                          $outcome === 'outcome_' + newData.child('parent_outcome_id').val() &&
+                          $playlist === 'playlist_' + newData.child('playlist_id').val() ",
+            "parent_outcome_id": {
+              ".validate": "newData.isString()"
+            },
+            "playlist_id": {
+              ".validate": "newData.isString()"
+            },
+            "upvote_count" : {
+              ".validate": "newData.isNumber() &&
+                            // It's being initialized at 0
+                            (
+                              !data.exists() &&
+                              newData.val() === 0
+                            ) ||
+                            // Or it's being incremented / de-incremented
+                            (
+                              data.isNumber() && 
+                              (
+                                newData.val() === data.val() + 1 ||
+                                newData.val() === data.val() - 1
+                              )
+                            )"
+            },
+            // No other fields are allowed
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "playlist_to_suboutcome": {
+        "$playlist": {
+          ".read": true,
+          "$suboutcome": {
+            ".write": "auth != null &&
+                      (
+                        ( 
+                          // If deleting and are the owner of the playlist
+                          !newData.exists() &&
+                           root.child('playlists/' + data.child('parent_playlist_id').val() + '/author_id').val() === auth.uid
+                        ) || 
+                        // If writing and are owner of the playlist
+                        root.child('playlists/' + newData.child('parent_playlist_id').val() + '/author_id').val() === auth.uid
+                      )",
+            // Required fields
+            // And make sure parent object keys ($playlist and $suboutcome) are formatted correctly
+            ".validate": "newData.hasChildren(['parent_playlist_id', 'suboutcome_id', 'order']) &&
+                          $playlist === 'playlist_' + newData.child('parent_playlist_id').val() &&
+                          $suboutcome === 'suboutcome_' + newData.child('suboutcome_id').val()",
+            "parent_playlist_id": {
+              ".validate": "newData.isString()"
+            },
+            "suboutcome_id": {
+              ".validate": "newData.isString()"
+            },
+            "order": {
+              ".validate": "newData.isNumber()"
+            },
+            "chosen_option": {
+              ".validate": "newData.isString()"
+            },
+            // No other fields are allowed
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      // TODO: double-check this is right (any other owner privs we should be checking?)
+      "suboutcome_to_option": {
+        "$suboutcome": {
+          ".read": true,
+          "$option": {
+            ".write": "auth != null &&
+                      (
+                        ( 
+                          // If deleting and are the owner of the option
+                          !newData.exists() &&
+                           root.child('options/' + data.child('option_id').val() + '/author_id').val() === auth.uid
+                        ) || 
+                        // If writing and are owner of the option
+                        root.child('options/' + newData.child('option_id').val() + '/author_id').val() === auth.uid ||
+                        (
+                          // If not author, they can only write to upvote_count for existing data
+                          // Our validate rule for upvote_count ensures ensures it can only be incremented and de-incremented
+                          data.exists() &&
+                          newData.hasChild('upvote_count') &&
+                          // Make sure they aren't changing any other fields
+                          data.child('parent_suboutcome_id').val() === newData.child('parent_suboutcome_id').val() &&
+                          data.child('option_id').val() === newData.child('option_id').val()
+                        )
+                      )",
+            // Required fields
+            // And make sure parent object keys ($suboutcome and $option) are formatted correctly
+            ".validate": "newData.hasChildren(['parent_suboutcome_id', 'option_id', 'upvote_count']) &&
+                          $suboutcome === 'suboutcome_' + newData.child('parent_suboutcome_id').val() &&
+                          $option === 'option_' + newData.child('option_id').val()",
+            "parent_suboutcome_id": {
+              ".validate": "newData.isString()"
+            },
+            "option_id": {
+              ".validate": "newData.isString()"
+            },
+            "upvote_count" : {
+              ".validate": "newData.isNumber() &&
+                            // It's being initialized at 0
+                            (
+                              !data.exists() &&
+                              newData.val() === 0
+                            ) ||
+                            // Or it's being incremented / de-incremented
+                            (
+                              data.isNumber() && 
+                              (
+                                newData.val() === data.val() + 1 ||
+                                newData.val() === data.val() - 1
+                              )
+                            )"
+            },
+            // No other fields are allowed
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      // TODO (future): Before letting people create a new playlist we may want to check that they have no value here (or they could create multiple playlists for an outcome)
+      "user_to_outcome_to_playlist": {
+        "$user": {
+          "$outcome": {
+            ".read": true,
+            ".write": "$user === 'user_' + auth.uid",
+            ".validate": "newData.isString()"
+          }
+        }
+      },
+      // No other fields are allowed
+      "$other": {
+        ".validate": false
       }
     },
     "users": {
-      ".read": true,
-      ".write": true
+      "$user_id": {
+        ".read": true,
+        ".write": "$user_id === auth.uid",
+        ".validate": "newData.hasChildren(['id', 'username', 'full_name'])",
+        "id": {
+          ".validate": "newData.isString()"
+        },
+        "username": {
+          ".validate": "newData.isString()"
+        },
+        "full_name": {
+          ".validate": "newData.isString()"
+        },
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "provider": {
+          ".validate": "newData.isString()"
+        },
+        "editing_playlist": {
+          ".validate": "newData.hasChildren(['parent_outcome_id', 'playlist_id', 'collapse'])",
+          "parent_outcome_id": {
+            ".validate": "newData.isString()"
+          },
+          "playlist_id": {
+            ".validate": "newData.isString()"
+          },
+          "collapse": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "admin": {
+          // Don't let people set self as admins (must be changed in Firebase forge)
+          ".validate": false 
+        },
+        // No other fields are allowed
+        "$other": {
+          ".validate": false
+        }
+      }
     },
     "upvotes": {
-      ".read": true,
-      ".write": true
+      "option": {
+        "$user_id": {
+          "$suboutcome": {
+            ".read": true,
+            ".write": "$user_id === auth.uid",
+            ".validate": "newData.hasChildren(['option_id', 'timestamp'])",
+            "option_id": {
+              ".validate": "newData.isString()"
+            },
+            "timestamp": {
+              ".validate": "newData.isNumber()"
+            },
+            // No other fields are allowed
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "playlist": {
+        "$user_id": {
+          "$outcome": {
+            ".read": true,
+            ".write": "$user_id === auth.uid",
+            ".validate": "newData.hasChildren(['playlist_id', 'timestamp'])",
+            "playlist_id": {
+              ".validate": "newData.isString()"
+            },
+            "timestamp": {
+              ".validate": "newData.isNumber()"
+            },
+            // No other fields are allowed
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
     }
   }
 }
