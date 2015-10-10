@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon; 
@@ -28,32 +30,7 @@ var CreateOptionButton = React.createClass({
       return;
     }
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
-    this.refOptions = this.firebase.child('options');
-    this.refSuboutcomeToOption = this.firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.suboutcome_id);
-
-    var newOptionRef = this.refOptions.push({ 
-      author_id: this.state.user.id,
-      description: '',
-      editing: true
-    });
-
-    var optionId = newOptionRef.key();
-
-    this.refSuboutcomeToOption.child('option_' + optionId).set({
-      parent_suboutcome_id: this.props.suboutcome_id,
-      option_id: optionId,
-      upvote_count: 0
-    });
-
-    // Increment the suboutcome's option_count
-    this.firebase.child('suboutcomes/' + this.props.suboutcome_id + '/option_count').transaction(function(currentValue) {
-      if (!currentValue)
-        currentValue = 0;
-
-      return currentValue + 1;
-    });
+    DbHelper.options.create(this.props.suboutcome_id, this.state.user.id);
   },
 
   render: function () {

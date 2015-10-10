@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 
 var Button = require('react-bootstrap').Button; 
@@ -48,6 +50,7 @@ var Option = React.createClass({
   */
 
   componentWillMount: function() {
+
     this.bindFirebaseRefs();
   },
 
@@ -137,10 +140,11 @@ var Option = React.createClass({
   },
 
   delete: function(){
+   
+    var option_id = this.props.option_id
+    var parent_suboutcome_id = this.props.relationData.parent_suboutcome_id;
 
-    // Remove option from suboutcome
-    var refSuboutcomeToOption = this.firebase.child('relations/suboutcome_to_option/suboutcome_' + this.props.relationData.parent_suboutcome_id  + '/option_' + this.props.option_id);
-    refSuboutcomeToOption.remove();
+    DbHelper.options.delete(parent_suboutcome_id, this.props.option_id);
 
     // TODO: Should probably remove this from chosen_option field (of playlist_to_suboutcome table) ...
     // ... if it is the chosen_option. Should we allow that if they are not the owner of the subutcome? ...
