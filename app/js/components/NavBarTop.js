@@ -23,12 +23,16 @@ var NavbarTop = React.createClass({
     this.context.router.transitionTo('app');
   },
 
+
   render: function() {
+
+
 
     var icon = (
       <span className="logo">
         <a href="#" onClick={this._handleBrandClick}>
-          <img src="/images/monogram.svg" height="36" width="36" alt="Logo" />
+         <span className="blacknwhite"><img src="/images/monogram.svg" height="160%" width="160%" alt="Logo" /></span>
+         <span className="purple"><img src="/images/monogram2.svg" height="160%" width="160%" alt="Logo" /></span>
         </a>
       </span>
     );

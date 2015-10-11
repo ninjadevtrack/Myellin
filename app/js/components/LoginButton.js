@@ -72,7 +72,7 @@ var LoginButton = React.createClass({
                 
                 { this.state.user &&
                     <div>
-                        {this.state.user.username} (<a href="#" onClick={this.logout}>logout</a>)
+                        {this.state.user.username}&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{lineHeight: '2.4em', textDecoration: 'underline'}}><a href="#" onClick={this.logout}>logout</a></span>
                     </div>
                 }
 
@@ -91,7 +91,7 @@ var LoginButton = React.createClass({
                             </a>
                         </div>
                         <div style={{display: (this.state.hover ? 'none' : 'inline')}}>
-                           <span style={{color: '#9B9B9B', lineHeight: '2.5em'}}> sign up&nbsp;&nbsp;|&nbsp;&nbsp;login</span>
+                           <span style={{color: '#222', lineHeight: '2.4em'}}> sign up&nbsp;&nbsp;|&nbsp;&nbsp;login</span>
                         </div>
                     </div>
                 }

@@ -9,37 +9,36 @@ margin-top: 60px;
 /* ==========================================================================
    State 1 - Homepage
    ========================================================================== */
-.column.state-1.active {
+.state-1 {
   padding-left: 20%;
   padding-right: 20%;
   border-left: 0px solid transparent;
   width: 100%;
-  opacity: 1;
+
 }
 
 /* ==========================================================================
    State 2 & 3 - Playlists open
    ========================================================================== */
 
-.state-2.hovered {
-	width: 40%;
-	opacity: 1;
-
-	.list-group {
-	width: 100%;
-	margin-left: 0;
-}
-}
-
-.state-2  {
+.state-2 {
 	width: 7%;
-	opacity: 0.1;
 
 	.list-group {
 	width: 600%;
 	margin-left: -500%;
 	margin-top: 0.5em;
+	font-size: 0.8em;
 	}
+	.badge {
+		font-size: 0.8em;
+	}
+
+}
+
+.state-3 {
+	padding-top: -20px;
+   width: 93%;
 
 }
 
@@ -59,23 +58,40 @@ a.list-group-item {
 }
 */
 
-.state-3.column-1-hovered {
-	width: 60%;
-	margin-top: -20px;
 
-	.playlist-container {
+
+.state-3.column-1-hovered {
+	width: 70%;
+	padding-top: -20px;
+
+
+.playlist-container {
   margin-left: 10%;
   min-width: 80%;
   margin-right: 10%;
  }
- .createplaylistbutton {
- 	display: none;
- }
+
 }
 
-.state-3 {
-	padding-top: -20px;
-   width: 93%;
+.state-2.hovered {
+	width: 30%;
+	opacity: 1;
+	background: #fff;
+
+	.list-group {
+	opacity: 1;
+	width: 100%;
+	margin-left: 0;
+	font-size: 0.8em;
+	-webkit-transition-delay: 300ms; 
+    transition-delay: 300ms;
+}
+
+.badge {
+		font-size: 0.8em;
+	}
+
+
 
 }
 
@@ -83,115 +99,37 @@ a.list-group-item {
  /* ==========================================================================
    State 4, 5 & 6 - Options open
  ========================================================================== */
-
-
+ 
 .state-4 {
-	width: 10%;
-	opacity: 0.1;
-}
+	display: none;
 
-.state-4.hovered {
-	width: 40%;
-	opacity: 1;
-
-	.list-group {
-	width: 100%;
-	margin-left: 0;
-	margin-top: 0;
-}
-.form-control {
-	display: block;
-}
 }
 
 .state-5 {
-		padding-top: -20px;
-	width: 80%;
-	opacity: 1;
-		.playlist-container {
-  margin-left: 20%;
-  min-width: 64%;
-  margin-right: 16%;
- }
-
+width: 10%;
+.playlist-container {
+	opacity: 0.2;
+	width: 800%;
+	margin-left: -700%;
+	overflow: hidden; 
 }
 
-
-.state-5.column-1-hovered {
-		margin-top: -20px;
-	width: 60%;
-	opacity: 0.1;
+.learninglistheader {
+	opacity: 0.2;
+	width: 800%;
+	margin-left: -700%;
 }
-
-.state-5.column-3-hovered {
-	padding-top: -20px;
-	width: 40%;
-	opacity: 0.1;
-	.playlist-container {
-  margin-left: 5%;
-  min-width: 90%;
-  margin-right: 5%;
- }
+.createplaylistbutton {
+	display: none;
 }
-
+}
 
 .state-6 {
-	width: 10%;
-	opacity: 0.1;
-	margin-top: 60px;
-
-.options-multiple {
-	width: 400%;
-}
-
-.nomargin-playlist {
-	width: 400%;
-
-}
-	.panel-heading  {
-	opacity: 0;
-	}
-}
-
-.state-6.hovered {
-	width: 60%;
-	opacity: 1;
-
-.options-multiple {
-	width: 100%;
-}
-
-.nomargin-playlist {
-	width: 70%;
-
-}
+padding-top: -20px;
+width: 90%;
 
 
 }
-
-
-.state-4.column-3-hovered {
-	display: none;
-}
-
-.state-4 {
-	.list-group {
-	width: 400%;
-	margin-left: -300%;
-	margin-top: 0.5em;
-}
-
-.form-control {
-	display: none;
-}
-}
-
-
-
-.state-6.column-1-hovered {
-	display: none;
-}
-
 
 
 

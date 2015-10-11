@@ -131,9 +131,9 @@ var OutcomePlaylists = React.createClass({
       <div>
 
         { outcome && 
-          <div>
+          <div className='learninglistheader'>
            <div style={{padding: '50px', fontSize:'2.5em', textAlign: 'center', width: '100%'}}>
-            {outcome.title}
+            how to {outcome.title}
           </div>
  <div style={{display: '-webkit-flex', display: 'flex', webkitFlexDirection: 'row', flexDirection: 'row', webkitFlexWrap: 'nowrap', flexWrap:'nowrap', width: '100%'}}>
 <div style={{padding: '10px', fontSize:'1.5em', textAlign: 'center', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', width: '50%'}}>
