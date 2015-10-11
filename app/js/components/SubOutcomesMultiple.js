@@ -215,17 +215,21 @@ var SubOutcomesMultiple = React.createClass({
 
     var suboutcomes = this.state.data.slice(0);
 
+    var refPlaylistToSuboutcome = {};
+
     for (var i = 0; i < suboutcomes.length; i++) { 
 
-      var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id);
-
-      refPlaylistToSuboutcome.update({
+      refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
         parent_playlist_id: this.props.playlist_id,
         suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
         chosen_option: (suboutcomes[i].chosen_option || null), // Copy over chosen_option
         order: i
-      });
+      } 
     }
+
+    // Update all firebase paths at same time
+    // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
+    this.firebase.update(refPlaylistToSuboutcome);
   },
 
   render: function () {

@@ -218,11 +218,6 @@ var Option = React.createClass({
       editable = true;
     }
 
-    console.log('FORCE EDIT:'+this.props.forceEdit);
-    console.log('EDITABLE:'+editable);
-
-    console.log('OPTION: ', this.state.data);
-
     var description = '';
     if (this.state.data.description){
       var descriptionParts = this.getDescriptionParts(this.state.data.description);
