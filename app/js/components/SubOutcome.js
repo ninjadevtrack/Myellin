@@ -148,7 +148,7 @@ var SubOutcome = React.createClass({
             <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
                 { this.props.relationData.chosen_option && 
-                  <Option contentOnly={true} option_id={this.props.relationData.chosen_option} />
+                  <Option forceEdit={this.props.editable} contentOnly={true} option_id={this.props.relationData.chosen_option} />
                 }
               </div>
             </div>

@@ -211,11 +211,15 @@ var Option = React.createClass({
       return false;
 
     var editable = false;
-    if (this.state.data.editing && 
-          this.state.user &&
-            this.state.user.id === this.state.data.author_id){
+    // If author AND (editing OR forceEdit)
+    // We use forceEdit prop when in edit playlist modal (should always be editable if you are author)
+    if ((this.state.user && this.state.user.id === this.state.data.author_id) &&
+          (this.props.forceEdit || this.state.data.editing)){
       editable = true;
     }
+
+    console.log('FORCE EDIT:'+this.props.forceEdit);
+    console.log('EDITABLE:'+editable);
 
     console.log('OPTION: ', this.state.data);
 
@@ -254,16 +258,6 @@ var Option = React.createClass({
               <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
                 {this.state.data.description}
               </textarea>
-
-              <div>
-                <Button onClick={this.save} style={{marginTop:'2em'}}>
-                  Save
-                </Button>
-
-                <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
-                  Cancel
-                </Button>
-              </div>
             </div>
           }
 
