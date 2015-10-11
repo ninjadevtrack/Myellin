@@ -23,21 +23,25 @@ var NavbarTop = React.createClass({
     this.context.router.transitionTo('app');
   },
 
+
   render: function() {
+
+
 
     var icon = (
       <span className="logo">
         <a href="#" onClick={this._handleBrandClick}>
-          <img src="/images/monogram.svg" height="36" width="36" alt="Logo" />
+         <span className="blacknwhite"><img src="/images/monogram.svg" height="160%" width="160%" alt="Logo" /></span>
+         <span className="purple"><img src="/images/monogram2.svg" height="160%" width="160%" alt="Logo" /></span>
         </a>
       </span>
     );
 
-    var brand = (this.props.section ? this.props.section.title : icon);
+
 
     return (
       <div className='navbarhidemobilemenu'>
-        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={brand}>{/* This is the eventKey referenced */}
+        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
           <Nav navbar left>
           <div className="compensate-for-the-nav">
             <div className="inputplaceholder">

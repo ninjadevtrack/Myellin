@@ -54,3 +54,34 @@
   }
 
 }
+
+.back-button {
+  position: fixed;
+  width: 50px;
+  height: 100vh;
+  background-color: #FBFBFB;
+  margin-left: -52px;
+  -webkit-align-items: center; /* Safari */
+  align-items:         center;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-justify-content: center; /* Safari */
+  justify-content:         center;
+}
+
+.back-button:hover {
+  position: fixed;
+  width: 50px;
+  background-color: #9D9D9D;
+     .backicon {
+    color: #fff;
+   }
+
+}
+
+ .backicon {
+  margin-top: -110px;
+  color: #000;
+  font-size: 2.5em;
+ }
+

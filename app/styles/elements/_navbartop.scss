@@ -57,6 +57,7 @@
   z-index: 9999;
   width: 38px;
   left: 50%;
+  margin-top: -2px;
   padding-right: 19; /* half of width */
 }
 
@@ -64,6 +65,25 @@
   background: transparent;
 }
 
+.logo:hover {
 
+  .blacknwhite {
+    display: none;
+  }
 
+.purple {
+  display: inline;
+}
+
+}
+
+.logo {
+    .blacknwhite {
+    display: inline;
+  }
+
+.purple {
+  display: none;
+}
+}
 

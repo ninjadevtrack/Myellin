@@ -5,6 +5,7 @@ var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
+var Glyphicon= require('react-bootstrap').Glyphicon;
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -86,6 +87,21 @@ var OptionsMultiple = React.createClass({
 
     return (
       <div className="options-multiple">
+       <div className="back-button">
+      <Glyphicon glyph='arrow-left' className='backicon'/></div>
+      <div>
+           <div style={{padding: '20px', fontSize:'1.5em', textAlign: 'center', width: '100%'}}>
+           Prerequisites
+          </div>
+ <div style={{display: '-webkit-flex', display: 'flex', webkitFlexDirection: 'row', flexDirection: 'row', webkitFlexWrap: 'nowrap', flexWrap:'nowrap', width: '100%'}}>
+<div style={{padding: '8px', fontSize:'1.2em', textAlign: 'center', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', width: '50%'}}>
+          3 alternatives
+          </div>
+          <div style={{padding: '8px', fontSize:'1.2em', textAlign: 'center', color: '#7A1D58', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', borderLeft: '3px solid  #FDFDFD', width: '50%'}}>
+            + <span style={{textDecoration: 'underline'}}>add an alternative</span>
+          </div>
+          </div>
+             </div>
         {options}
       </div>
     );

@@ -131,9 +131,19 @@ var OutcomePlaylists = React.createClass({
       <div>
 
         { outcome && 
-          <div style={{padding: '50px', fontSize:'18px', backgroundColor: '#efefef'}}>
-            {outcome.title} ({outcome.playlist_count} playlists)
+          <div className='learninglistheader'>
+           <div style={{padding: '50px', fontSize:'2.5em', textAlign: 'center', width: '100%'}}>
+            how to {outcome.title}
           </div>
+ <div style={{display: '-webkit-flex', display: 'flex', webkitFlexDirection: 'row', flexDirection: 'row', webkitFlexWrap: 'nowrap', flexWrap:'nowrap', width: '100%'}}>
+<div style={{padding: '10px', fontSize:'1.5em', textAlign: 'center', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', width: '50%'}}>
+            {outcome.playlist_count} learning lists
+          </div>
+          <div style={{padding: '10px', fontSize:'1.5em', textAlign: 'center', color: '#00FF9B', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', borderLeft: '3px solid  #FDFDFD', width: '50%'}}>
+            + <span style={{textDecoration: 'underline'}}>add a learning list</span>
+          </div>
+          </div>
+             </div>
         }
 
         { outcome_id && 
