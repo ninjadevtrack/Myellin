@@ -179,16 +179,22 @@ var Option = React.createClass({
 
   chooseOption: function(){
 
+    DbHelper.suboutcomes.choose_option(this.getParams().playlist_id, 
+                                          this.props.relationData.parent_suboutcome_id,
+                                            this.state.data['.key']);
+
     // Make this option the chosen_option for the parent suboutcome
     // We store this in the relations table so that a different playlist/suboutcome pair ...
     // ... can have a different chosen option
     // Note: we get the playlist_id from the url, since we don't pass this down via props ...
     // ... this is a bit hacky. Something to improve once we have a better system for accessing app state.
+    /*
     this.firebase.child('relations' +
                           '/playlist_to_suboutcome' +
                           '/playlist_' + this.getParams().playlist_id + 
                           '/suboutcome_' + this.props.relationData.parent_suboutcome_id + 
                           '/chosen_option').set(this.state.data['.key']);
+    */
   },
 
   save: function(){
@@ -236,7 +242,31 @@ var Option = React.createClass({
       return (
         <div>
           <AuthorName id={this.state.data.author_id} />
-          {optionContent}
+          
+          { !editable &&
+            <div>
+              {optionContent}
+            </div>
+          }
+
+          { editable &&
+            <div>
+              <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
+                {this.state.data.description}
+              </textarea>
+
+              <div>
+                <Button onClick={this.save} style={{marginTop:'2em'}}>
+                  Save
+                </Button>
+
+                <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          }
+
         </div>
       );
     }

@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Router = require('react-router');
 var PanelGroup = require('react-bootstrap').PanelGroup;
@@ -156,61 +158,54 @@ var SubOutcomesMultiple = React.createClass({
     return false;
   },
 
+  createThenAdd: function(title){
+
+    // Create the suboutcome
+    var suboutcome_id = this.create(title, function(error){
+        if (error){
+          // If there was an error creating the suboutcome ...
+          // ... delete it from the playlist.
+          // By inserting immediately after push and then rolling back on error ...
+          // ... we are able to have the playlist UI update immediately
+          this.delete(suboutcome_id);
+          console.log('Error: could not create suboutcome');
+          return;
+        }
+
+    }.bind(this));
+
+    // Add the suboutcome to playlist
+    this.add(suboutcome_id);
+
+    // Create a new option to populate this suboutcome
+    var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
+    
+    // Add the option as chosen_option for suboutcome
+    DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
+  },
+
+  // Create a new suboutcome
+  create: function(title, callback){ 
+    var suboutcome_id = DbHelper.suboutcomes.create(title, this.state.user.id, callback);
+    return suboutcome_id;
+  },
 
   // Add a suboutcome to this playlist
-  add: function(id, order){
-
+  // TODO: Move to DbHelper.js
+  add: function(suboutcome_id, order){
     // Add to end if no order number set
     if (!order && order !== 0)
       order = this.state.data.length;
 
-    this.refSubOutcomes.child('suboutcome_' + id).set({
+    this.refSubOutcomes.child('suboutcome_' + suboutcome_id).set({
       parent_playlist_id: this.props.playlist_id,
-      suboutcome_id: id,
+      suboutcome_id: suboutcome_id,
       order: order
     });
   },
 
-  // Create a new suboutcome
-  create: function(title){  
-    var refSuboutcomes = this.firebase.child('suboutcomes');
-    
-    var newRef = refSuboutcomes.push({ 
-        title: title,
-        author_id: this.state.user.id,
-        option_count: 0
-    }, 
-    // Callback
-    function(error){
-
-      if (error){
-        console.log('error: could not create suboutcome');
-        // Delete from relations table
-        // By inserting immediately after push and then rolling back on error ...
-        // ... we are able to have the playlist UI update immediately
-        var suboutcome_id = newRef.key();
-        this.delete(suboutcome_id)
-      }
-    }.bind(this));
-
-    var suboutcome_id = newRef.key();
-    return suboutcome_id;
-  },
-
-  createThenAdd: function(title){
-    var suboutcome_id = this.create(title);
-    this.add(suboutcome_id);
-  },
-
   delete: function(suboutcome_id){
-
-    // Remove suboutcome from playlist
-    var refPlaylistToSuboutcome = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcome_id);
-    refPlaylistToSuboutcome.remove();
-
-    // Delete the suboutcome
-    //var refSuboutcome = this.firebase.child('suboutcomes/' + suboutcome_id);
-    //refSuboutcome.remove();
+    DbHelper.suboutcomes.delete(this.props.playlist_id, suboutcome_id);
   },
 
   // This iterates through suboutcomes (this.state.data) and saves their order to Firebase
