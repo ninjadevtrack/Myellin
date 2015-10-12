@@ -17,11 +17,9 @@ var DropdownButton = require('react-bootstrap').DropdownButton;
 require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
-
 var ComponentTypes = require('./ComponentTypes');
-
+var OptionContent = require('./OptionContent');
 var AuthMixin = require('./../mixins/AuthMixin.js');
-
 var ReactDnD = require('react-dnd');
 
 var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
@@ -33,6 +31,7 @@ var Option = React.createClass({
   getInitialState: function(){
     return {
       data: null,
+      playlist: null,
       //editable: (this.props.editable || false)
     };
   },
@@ -51,7 +50,7 @@ var Option = React.createClass({
 
   componentWillMount: function() {
 
-    this.bindFirebaseRefs();
+      this.bindFirebaseRefs();
   },
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -116,7 +115,7 @@ var Option = React.createClass({
     //this.bindAsObject(this.refSuboutcome, 'suboutcome');     
   },
 
-  menuOnSelect: function(event, eventKey){
+  menuSelect: function(event, eventKey){
     switch (eventKey){
       case 'switch':
         this.chooseOption();
@@ -197,10 +196,11 @@ var Option = React.createClass({
     */
   },
 
-  save: function(){
+  save: function(description){
 
-    var description = React.findDOMNode(this.refs.description).value.trim();
-    this.refOption.update({ description: description });
+    this.refOption.update({ 
+        description: description 
+    });
 
     this.toggleEdit();
   },
@@ -210,121 +210,20 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
-    var editable = false;
-    // If author AND (editing OR forceEdit)
-    // We use forceEdit prop when in edit playlist modal (should always be editable if you are author)
-    if ((this.state.user && this.state.user.id === this.state.data.author_id) &&
-          (this.props.forceEdit || this.state.data.editing)){
-      editable = true;
-    }
-
-    var description = '';
-    if (this.state.data.description){
-      var descriptionParts = this.getDescriptionParts(this.state.data.description);
-
-      description = descriptionParts.map(function(part, i){
-        if (part.type === 'url'){
-          return ( <UrlEmbed url={part.content} /> );
-        }else{
-          return part.content;
-        }
-      });
-    }
-
-    var optionContent = (
-      <div>
-        {description}
-      </div>
-    );
-
-    if (this.props.contentOnly){
-      return (
-        <div>
-          <AuthorName id={this.state.data.author_id} />
-          
-          { !editable &&
-            <div>
-              {optionContent}
-            </div>
-          }
-
-          { editable &&
-            <div>
-              <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
-                {this.state.data.description}
-              </textarea>
-            </div>
-          }
-
-        </div>
-      );
-    }
-
-    var menuItems = [];
-    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id){
-      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
-    }
-
-    if (this.state.user && this.state.playlist && this.state.user.id === this.state.playlist.author_id)
-      menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
-
-
     return this.props.connectDragSource(
-      <div className="option-container">
-
-        { !editable && menuItems.length >= 1 &&
-          <div style={{ float: 'right'}}>
-            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.menuOnSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-              {menuItems}
-            </DropdownButton>
-          </div>
-        }
-        
-        <AuthorName id={this.state.data.author_id} />
-
-        <div className="upvote">
-          <div className="count">{this.props.relationData.upvote_count}</div>
-
-          <UpvoteButton 
-            label={<Glyphicon glyph='ok-circle'/>}
-            this_type="option"
-            this_id={this.state.data['.key']} 
-            parent_type="suboutcome"
-            parent_id={this.props.relationData.parent_suboutcome_id} />
-        </div>
-        
-        { !editable &&
-          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
-            {optionContent}
-          </div>
-        }
-
-        { editable &&
-          <div>
-            <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
-              {this.state.data.description}
-            </textarea>
-
-            <div>
-              <Button onClick={this.save} style={{marginTop:'2em'}}>
-                Save
-              </Button>
-
-              <Button onClick={this.toggleEdit} style={{marginTop:'2em', marginLeft: '2em'}}>
-                Cancel
-              </Button>
-            </div>
-          </div>
-        }
-
+      <div>
+        <OptionContent 
+          relationData={this.props.relationData}
+          data={this.state.data}
+          playlist={this.state.playlist}
+          contentOnly={this.props.contentOnly}
+          onSave={this.save}
+          onCancel={this.toggleEdit} 
+          onMenuSelect={this.menuSelect} />
       </div>
     );
-        
+
   }
-
-
- 
 
 });
 
