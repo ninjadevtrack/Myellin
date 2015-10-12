@@ -178,10 +178,10 @@ var SubOutcomesMultiple = React.createClass({
     this.add(suboutcome_id);
 
     // Create a new option to populate this suboutcome
-    var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
+    //var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
     
     // Add the option as chosen_option for suboutcome
-    DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
+    //DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
   },
 
   // Create a new suboutcome
@@ -217,8 +217,17 @@ var SubOutcomesMultiple = React.createClass({
 
     var refPlaylistToSuboutcome = {};
 
-    for (var i = 0; i < suboutcomes.length; i++) { 
+    for (var i = 0; i < suboutcomes.length; i++) {
 
+      // TODO: Reach into Option component using refs and call save()
+      // PROBLEM: Because of ReactDND we don't get refs withinin suboutcome (since it's wrapped by ReactDnD)
+      /*
+      console.log('REFS', this.refs.PanelGroup.refs['SubOutcome_' + suboutcomes[i].suboutcome_id]);
+      var optionReactRef = this.refs.PanelGroup.refs['SubOutcome_' + suboutcomes[i].suboutcome_id].refs.option;
+      if (optionReactRef)
+        optionReactRef.refs.save();
+      */
+      
       refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
         parent_playlist_id: this.props.playlist_id,
         suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
@@ -245,7 +254,7 @@ var SubOutcomesMultiple = React.createClass({
     // Setup SubOutcome components
     // Note: eventKey prop is required by <PanelGroup> to control which panel is expanded ...
     // ... <PanelGroup> will pass props to <SubOutcome> which are then forwarded to <Panel> via {...this.props}
-    subOutcomes = subOutcomes.map(function (relationData) {
+    subOutcomes = subOutcomes.map(function (relationData, i) {
 
       var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
 
@@ -261,7 +270,8 @@ var SubOutcomesMultiple = React.createClass({
           editable={this.props.editable}
           onMove={this.handleMove}
           onDelete={this.delete}
-          key={relationData.suboutcome_id} />
+          key={relationData.suboutcome_id}
+          ref={'SubOutcome_' + relationData.suboutcome_id} />
    
       );
     }.bind(this));
@@ -279,7 +289,7 @@ var SubOutcomesMultiple = React.createClass({
 
     return this.props.connectDropTarget(
       <div style={style}>
-        <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
+        <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
           {subOutcomes}
         </PanelGroup>
       </div>

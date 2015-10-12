@@ -5,7 +5,7 @@ var React = require('react/addons');
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
 var Router = require('react-router');
-var OptionContentDescription = require('./OptionContentDescription');
+var OptionDescription = require('./OptionDescription');
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
@@ -17,14 +17,30 @@ require('firebase');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
-var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
-
 var OptionContent = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
+  _getMenuItems: function(){
+
+    var menuItems = [];
+
+    if (this.state.user && this.props.data && this.state.user.id === this.props.data.author_id){
+      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
+
+    if (this.state.user && this.props.playlist && this.state.user.id === this.props.playlist.author_id)
+      menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
+
+    return menuItems;
+  },
 
   _save: function(){
+
+    if (!this.refs.description)
+      return false;
+
     var description = React.findDOMNode(this.refs.description).value.trim();
     this.props.onSave(description);
   },
@@ -37,24 +53,29 @@ var OptionContent = React.createClass({
 
   render: function () {
 
+    var menuItems = this._getMenuItems();
+
+    var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
+
     var editable = false;
     // If author AND (editing OR forceEdit)
     // We use forceEdit prop when in edit playlist modal (should always be editable if you are author)
     if ((this.state.user && this.state.user.id === this.props.data.author_id) &&
-          (this.props.forceEdit || this.props.data.editing)){
+          (this.props.editable || this.props.data.editing)){
       editable = true;
     }
 
-
+    /** DISPLAY INLINE under Suboutcome **/
     if (this.props.contentOnly){
       return (
         <div>
+
 
           <AuthorName id={this.props.data.author_id} />
           
           { !editable &&
             <div>
-              <OptionContentDescription text={this.props.data.description} />
+              <OptionDescription text={this.props.data.description} />
             </div>
           }
 
@@ -70,17 +91,8 @@ var OptionContent = React.createClass({
       );
     }
 
-    var menuItems = [];
-    if (this.state.user && this.props.data && this.state.user.id === this.props.data.author_id){
-      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
-    }
-
-    if (this.state.user && this.props.playlist && this.state.user.id === this.props.playlist.author_id)
-      menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
-
+    /** DISPLAY in Options column **/
     return (
-
 
       <div className="option-container">
 
@@ -107,7 +119,7 @@ var OptionContent = React.createClass({
         
         { !editable &&
           <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
-            <OptionContentDescription text={this.props.data.description} />
+            <OptionDescription text={this.props.data.description} />
           </div>
         }
 

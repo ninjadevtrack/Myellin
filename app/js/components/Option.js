@@ -151,49 +151,11 @@ var Option = React.createClass({
     // ... Figure out the security rules needed for this action.
   },
 
-  getDescriptionParts: function(text){
-
-    // Basic url regex
-    var urlPattern = /(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])/gim;
-
-    // Split into array with url regex as serator
-    // We wrap url regex in ( ) so that match also gets included in array
-    var parts = text.split(urlPattern);
-
-    // Construct an array of objects that include the type (text or url)
-    // We run match on each part to check if url or not
-    // There's probably a better way since seems redundant to run regex again on each part
-    var partsWithType = [];
-    for (var i = 0; i < parts.length; i++) { 
-      var match = parts[i].match(urlPattern);
-      var type = (match ? 'url' : text);
-      partsWithType.push({ type: type, content: parts[i] });
-    }
-
-    //console.log('partsWithType ...');
-    //console.log(partsWithType);
-
-    return partsWithType;
-  },
 
   chooseOption: function(){
-
     DbHelper.suboutcomes.choose_option(this.getParams().playlist_id, 
                                           this.props.relationData.parent_suboutcome_id,
                                             this.state.data['.key']);
-
-    // Make this option the chosen_option for the parent suboutcome
-    // We store this in the relations table so that a different playlist/suboutcome pair ...
-    // ... can have a different chosen option
-    // Note: we get the playlist_id from the url, since we don't pass this down via props ...
-    // ... this is a bit hacky. Something to improve once we have a better system for accessing app state.
-    /*
-    this.firebase.child('relations' +
-                          '/playlist_to_suboutcome' +
-                          '/playlist_' + this.getParams().playlist_id + 
-                          '/suboutcome_' + this.props.relationData.parent_suboutcome_id + 
-                          '/chosen_option').set(this.state.data['.key']);
-    */
   },
 
   save: function(description){
@@ -212,14 +174,19 @@ var Option = React.createClass({
 
     return this.props.connectDragSource(
       <div>
+
         <OptionContent 
           relationData={this.props.relationData}
           data={this.state.data}
           playlist={this.state.playlist}
+          editable={this.props.editable}
           contentOnly={this.props.contentOnly}
           onSave={this.save}
           onCancel={this.toggleEdit} 
-          onMenuSelect={this.menuSelect} />
+          onMenuSelect={this.menuSelect}
+          ref="optionContent" 
+          key={this.state.data['.key']} />
+
       </div>
     );
 

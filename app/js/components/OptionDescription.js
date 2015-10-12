@@ -3,7 +3,7 @@
 var React = require('react/addons');
 var UrlEmbed = require('./UrlEmbed');
 
-var OptionContentDescription = React.createClass({
+var OptionDescription = React.createClass({
 
   _getDescriptionParts: function(text){
 
@@ -23,9 +23,6 @@ var OptionContentDescription = React.createClass({
       var type = (match ? 'url' : text);
       partsWithType.push({ type: type, content: parts[i] });
     }
-
-    //console.log('partsWithType ...');
-    //console.log(partsWithType);
 
     return partsWithType;
   },
@@ -56,4 +53,4 @@ var OptionContentDescription = React.createClass({
 
 });
 
-module.exports = OptionContentDescription;
+module.exports = OptionDescription;

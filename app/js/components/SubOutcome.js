@@ -135,7 +135,8 @@ var SubOutcome = React.createClass({
           expanded={this.state.expanded}
           onSelect={this._toggleExpand}
           key={this.props.key} 
-          accordion>
+          accordion
+          ref="Panel">
 
           { this.state.expanded && this.props.relationData.chosen_option &&
 
@@ -149,16 +150,24 @@ var SubOutcome = React.createClass({
               <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
                 { this.props.relationData.chosen_option && 
                   <Option 
-                    forceEdit={this.props.editable} 
+                    editable={this.props.editable} 
                     contentOnly={true} 
-                    option_id={this.props.relationData.chosen_option} />
+                    option_id={this.props.relationData.chosen_option}
+                    ref="option" />
+                }
+                { !this.props.relationData.chosen_option && 
+                  <div style={{textAlign:'center', color: '#CCC'}}>No content yet</div>
                 }
               </div>
             </div>
           }
-          <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
-            options ({this.state.data.option_count})
-          </Button>
+
+          { !this.props.editable && 
+            <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
+              options ({this.state.data.option_count})
+            </Button>
+          }
+
         </Panel>
       </div>
 
