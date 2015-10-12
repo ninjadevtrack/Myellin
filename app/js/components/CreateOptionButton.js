@@ -30,7 +30,7 @@ var CreateOptionButton = React.createClass({
       return;
     }
 
-    DbHelper.options.create(this.props.suboutcome_id, this.state.user.id);
+    DbHelper.options.create(this.state.user.id, this.props.suboutcome_id);
   },
 
   render: function () {
