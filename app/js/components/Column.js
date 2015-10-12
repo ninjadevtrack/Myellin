@@ -39,7 +39,7 @@ var Column = React.createClass({
       float: 'left',
       height: '100vh',
       overflow: 'scroll',
-      webkitTransition: 'all 300ms ease-in-out',
+      WebkitTransition: 'all 300ms ease-in-out',
       transition: 'all 300ms ease-in-out',
     };
 

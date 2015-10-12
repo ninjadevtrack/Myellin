@@ -125,10 +125,11 @@ var OptionContent = React.createClass({
 
         { editable &&
           <div>
-            <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
-              {this.props.data.description}
-            </textarea>
-
+            <textarea ref="description"
+              rows="5" 
+              style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}
+              defaultValue={this.props.data.description} />
+                     
             <div>
               <Button onClick={this._save} style={{marginTop:'2em'}}>
                 Save

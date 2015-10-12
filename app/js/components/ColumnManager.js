@@ -59,7 +59,7 @@ var ColumnManager = React.createClass({
   },
 
   childIsValidColumn: function(child){
-    return (child && child.type === Column.type);
+    return (child && child.type === Column);
   },
 
   onHoverChange: function(column_num, columnChildData, isHovering){

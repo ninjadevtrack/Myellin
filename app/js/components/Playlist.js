@@ -245,9 +245,13 @@ var Playlist = React.createClass({
         }
 
         { this.state.editable &&
-          <textarea ref="description" rows="7" className='inputdescription' placeholder="Edit playbook overview." style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}}>
-            {this.getDescription()}
-          </textarea>
+          <textarea 
+            ref="description" 
+            rows="7" 
+            className='inputdescription' 
+            placeholder="Edit playbook overview." 
+            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}} 
+            defaultValue={this.getDescription()} />
         }
        
         <SubOutcomesMultiple 
