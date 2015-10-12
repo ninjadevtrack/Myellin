@@ -89,18 +89,9 @@ var OptionsMultiple = React.createClass({
       <div className="options-multiple">
        <div className="back-button">
       <Glyphicon glyph='arrow-left' className='backicon'/></div>
-      <div>
-           <div style={{padding: '20px', fontSize:'1.5em', textAlign: 'center', width: '100%'}}>
-           Prerequisites
-          </div>
- <div style={{display: '-webkit-flex', display: 'flex', webkitFlexDirection: 'row', flexDirection: 'row', webkitFlexWrap: 'nowrap', flexWrap:'nowrap', width: '100%'}}>
-<div style={{padding: '8px', fontSize:'1.2em', textAlign: 'center', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', width: '50%'}}>
-          3 alternatives
-          </div>
-          <div style={{padding: '8px', fontSize:'1.2em', textAlign: 'center', color: '#7A1D58', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', borderLeft: '3px solid  #FDFDFD', width: '50%'}}>
-            + <span style={{textDecoration: 'underline'}}>add an alternative</span>
-          </div>
-          </div>
+           <div style={{padding: '60px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#7A1D58'}}>
+            <div style={{fontSize:'3em', lineHeight: '1.4em', margin: '0', padding: '0'}}>Prerequsities</div>
+             <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>22 learning lists&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{textDecoration: 'underline'}}>add a learning list</span></div>
              </div>
         {options}
       </div>
