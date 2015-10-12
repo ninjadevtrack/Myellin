@@ -178,7 +178,7 @@ var OutcomesMultiple = React.createClass({
     return (
       <ListGroup fill>
       <div style={{background: '#FEFEFE', paddingTop: '20px', paddingBottom: '5px'}}>
-      <span style={{paddingLeft: '15px', fontSize: '1.1em', color: '#000', lineHeight: '0.1em'}}>how to</span><span style={{float: 'right', paddingRight: '20px', fontSize: '1.1em', color: '#00FF9B',}}>learning lists</span>
+      <span style={{paddingLeft: '15px', fontSize: '1.1em', color: '#000', lineHeight: '0.1em'}}>how to</span><span style={{float: 'right', paddingRight: '20px', fontSize: '1.1em', color: '#222',}}>learning lists</span>
       </div>
         {createOutcome}
         {elements}

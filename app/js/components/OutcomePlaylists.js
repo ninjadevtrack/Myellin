@@ -131,19 +131,12 @@ var OutcomePlaylists = React.createClass({
       <div>
 
         { outcome && 
-          <div className='learninglistheader'>
-           <div style={{padding: '50px', fontSize:'2.5em', textAlign: 'center', width: '100%'}}>
-            how to {outcome.title}
-          </div>
- <div style={{display: '-webkit-flex', display: 'flex', webkitFlexDirection: 'row', flexDirection: 'row', webkitFlexWrap: 'nowrap', flexWrap:'nowrap', width: '100%'}}>
-<div style={{padding: '10px', fontSize:'1.5em', textAlign: 'center', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', width: '50%'}}>
-            {outcome.playlist_count} learning lists
-          </div>
-          <div style={{padding: '10px', fontSize:'1.5em', textAlign: 'center', color: '#00FF9B', borderTop: '3px solid  #FDFDFD', borderBottom: '3px solid  #FDFDFD', borderLeft: '3px solid  #FDFDFD', width: '50%'}}>
-            + <span style={{textDecoration: 'underline'}}>add a learning list</span>
+           <div className='learninglistheader'>
+           <div style={{padding: '80px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#00FF9B'}}>
+            <div style={{fontSize:'3.5em', lineHeight: '1.6em', margin: '0', padding: '0'}}>how to {outcome.title}</div>
+             <div style={{fontSize:'1.7em', lineHeight: '1em', margin: '0', padding: '0'}}>{outcome.playlist_count} learning lists&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{textDecoration: 'underline'}}>add a learning list</span></div>
           </div>
           </div>
-             </div>
         }
 
         { outcome_id && 
