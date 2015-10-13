@@ -97,9 +97,18 @@ var OptionContent = React.createClass({
 
           { editable &&
             <div>
+
+            <Editor
+              text={this.state.description}
+              options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+              onChange={this._handleChange} />
+
+
+              {/*
               <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
                 {this.props.data.description}
               </textarea>
+            */}
             </div>
           }
 

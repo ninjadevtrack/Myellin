@@ -31,7 +31,7 @@ mixins: [ReactFireMixin, AuthMixin],
           width: '100vw', 
           height: '100vh',
           overflow: 'scroll',
-          zIndex: 9999 }}>
+          zIndex: 1900 }}>
 
           { !this.props.collapse && 
             <Button onClick={this.props.onHide} bsStyle='link' style={{position: 'fixed', right: '29%', bottom: '30px', fontSize: '1em', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', zIndex: '99999 !important'}}>hide</Button>

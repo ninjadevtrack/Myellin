@@ -208,8 +208,6 @@ var Playlist = React.createClass({
       menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
     }
 
-    //menuItems.push( <MenuItem eventKey='report'>Report Spam</MenuItem> );
-
     var classes = cx('playlist-container', {
       'editing': this.state.editable
     });
@@ -218,8 +216,6 @@ var Playlist = React.createClass({
       <div className={classes}>
         <div>
 
-          {/* {this.state.data['.key']} */}
-        
           { !this.state.editable &&
             <div className="upvotediv">
               <div className="count">{this.props.relationData.upvote_count}</div>
