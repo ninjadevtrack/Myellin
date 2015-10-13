@@ -5,12 +5,15 @@ var React = require('react/addons');
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
 var Router = require('react-router');
-var OptionDescription = require('./OptionDescription');
+var Editor = require('react-medium-editor');
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 var MenuItem = require('react-bootstrap').MenuItem;
 var DropdownButton = require('react-bootstrap').DropdownButton;
+
+//var OptionDescription = require('./OptionDescription');
+var OptionDescription = require('./OptionDescriptionFancy');
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -20,6 +23,12 @@ var AuthMixin = require('./../mixins/AuthMixin.js');
 var OptionContent = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
+
+  getInitialState: function(){
+    return {
+      description: (this.props.data.description || '')
+    };
+  },
 
   _getMenuItems: function(){
 
@@ -38,10 +47,14 @@ var OptionContent = React.createClass({
 
   _save: function(){
 
+    /*
     if (!this.refs.description)
       return false;
 
     var description = React.findDOMNode(this.refs.description).value.trim();
+    */
+
+    var description = this.state.description;
     this.props.onSave(description);
   },
 
@@ -50,6 +63,9 @@ var OptionContent = React.createClass({
     this.props.onCancel();
   },
 
+  _handleChange: function(text) {
+    this.setState({description: text});
+  },
 
   render: function () {
 
@@ -125,10 +141,23 @@ var OptionContent = React.createClass({
 
         { editable &&
           <div>
+
+            <div style={{padding: '10px', marginBottom: '1em', border: '1px solid #CCC'}}>
+              <u>HTML (for debugging)</u><br/>
+              {this.state.description}
+            </div>
+
+            <Editor
+              text={this.state.description}
+              options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+              onChange={this._handleChange} />
+
+            {/*
             <textarea ref="description"
               rows="5" 
               style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}
               defaultValue={this.props.data.description} />
+            */}
                      
             <div>
               <Button onClick={this._save} style={{marginTop:'2em'}}>
