@@ -15,7 +15,7 @@ var OptionDescription = React.createClass({
 
     // After being split into chunks, we iterate through each chunk and check (again) if it's a url
     // If its a url we set its type value so it's easier to handle this data later (we can check if any chunk is a url)
-    var urlPattern = /(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])/gim;
+    var urlPattern = /^(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])$/gim;
 
     // Basic url regex on newlines for readability
     /*
