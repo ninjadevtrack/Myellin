@@ -88,9 +88,13 @@ p {
 
 .panel-heading {
   margin-bottom: 8px;
-  color: $gray-dark;
+  color: #fff;
+  background: #9D9D9D;
+  font-family: Akkurat-Bold;
 }
-
+.panel-heading:hover {
+  background: #BBBBBB;
+}
 
 .upvotediv {
 
