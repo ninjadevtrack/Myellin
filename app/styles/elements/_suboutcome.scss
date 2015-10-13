@@ -33,19 +33,12 @@
   font-size: 1.3em;
   display: inline-block;
   float: right;
-  color: #CACACA;
+  color: $gray-dark;
   text-decoration: underline;
   margin-top: 1.5em;
-
-
-  .btn-link {
-    margin: 0;
-    padding: 0;
-    margin: 0 0 0 0;
-    background: transparent;
-    box-shadow: 0 0 0;
-    }
-
+}
+.options-button:hover {
+  color: #850057;
 }
 }
 
