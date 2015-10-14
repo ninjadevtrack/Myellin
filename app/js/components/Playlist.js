@@ -216,28 +216,10 @@ var Playlist = React.createClass({
 
     return (
       <div className={classes}>
-        <div>
-
-          {/* {this.state.data['.key']} */}
-        
-          { !this.state.editable &&
-            <div className="upvotediv">
-              <div className="count">{this.props.relationData.upvote_count}</div>
-              <div className="upvote">
-          
-                <UpvoteButton 
-                  label={<Glyphicon glyph='ok-circle'/>}
-                  this_type="playlist"
-                  this_id={this.state.data['.key']} 
-                  parent_type="outcome"
-                  parent_id={this.props.relationData.parent_outcome_id}
-                  key={this.getUpvoteButtonKey()} />
-              
-              </div>
-            </div>
-          }
-        </div>
-
+<div className="countdiv">
+<div className="listnumber">1.</div>
+<div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
+</div>
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&
@@ -274,6 +256,28 @@ var Playlist = React.createClass({
           </div>
         }
         
+  <div>
+
+          {/* {this.state.data['.key']} */}
+        
+          { !this.state.editable &&
+            <div className="upvotediv">
+              <div className="upvote">
+                <UpvoteButton 
+                  label={<Glyphicon glyph='ok-circle'/>}
+                  this_type="playlist"
+                  this_id={this.state.data['.key']} 
+                  parent_type="outcome"
+                  parent_id={this.props.relationData.parent_outcome_id}
+                  key={this.getUpvoteButtonKey()} />
+              </div>
+              <div className="helptext">I found this the most useful learning list for this how-to.</div>
+            </div>
+          }
+        </div>
+
+
+
         { !this.state.editable && menuItems.length >= 1 &&
           <div>
             <div style={{ float: 'right'}}>
