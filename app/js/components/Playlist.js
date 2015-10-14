@@ -219,25 +219,7 @@ var Playlist = React.createClass({
 <div className="listnumber">1.</div>
 <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
 </div>
-        <div>
-
-          { !this.state.editable &&
-            <div className="upvotediv">
-              <div className="count">{this.props.relationData.upvote_count}</div>
-              <div className="upvote">
-          
-                <UpvoteButton 
-                  label={<Glyphicon glyph='ok-circle'/>}
-                  this_type="playlist"
-                  this_id={this.state.data['.key']} 
-                  parent_type="outcome"
-                  parent_id={this.props.relationData.parent_outcome_id}
-                  key={this.getUpvoteButtonKey()} />
-              
-              </div>
-            </div>
-          }
-        </div>
+       
 
         <AuthorName id={this.getAuthorId()} />
 
