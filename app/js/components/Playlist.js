@@ -208,18 +208,37 @@ var Playlist = React.createClass({
       menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
     }
 
-    //menuItems.push( <MenuItem eventKey='report'>Report Spam</MenuItem> );
-
     var classes = cx('playlist-container', {
       'editing': this.state.editable
     });
 
     return (
       <div className={classes}>
+
 <div className="countdiv">
 <div className="listnumber">1.</div>
 <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
 </div>
+        <div>
+
+          { !this.state.editable &&
+            <div className="upvotediv">
+              <div className="count">{this.props.relationData.upvote_count}</div>
+              <div className="upvote">
+          
+                <UpvoteButton 
+                  label={<Glyphicon glyph='ok-circle'/>}
+                  this_type="playlist"
+                  this_id={this.state.data['.key']} 
+                  parent_type="outcome"
+                  parent_id={this.props.relationData.parent_outcome_id}
+                  key={this.getUpvoteButtonKey()} />
+              
+              </div>
+            </div>
+          }
+        </div>
+
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&
@@ -229,7 +248,7 @@ var Playlist = React.createClass({
         { this.state.editable &&
           <textarea 
             ref="description" 
-            rows="7" 
+            rows="3" 
             className='inputdescription' 
             placeholder="Edit playbook overview." 
             style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}} 

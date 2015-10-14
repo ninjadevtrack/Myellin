@@ -16,6 +16,11 @@ $icon-font-path: "../fonts/";
 @import "elements/column";
 @import "elements/createplaylistbutton";
 
+// Medium Editor theme (copied from medium-editor npm)
+// TODO: Link directly to stylesheets in medium-editor npm
+@import "medium-editor";
+@import "medium-editor-theme-default";
+
 a.list-group-item.create-outcome input{
 	outline: none;
 }

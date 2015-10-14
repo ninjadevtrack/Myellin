@@ -10,9 +10,13 @@ var UrlEmbed = React.createClass({
 
   getDefaultProps: function() {
     return {
-      iframelyKey: '4dcff1ef2f24f1790e6a3f4aa73016e8',
+      iframelyKey: '99f65a69d6b29b0a6f87cb',
       service: 'iframely'
     };
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState){
+    return false;
   },
 
   render: function () {
