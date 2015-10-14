@@ -197,10 +197,10 @@ var SubOutcomesMultiple = React.createClass({
     this.add(suboutcome_id);
 
     // Create a new option to populate this suboutcome
-    //var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
+    var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
     
     // Add the option as chosen_option for suboutcome
-    //DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
+    DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
   },
 
   // Create a new suboutcome

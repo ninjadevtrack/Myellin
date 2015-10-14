@@ -162,7 +162,7 @@ var Option = React.createClass({
 
     DbHelper.options.update(this.props.option_id, description);
 
-    this.toggleEdit();
+    //this.toggleEdit(); // option.editing now set to false in DbHelper.options.update()
   },
 
   _handleDescriptionChange: function(updatedDescription){

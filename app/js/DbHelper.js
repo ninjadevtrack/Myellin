@@ -41,7 +41,8 @@ var DbHelper = (function () {
         var refOption = _firebase.child('options/' + option_id);
 
         refOption.update({ 
-          description: description 
+          description: description,
+          editing: null
         });
       },
 

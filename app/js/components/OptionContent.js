@@ -158,7 +158,7 @@ var OptionContent = React.createClass({
 
             <div style={{padding: '10px', marginBottom: '1em', border: '1px solid #CCC'}}>
               <u>HTML (for debugging)</u><br/>
-              {this.state.description}
+              {this.state.descriptionDuringEdit}
             </div>
 
             <Editor
