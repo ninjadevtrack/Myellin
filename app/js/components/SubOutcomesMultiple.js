@@ -23,7 +23,11 @@ var SubOutcomesMultiple = React.createClass({
 
   getInitialState: function(){
     return {
-      activeKey: null
+      activeKey: null,
+      // Keep track of any Options whos description text has been edited
+      // Changes are passed up the chain via callbacks. We look at this object when saving ...
+      // ... the playlist, so we can also save any changed Options.
+      optionsChanged: {}
     };
   },
 
@@ -37,6 +41,21 @@ var SubOutcomesMultiple = React.createClass({
   _passBackReferenceToSelf: function(){
 
     this.props.referenceCallback(this);
+  },
+
+  // This callback is passed all the way down to Option component ...
+  // ... so that we are notified if any Option description text changes.
+  // this.save() will update very changed Option.
+  _handleOptionDescriptionChange: function(option){
+
+    // Clone current object
+    var optionsChanged = JSON.parse(JSON.stringify(this.state.optionsChanged));
+
+    // Make key option_id so it never gets added twice
+    optionsChanged[option.option_id] = option;
+
+    // Update state
+    this.setState({ optionsChanged : optionsChanged });
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -205,6 +224,7 @@ var SubOutcomesMultiple = React.createClass({
   },
 
   delete: function(suboutcome_id){
+
     DbHelper.suboutcomes.delete(this.props.playlist_id, suboutcome_id);
   },
 
@@ -218,15 +238,6 @@ var SubOutcomesMultiple = React.createClass({
     var refPlaylistToSuboutcome = {};
 
     for (var i = 0; i < suboutcomes.length; i++) {
-
-      // TODO: Reach into Option component using refs and call save()
-      // PROBLEM: Because of ReactDND we don't get refs withinin suboutcome (since it's wrapped by ReactDnD)
-      /*
-      console.log('REFS', this.refs.PanelGroup.refs['SubOutcome_' + suboutcomes[i].suboutcome_id]);
-      var optionReactRef = this.refs.PanelGroup.refs['SubOutcome_' + suboutcomes[i].suboutcome_id].refs.option;
-      if (optionReactRef)
-        optionReactRef.refs.save();
-      */
       
       refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
         parent_playlist_id: this.props.playlist_id,
@@ -234,6 +245,16 @@ var SubOutcomesMultiple = React.createClass({
         chosen_option: (suboutcomes[i].chosen_option || null), // Copy over chosen_option
         order: i
       } 
+    }
+
+    // If any options were edited, iterate through and save them
+    // When options are edited they pass their new text back up the chain through callbacks
+    // This is done because (due to ReactDnD) we are unable to reach down to read them via React refs
+    for (var key in this.state.optionsChanged){
+
+      var option = this.state.optionsChanged[key];
+
+      DbHelper.options.update(option.option_id, option.description);
     }
 
     // Update all firebase paths at same time
@@ -270,6 +291,7 @@ var SubOutcomesMultiple = React.createClass({
           editable={this.props.editable}
           onMove={this.handleMove}
           onDelete={this.delete}
+          onOptionDescriptionChange={this._handleOptionDescriptionChange}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
    

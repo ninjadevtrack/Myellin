@@ -160,11 +160,21 @@ var Option = React.createClass({
 
   save: function(description){
 
-    this.refOption.update({ 
-        description: description 
-    });
+    DbHelper.options.update(this.props.option_id, description);
 
     this.toggleEdit();
+  },
+
+  _handleDescriptionChange: function(updatedDescription){
+    if (this.props.onDescriptionChange){
+
+      // Pass updated description to parent, along with the option_id
+      // This is so we can also save all changed Options when we save a playlist
+      this.props.onDescriptionChange({
+        option_id: this.state.data['.key'],
+        description: updatedDescription
+      })
+    }
   },
 
   render: function () {
@@ -184,6 +194,7 @@ var Option = React.createClass({
           onSave={this.save}
           onCancel={this.toggleEdit} 
           onMenuSelect={this.menuSelect}
+          onDescriptionChange={this._handleDescriptionChange}
           ref="optionContent" 
           key={this.state.data['.key']} />
 

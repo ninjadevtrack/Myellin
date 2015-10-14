@@ -26,7 +26,7 @@ var OptionContent = React.createClass({
 
   getInitialState: function(){
     return {
-      description: (this.props.data.description || '')
+      descriptionDuringEdit: (this.props.data.description || '')
     };
   },
 
@@ -54,7 +54,7 @@ var OptionContent = React.createClass({
     var description = React.findDOMNode(this.refs.description).value.trim();
     */
 
-    var description = this.state.description;
+    var description = this.state.descriptionDuringEdit;
     this.props.onSave(description);
   },
 
@@ -64,7 +64,13 @@ var OptionContent = React.createClass({
   },
 
   _handleChange: function(text) {
-    this.setState({description: text});
+
+    // Save edited description to state
+    this.setState({ descriptionDuringEdit: text });
+
+    // Pass edited description up to Option component
+    if (this.props.onDescriptionChange)
+      this.props.onDescriptionChange(text);
   },
 
   render: function () {
@@ -86,7 +92,6 @@ var OptionContent = React.createClass({
       return (
         <div>
 
-
           <AuthorName id={this.props.data.author_id} />
           
           { !editable &&
@@ -99,7 +104,7 @@ var OptionContent = React.createClass({
             <div>
 
             <Editor
-              text={this.state.description}
+              text={this.state.descriptionDuringEdit}
               options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
               onChange={this._handleChange} />
 
@@ -157,7 +162,7 @@ var OptionContent = React.createClass({
             </div>
 
             <Editor
-              text={this.state.description}
+              text={this.state.descriptionDuringEdit}
               options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
               onChange={this._handleChange} />
 

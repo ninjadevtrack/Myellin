@@ -35,6 +35,7 @@ var SubOutcome = React.createClass({
   },
 
   componentWillMount: function() {
+
     this.bindFirebaseRefs();
   },
 
@@ -153,6 +154,7 @@ var SubOutcome = React.createClass({
                     editable={this.props.editable} 
                     contentOnly={true} 
                     option_id={this.props.relationData.chosen_option}
+                    onDescriptionChange={this.props.onOptionDescriptionChange}
                     ref="option" />
                 }
                 { !this.props.relationData.chosen_option && 

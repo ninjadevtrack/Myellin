@@ -36,6 +36,15 @@ var DbHelper = (function () {
         return option_id;
       },
 
+      update: function(option_id, description){
+
+        var refOption = _firebase.child('options/' + option_id);
+
+        refOption.update({ 
+          description: description 
+        });
+      },
+
       delete: function(parent_suboutcome_id, option_id){
 
         // We don't actually delete the option, just remove from suboutcome
