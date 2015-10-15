@@ -20,6 +20,10 @@ require('firebase');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
+
+
+
+
 var OptionContent = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
@@ -105,7 +109,7 @@ var OptionContent = React.createClass({
 
             <Editor
               text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+              options={{toolbar: {buttons: ['bold', 'h2','anchor', 'orderedlist', 'unorderedlist', 'quote']}}}
               onChange={this._handleChange} />
 
 

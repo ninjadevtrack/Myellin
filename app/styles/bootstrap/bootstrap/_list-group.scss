@@ -26,7 +26,7 @@
   margin-bottom: -1px;
   background-color: $list-group-bg;
   border-top: 1px solid $list-group-border;
-  font-family: Akkurat-Light;
+  font-family: 'Akkurat-Regular';
 
   // Round the first and last items
   &:first-child {
@@ -45,7 +45,7 @@
 // Includes an extra `.active` modifier class for showing selected items.
 
 a.list-group-item {
-  color: $list-group-link-color;
+  color: #616161;
 
   .list-group-item-heading {
     color: $list-group-link-heading-color;
