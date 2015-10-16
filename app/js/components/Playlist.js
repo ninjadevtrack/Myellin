@@ -214,6 +214,7 @@ var Playlist = React.createClass({
 
     return (
       <div className={classes}>
+      <div style={{borderBottom: '3px solid #000', paddingBottom: '10em'}}>
 
 <div className="countdiv">
 <div className="listnumber">1.</div>
@@ -223,7 +224,7 @@ var Playlist = React.createClass({
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&
-          <p>{this.getDescription()}</p>
+          <div style={{paddingBottom: '1.3em', marginTop: '-1.1em'}}><p>{this.getDescription()}</p></div>
         }
 
         { this.state.editable &&
@@ -232,7 +233,7 @@ var Playlist = React.createClass({
             rows="3" 
             className='inputdescription' 
             placeholder="Edit playbook overview." 
-            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', textAlign: 'justify', fontFamily: 'Akkurat-Light', fontSize: '1.2em'}} 
+            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', marginTop: '2em'}} 
             defaultValue={this.getDescription()} />
         }
        
@@ -286,14 +287,12 @@ var Playlist = React.createClass({
               </DropdownButton>
             </div>
 
-            <div className="playlist-bottom-border"></div>
 
           </div>
         }
-  
 
       </div>
-
+      </div>
     );
   }
 }

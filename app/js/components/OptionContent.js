@@ -95,9 +95,9 @@ var OptionContent = React.createClass({
     if (this.props.contentOnly){
       return (
         <div>
-
+          <div style={{background: '#CDCDCD', color: '#fff', lineHeight: '3em'}}>
           <AuthorName id={this.props.data.author_id} />
-          
+           </div>
           { !editable &&
             <div>
               <OptionDescription text={this.props.data.description} />
@@ -109,7 +109,7 @@ var OptionContent = React.createClass({
 
             <Editor
               text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold', 'h2','anchor', 'orderedlist', 'unorderedlist', 'quote']}}}
+              options={{toolbar: {buttons: ['bold','unorderedlist', 'h3','anchor','indent', 'quote']}}}
               onChange={this._handleChange} />
 
 
@@ -140,7 +140,7 @@ var OptionContent = React.createClass({
         
         <AuthorName id={this.props.data.author_id} />
 
-        <div className="upvote">
+  /*      <div className="upvote">
           <div className="count">{this.props.relationData.upvote_count}</div>
 
           <UpvoteButton 
@@ -149,10 +149,10 @@ var OptionContent = React.createClass({
             this_id={this.props.data['.key']} 
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
-        </div>
+        </div>  */
         
         { !editable &&
-          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}}>
+          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify',}}>
             <OptionDescription text={this.props.data.description} />
           </div>
         }
@@ -167,7 +167,7 @@ var OptionContent = React.createClass({
 
             <Editor
               text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+              options={{toolbar: {buttons: ['bold', 'unorderedlist', 'anchor', 'h2', 'quote']}}}
               onChange={this._handleChange} />
 
             {/*

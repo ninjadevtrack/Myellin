@@ -139,16 +139,10 @@ var SubOutcome = React.createClass({
           accordion
           ref="Panel">
 
-          { this.state.expanded && this.props.relationData.chosen_option &&
-
-            <div className="optionsicondiv">
-              {VoteButton}
-            </div>
-          }
+         
 
           { this.state.expanded && 
-            <div style={{borderBottom: '2px solid #FDFDFD', borderTop: '2px solid #FDFDFD' }} >
-              <div style={{marginTop: '2.5em', marginBottom: '2em', textAlign: 'justify', fontFamily: "Akkurat-Light"}} >
+              <div style={{background: '#fff', paddingBottom: '2em'}}>
                 { this.props.relationData.chosen_option && 
                   <Option 
                     editable={this.props.editable} 
@@ -160,11 +154,10 @@ var SubOutcome = React.createClass({
                 { !this.props.relationData.chosen_option && 
                   <div style={{textAlign:'center', color: '#CCC'}}>No content yet</div>
                 }
-              </div>
             </div>
           }
 
-          { !this.props.editable && 
+          { !this.props.editable &&    
             <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
               alternatives to this learning step ({this.state.data.option_count})
             </Button>
