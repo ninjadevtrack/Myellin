@@ -140,10 +140,10 @@ $line-height-base:        1.846 !default; // 20/14
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
-$headings-font-family:    inherit !default;
+$headings-font-family:     "Akkurat-Regular" !default;
 $headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
-$headings-color:          #444 !default;
+$headings-color:          $gray-dark !default;
 $logo-font-weight:        100 !default;
 $latest-first-weight:     400 !default;
 $thin-font-weight: 		  100 !default;

@@ -25,17 +25,26 @@
     text-align: center;
     }
     .author-name {
-  color: #CACACA;
+  color: #fff;
   padding-bottom: 0;
+  margin-top: -1.4em;
+  padding-left: 1.5em;
+  padding-top: 0;
+  margin-bottom: 4em;
 }
 
  .options-button {
-  font-size: 1.3em;
+  font-size: 1em;
   display: inline-block;
-  float: right;
-  color: $gray-dark;
+  margin-bottom: 1em;
+  text-align: right;
+  color: #333333;
   text-decoration: underline;
   margin-top: 1.5em;
+  border-top: 3px solid #cdcdcd;
+  width: 100%;
+  padding-top: 0.5em;
+  padding-bottom: 1em;
 }
 .options-button:hover {
   color: #850057;

@@ -8,9 +8,9 @@ float: right;
 }
 
 .playlist-container.editing {
-  margin-left: 25%;
+  padding-left: 25%;
   min-width: 50%;
-  margin-right: 25%;
+  padding-right: 25%;
   margin-bottom: 2em;
   margin-top: 5em;
 
@@ -25,14 +25,11 @@ float: right;
 
 .playlist-container {
   position: relative;
-  margin-left: 20%;
-  min-width: 54%;
-  margin-right: 26%;
+  padding-left: 20%;
+  padding-right: 26%;
   margin-bottom: 5em;
   margin-top: 8em;
   line-height: 1.2;
-  text-align: justify;
-  font-size: 16px;
  
  .listnumber {
   float: left;
@@ -98,9 +95,11 @@ float: right;
 }
 
 p {
- font-family:"Akkurat-Light";
- color: $gray;
- font-size: 1.1em; 
+ font-family:"Akkurat-Regular";
+ color: #333333;
+ font-size: 16px; 
+ line-height: 1.58;
+letter-spacing: -0.003em;
 
 }
 
@@ -187,14 +186,7 @@ p {
     display: none;
 }
 
-.playlist-bottom-border {
-  padding-top: 10em;
-  border-bottom: 1px solid #ECEBEC;
-  padding-bottom: 1em;
-  width: 150%;
-  margin-left: -25%;
 
-}
 
 .panel-group {
     margin-bottom: 12px;
