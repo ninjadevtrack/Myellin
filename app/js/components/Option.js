@@ -131,11 +131,13 @@ var Option = React.createClass({
 
   toggleEdit: function(){
 
-    if (this.state.data.editing){
-      this.refOption.child('editing').remove();
+    if (this.props.editable){
+      DbHelper.options.remove_editing(this.state.user.id);
     }else{
-      this.refOption.child('editing').set(true);
+      DbHelper.options.set_editing(this.state.user.id, this.props.relationData.parent_suboutcome_id, this.props.option_id);
     }
+
+
   },
 
   delete: function(){
@@ -162,7 +164,7 @@ var Option = React.createClass({
 
     DbHelper.options.update(this.props.option_id, description);
 
-    //this.toggleEdit(); // option.editing now set to false in DbHelper.options.update()
+    this.toggleEdit();
   },
 
   _handleDescriptionChange: function(updatedDescription){

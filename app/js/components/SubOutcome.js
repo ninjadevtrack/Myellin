@@ -139,8 +139,6 @@ var SubOutcome = React.createClass({
           accordion
           ref="Panel">
 
-         
-
           { this.state.expanded && 
               <div style={{background: '#fff', paddingBottom: '2em'}}>
                 { this.props.relationData.chosen_option && 

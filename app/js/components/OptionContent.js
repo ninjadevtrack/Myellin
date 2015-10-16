@@ -140,7 +140,7 @@ var OptionContent = React.createClass({
         
         <AuthorName id={this.props.data.author_id} />
 
-  /*      <div className="upvote">
+        /*  <div className="upvote">
           <div className="count">{this.props.relationData.upvote_count}</div>
 
           <UpvoteButton 
@@ -152,7 +152,7 @@ var OptionContent = React.createClass({
         </div>  */
         
         { !editable &&
-          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify',}}>
+          <div style={{ lineHeight: "1.2", marginBottom: '2em', textAlign: 'justify'}}>
             <OptionDescription text={this.props.data.description} />
           </div>
         }

@@ -64,6 +64,8 @@
         },
         "description": {
           ".validate": "newData.isString()"
+          //".validate": "newData.isString() && newData.val().matches(/<(?>\/?)(?:[^p|body|b|u|em|strong|ul|ol|li|h1|h2|h3|h4|h5|h6|hr|a|br|img|tr|td|table|tbody|label|div|sup|sub|caption|P]|[p|cufontext|cufoncanvas|P][^\s>\/])[^>]*>/)"
+          //".validate": "newData.isString() && newData.val().matches(/^([^<>]*(<(i|p|b|br|strong|em|blockquote|pre|code|a href=\"http[^\"]+\")>[^<>]+<\/(i|p|b|br|strong|em|blockquote|pre|code|a)>)?[^<>]*)+$/)"
         }
       }
     },
@@ -346,6 +348,15 @@
           },
           "collapse": {
             ".validate": "newData.isBoolean()"
+          }
+        },
+        "editing_option": {
+          ".validate": "newData.hasChildren(['parent_suboutcome_id', 'option_id'])",
+          "parent_suboutcome_id": {
+            ".validate": "newData.isString()"
+          },
+          "option_id": {
+            ".validate": "newData.isString()"
           }
         },
         "admin": {

@@ -11,11 +11,13 @@ require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
+var AuthMixin = require('./../mixins/AuthMixin.js');
+
 var Option = require('./Option');
 
 var OptionsMultiple = React.createClass({
 
-  mixins: [Router.Navigation, Router.State, ReactFireMixin],
+  mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   getInitialState: function(){
     return {
@@ -74,12 +76,21 @@ var OptionsMultiple = React.createClass({
     });
 
     options = options.map(function (relationData) {
+
+      var editable = false;
+      if (this.state.user && 
+            this.state.user.editing_option && 
+              this.state.user.editing_option.option_id === relationData.option_id){
+        editable = true;
+      }
+
       return (
         <div>
           <Option 
             relationData={relationData} 
             parent_playlist_id={this.props.playlist_id}
             option_id={relationData.option_id}
+            editable={editable} 
             key={relationData.option_id} />
         </div>
       );

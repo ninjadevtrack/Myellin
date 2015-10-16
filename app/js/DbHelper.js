@@ -20,7 +20,7 @@ var DbHelper = (function () {
         var newOptionRef = refOptions.push({ 
           author_id: author_id,
           description: '',
-          editing: true
+          //editing: true
         });
 
         // Get Option id
@@ -50,7 +50,23 @@ var DbHelper = (function () {
 
         // We don't actually delete the option, just remove from suboutcome
         models.suboutcomes.remove_option(parent_suboutcome_id, option_id);
+      },
+
+      set_editing: function(user_id, parent_suboutcome_id, option_id){
+
+        var refEditingOption = _firebase.child('users/' + user_id + '/editing_option');
+
+        refEditingOption.set({ 
+          parent_suboutcome_id: parent_suboutcome_id,
+          option_id: option_id
+        });
+      },
+
+      remove_editing: function(user_id){
+
+        _firebase.child('users/' + user_id + '/editing_option').remove();
       }
+
     },
 
     suboutcomes: {
@@ -122,7 +138,6 @@ var DbHelper = (function () {
                       '/chosen_option').set(option_id);
 
       }
-
     }
 
   }
