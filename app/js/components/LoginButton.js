@@ -58,8 +58,11 @@ var LoginButton = React.createClass({
                     full_name: authData.twitter.displayName,
                 };
             case 'facebook':
+
+                var username = authData.facebook.displayName.replace(/\s+/g, '').toLowerCase();
+
                 return {
-                    username: authData.facebook.username,
+                    username: username,
                     full_name: authData.facebook.displayName,
                 };
         }
