@@ -214,7 +214,7 @@ var Playlist = React.createClass({
 
     return (
       <div className={classes}>
-      <div style={{borderBottom: '3px solid #000', paddingBottom: '10em'}}>
+      <div style={{borderBottom: '5px solid #000', paddingBottom: '10em'}}>
 
 <div className="countdiv">
 <div className="listnumber">1.</div>
