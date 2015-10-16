@@ -184,9 +184,8 @@ var Option = React.createClass({
     if (!this.state.data)
       return false;
 
-    return this.props.connectDragSource(
+    var jsx = (
       <div>
-
         <OptionContent 
           relationData={this.props.relationData}
           data={this.state.data}
@@ -199,9 +198,15 @@ var Option = React.createClass({
           onDescriptionChange={this._handleDescriptionChange}
           ref="optionContent" 
           key={this.state.data['.key']} />
-
       </div>
     );
+
+    if (this.props.editable){
+      return jsx; 
+    }else{
+      return this.props.connectDragSource( jsx );
+    }
+
 
   }
 
