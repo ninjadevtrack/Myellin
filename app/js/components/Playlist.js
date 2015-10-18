@@ -214,7 +214,7 @@ var Playlist = React.createClass({
 
     return (
       <div className={classes}>
-      <div style={{borderBottom: '5px solid #000', paddingBottom: '10em'}}>
+      <div className="bottomborder">
 
 <div className="countdiv">
 <div className="listnumber">1.</div>
@@ -230,10 +230,10 @@ var Playlist = React.createClass({
         { this.state.editable &&
           <textarea 
             ref="description" 
-            rows="3" 
+            rows="5" 
             className='inputdescription' 
-            placeholder="Edit playbook overview." 
-            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', marginTop: '2em'}} 
+            placeholder="In 2-3 lines tell us about your experience realted to this how-to, how you came up with your list, and who it is for." 
+            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', marginBottom: '2em'}} 
             defaultValue={this.getDescription()} />
         }
        
@@ -246,14 +246,15 @@ var Playlist = React.createClass({
 
         { this.state.editable &&
           <div>
-            <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" className='inputchapter' placeholder="Add a playbook chapter. Hit enter." type="text" style={{width:'100%', backgroundColor: '#fdfdfd', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em', fontSize: '1.2em'}} />
-            </form>
-      
-            <ButtonGroup justified bsSize='medium' style={{position: 'fixed', width: '35%', bottom: '30px', zIndex: '10'}}>
-              <Button onClick={this.save} style={{color: '#4A4A4A', fontFamily: 'Akkurat-Bold', backgroundColor:'#F9F9F9', border: '0px solid #fff', width:'49%'}}>save</Button>
-              <Button onClick={this.cancel} style={{marginLeft: '2%', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', backgroundColor:'#F9F9F9', border: '0px solid #fff', width:'49%'}}>cancel</Button>
+          <div style={{top: '0', width: '100%', borderBottom: '1px solid #EEEEEE', height: '60px', position: 'fixed', zIndex: '10', backgroundColor: '#fff', left: '0'}}>
+            <ButtonGroup justified bsSize='medium' style={{width: '210px', top: '12.5px', right: '10px', float: 'right'}}>
+              <Button onClick={this.save} style={{float: 'right', color: '#FFF', fontFamily: 'Akkurat-Bold', backgroundColor:'#00FF9B', border: '0px solid #fff', width:'100px', height: '35px', borderRadius: '5px', lineHeight: '1.4em'}}>save</Button>
+              <Button onClick={this.cancel} style={{float: 'left', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', backgroundColor:'#FFF', border: '0px solid #fff', width:'100px', height: '35px', borderRadius: '5px', lineHeight: '1.4em'}}>cancel</Button>
             </ButtonGroup>
+          </div>
+            <form onSubmit={this.addSubOutcomeSubmit}>
+              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a learning step, edit this text and hit enter" type="text" style={{width:'100%', borderRadius: '5px', border: '2px solid #F1F1F1',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
+            </form>
           </div>
         }
         

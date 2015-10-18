@@ -14,8 +14,16 @@ float: right;
   margin-bottom: 2em;
   margin-top: 5em;
 
+.bottomborder {
+    border-bottom: 0px solid #fff; 
+    padding-bottom: 10em;
+  }
 
-  .author-name {
+.author-name {
+   display: none;
+}
+
+  .countdiv {
     display: none;
   }
 
@@ -30,6 +38,11 @@ float: right;
   margin-bottom: 5em;
   margin-top: 8em;
   line-height: 1.2;
+
+  .bottomborder {
+    border-bottom: 8px solid #cdcdcd; 
+    padding-bottom: 10em;
+  }
  
  .listnumber {
   float: left;
@@ -65,20 +78,25 @@ float: right;
 
 .inputdescription::-webkit-input-placeholder {
    height: 2em;
-   color: #4D4747;
+   color: #9B9B9B;
    font-family: 'Akkurat-Regular';
+   font-size: 1.3em;
 }
 
 .inputdescription::-moz-placeholder {  /* Firefox 19+ */
    height: 2em;
-   color: #4D4747;
+   color: #9B9B9B;
   font-family: 'Akkurat-Regular';
+     font-size: 1.3em;
+
 }
 
 .inputdescription:-ms-input-placeholder {  
    height: 2em;
-   color: #4D4747;
+   color: #9B9B9B;
   font-family: 'Akkurat-Regular';
+     font-size: 1.3em;
+
 }
 
 

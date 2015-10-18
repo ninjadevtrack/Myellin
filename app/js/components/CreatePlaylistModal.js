@@ -21,9 +21,10 @@ mixins: [ReactFireMixin, AuthMixin],
   render: function () {
 
     return (
-       <div onMouseEnter={this.props.onMouseEnter} style={{ 
+       <div onClick={this.props.onMouseEnter} style={{ 
           position: (this.props.collapse ? 'fixed' : 'fixed'), 
-          top: (this.props.collapse ? '97%' : '0px'), 
+          top: (this.props.collapse ? '93%' : '0px'), 
+          cursor: (this.props.collapse ? 'n-resize' : ''),    
           borderTop: (this.props.collapse ? '1px solid #D2D2D2' : '0px solid #000'), 
           backgroundColor: (this.props.collapse ? '#FAFAFA' : '#fff'),
           WebkitTransition: 'all 100ms ease',
@@ -34,13 +35,13 @@ mixins: [ReactFireMixin, AuthMixin],
           zIndex: 1900 }}>
 
           { !this.props.collapse && 
-            <Button onClick={this.props.onHide} bsStyle='link' style={{position: 'fixed', right: '29%', bottom: '30px', fontSize: '1em', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', zIndex: '99999 !important'}}>hide</Button>
+            <Button onClick={this.props.onHide} bsStyle='link' style={{position: 'fixed', left: '45%', top: '6px', fontSize: '1.2em', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', textDecoration: 'underline', zIndex: '99999 !important', cursor: 's-resize'}}>drag & drop</Button>
           }
           
             { !this.props.collapse && this.props.children}
 
              {this.props.collapse &&
-          <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '-3px', padding: '0', color: '#656565', fontSize: '0.9em'}}>show</div>
+          <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '4px', padding: '0', color: '#656565', fontSize: '1.5em'}}>your learning list</div>
 }
       
       </div>
