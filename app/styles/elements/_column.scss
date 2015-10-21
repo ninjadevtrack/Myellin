@@ -65,11 +65,13 @@ a.list-group-item {
 	width: 70%;
 	padding-top: -20px;
 
-
 .playlist-container {
-  margin-left: 10%;
-  min-width: 80%;
-  margin-right: 10%;
+ position: relative;
+  padding-left: 15%;
+  padding-right: 15%;
+  margin-bottom: 5em;
+  margin-top: 8em;
+  line-height: 1.2;
  }
 
 }
@@ -110,8 +112,8 @@ a.list-group-item {
 width: 10%;
 .playlist-container {
 	opacity: 0.2;
-	width: 800%;
-	margin-left: -700%;
+	width: 500%;
+	margin-left: -400%;
 	overflow: hidden; 
 }
 
