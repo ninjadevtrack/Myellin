@@ -34,12 +34,12 @@ $brand-danger:          #e51c23 !default;
 //** Background color for `<body>`.
 $body-bg:               #fff !default;
 //** Global text color on `<body>`.
-$text-color:            $gray !default;
+$text-color:            #333 !default;
 
 //** Global textual link color.
-$link-color:            $gray-dark !default;
+$link-color:            #000 !default;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      $brand-secondary !default;
+$link-hover-color:      #333 !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
 
@@ -129,7 +129,7 @@ $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
 
 $font-size-h1:            56px !default;
 $font-size-h2:            45px !default;
-$font-size-h3:            34px !default;
+$font-size-h3:            25px !default;
 $font-size-h4:            24px !default;
 $font-size-h5:            20px !default;
 $font-size-h6:            14px !default;

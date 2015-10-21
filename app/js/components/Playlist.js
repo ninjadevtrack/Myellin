@@ -220,7 +220,7 @@ var Playlist = React.createClass({
 <div className="listnumber">1.</div>
 <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
 </div>
-        
+      
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&

@@ -6,9 +6,17 @@
 
   position: relative;
   margin-bottom: 3em;
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 25%;
+  padding-right: 25%;
   margin-top: 2em;
+
+   p {
+    font-family: "Akkurat-Regular";
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.58;
+    letter-spacing: -0.003em;
+}
 
 :focus {
   outline-color: transparent;
@@ -36,24 +44,25 @@
     color: $gray-dark;
     }
   .upvote{
-     position: absolute;
-    margin-left: -2em;
-    top: 0.2em;
-    font-size: 2em;
-    line-height: 1em;
-   
-    .count{
-       margin-bottom: 0;
-       text-align: center;
-    }
-
-    button{
-
-    }
-
+  border-bottom: 3px #F7F7F7 solid;
+  padding-bottom: 2em;
   }
+  .count{
+    float: right;
+    bottom: 0;
+    font-size:1em;
+    font-family: 'Akkurat-Bold';
+    color: #850057;
+    }
 
 }
+
+.listnumber {
+  float: left;
+  font-size:1.2em;
+  font-family: 'Akkurat-Regular';
+  color: #000;
+ }
 
 .back-button {
   position: fixed;

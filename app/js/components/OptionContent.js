@@ -109,7 +109,7 @@ var OptionContent = React.createClass({
 
             <Editor
               text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold','unorderedlist', 'h3','anchor','indent', 'quote']}}}
+              options={{toolbar: {buttons: ['bold','unorderedlist', 'h3','anchor', 'removeFormat', 'quote']}}}
               onChange={this._handleChange} />
 
 
@@ -130,44 +130,36 @@ var OptionContent = React.createClass({
 
       <div className="option-container">
 
-        { !editable && menuItems.length >= 1 &&
-          <div style={{ float: 'right'}}>
-            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.props.onMenuSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
-              {menuItems}
-            </DropdownButton>
-          </div>
-        }
-        
+         <div className="upvote">
+         <div className="listnumber">1.</div>
+          <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
+        </div>  
+
         <AuthorName id={this.props.data.author_id} />
-
-        /*  <div className="upvote">
-          <div className="count">{this.props.relationData.upvote_count}</div>
-
-          <UpvoteButton 
-            label={<Glyphicon glyph='ok-circle'/>}
-            this_type="option"
-            this_id={this.props.data['.key']} 
-            parent_type="suboutcome"
-            parent_id={this.props.relationData.parent_suboutcome_id} />
-        </div>  */
         
         { !editable &&
           <div style={{ lineHeight: "1.2", marginBottom: '2em'}}>
             <OptionDescription text={this.props.data.description} />
           </div>
         }
+<UpvoteButton 
+            label={<Glyphicon glyph='ok-circle'/>}
+            this_type="option"
+            this_id={this.props.data['.key']} 
+            parent_type="suboutcome"
+            parent_id={this.props.relationData.parent_suboutcome_id} />
 
         { editable &&
           <div>
-
+/*
             <div style={{padding: '10px', marginBottom: '1em', border: '1px solid #CCC'}}>
               <u>HTML (for debugging)</u><br/>
               {this.state.descriptionDuringEdit}
-            </div>
+            </div>  */
 
             <Editor
               text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold', 'unorderedlist', 'anchor', 'h2', 'quote']}}}
+              options={{toolbar: {buttons: ['bold', 'unorderedlist', 'anchor', 'h4', 'removeFormat', 'quote']}}}
               onChange={this._handleChange} />
 
             {/*
@@ -188,7 +180,14 @@ var OptionContent = React.createClass({
             </div>
           </div>
         }
-
+ { !editable && menuItems.length >= 1 &&
+          <div style={{ float: 'right'}}>
+            <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.props.onMenuSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+              {menuItems}
+            </DropdownButton>
+          </div>
+        }
+        
       </div>
     );
         

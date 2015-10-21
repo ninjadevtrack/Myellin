@@ -27,6 +27,8 @@
   background-color: $list-group-bg;
   border-top: 1px solid $list-group-border;
   font-family: 'Akkurat-Regular';
+  text-decoration: none;
+
 
   // Round the first and last items
   &:first-child {

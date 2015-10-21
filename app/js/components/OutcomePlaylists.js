@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
+var CreatePlaylistButton = require('./CreatePlaylistButton');
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -128,8 +129,8 @@ var OutcomePlaylists = React.createClass({
     }
 
     return (
+           <CreatePlaylistButton />
       <div>
-
         { outcome && 
            <div className='learninglistheader'>
            <div style={{padding: '80px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#00FF9B'}}>
