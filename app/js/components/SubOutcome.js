@@ -6,11 +6,14 @@ var cx = require('classnames');
 var Glyphicon = require('react-bootstrap').Glyphicon; 
 var Router = require('react-router');
 var Option = require('./Option');
+
 var UrlEmbed = require('./UrlEmbed');
 var UpvoteButton = require('./UpvoteButton');
 var DragSource = require('react-dnd').DragSource;
 var AuthorName = require('./AuthorName');
 var Button = require('react-bootstrap').Button;
+
+var OptionEditor = require('./OptionEditor');
 
 var ComponentTypes = require('./ComponentTypes');
 
@@ -87,6 +90,19 @@ var SubOutcome = React.createClass({
     });
   },
 
+  // If new option was created ... 
+  // Pass suboutcome_id and new option text to callback
+  // This is passed to OptionEditor in the case that we are in ...
+  // ... edit playlist view and don't yet have an Option chosen
+  _handleNewOptionDescription: function(description){
+    if (this.props.onNewOptionDescription){
+      this.props.onNewOptionDescription({
+        suboutcome_id: this.props.relationData.suboutcome_id,
+        description: description
+      });
+    }
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -149,7 +165,13 @@ var SubOutcome = React.createClass({
                     onDescriptionChange={this.props.onOptionDescriptionChange}
                     ref="option" />
                 }
-                { !this.props.relationData.chosen_option && 
+
+                { !this.props.relationData.chosen_option && this.props.editable &&
+                  <OptionEditor 
+                    onChange={this._handleNewOptionDescription} />
+                }
+
+                { !this.props.relationData.chosen_option && !this.props.editable &&
                   <div style={{textAlign:'center', color: '#CCC'}}>No content yet</div>
                 }
             </div>

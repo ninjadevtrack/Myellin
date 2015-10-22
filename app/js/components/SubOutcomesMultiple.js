@@ -27,7 +27,8 @@ var SubOutcomesMultiple = React.createClass({
       // Keep track of any Options whos description text has been edited
       // Changes are passed up the chain via callbacks. We look at this object when saving ...
       // ... the playlist, so we can also save any changed Options.
-      optionsChanged: {}
+      optionsChanged: {},
+      optionsNew: {}
     };
   },
 
@@ -56,6 +57,18 @@ var SubOutcomesMultiple = React.createClass({
 
     // Update state
     this.setState({ optionsChanged : optionsChanged });
+  },
+
+  _handleNewOptionDescription: function(data){
+
+     // Clone current object
+    var optionsNew = JSON.parse(JSON.stringify(this.state.optionsNew));
+
+    // Make key option_id so it never gets added twice
+    optionsNew[data.suboutcome_id] = data;
+
+    // Update state
+    this.setState({ optionsNew : optionsNew });
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -197,10 +210,10 @@ var SubOutcomesMultiple = React.createClass({
     this.add(suboutcome_id);
 
     // Create a new option to populate this suboutcome
-    var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
+    //var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
     
     // Add the option as chosen_option for suboutcome
-    DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
+    //DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
   },
 
   // Create a new suboutcome
@@ -247,6 +260,10 @@ var SubOutcomesMultiple = React.createClass({
       } 
     }
 
+    // Update all firebase paths at same time
+    // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
+    this.firebase.update(refPlaylistToSuboutcome);
+
     // If any options were edited, iterate through and save them
     // When options are edited they pass their new text back up the chain through callbacks
     // This is done because (due to ReactDnD) we are unable to reach down to read them via React refs
@@ -257,9 +274,16 @@ var SubOutcomesMultiple = React.createClass({
       DbHelper.options.update(option.option_id, option.description);
     }
 
-    // Update all firebase paths at same time
-    // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
-    this.firebase.update(refPlaylistToSuboutcome);
+    // If any new options need to be created (text was entered for suboutcome, but no chosen_option yet)
+    // Create the options and set as chosen_option for the specified suboutcome_id
+    for (var key in this.state.optionsNew){
+
+      var data = this.state.optionsNew[key];
+
+      var option_id = DbHelper.options.create(this.state.user.id, data.suboutcome_id, data.description);
+      DbHelper.suboutcomes.choose_option(this.props.playlist_id, data.suboutcome_id, option_id);
+    }
+
   },
 
   render: function () {
@@ -292,6 +316,7 @@ var SubOutcomesMultiple = React.createClass({
           onMove={this.handleMove}
           onDelete={this.delete}
           onOptionDescriptionChange={this._handleOptionDescriptionChange}
+          onNewOptionDescription={this._handleNewOptionDescription}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
    

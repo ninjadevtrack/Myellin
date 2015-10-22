@@ -5,7 +5,10 @@ var React = require('react/addons');
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
 var Router = require('react-router');
+
+var OptionEditor = require('./OptionEditor');
 var Editor = require('react-medium-editor');
+
 var UpvoteButton = require('./UpvoteButton');
 var AuthorName = require('./AuthorName');
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
@@ -19,8 +22,6 @@ require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 var AuthMixin = require('./../mixins/AuthMixin.js');
-
-
 
 
 
@@ -95,31 +96,14 @@ var OptionContent = React.createClass({
     if (this.props.contentOnly){
       return (
         <div>
+
           <div style={{background: '#CDCDCD', color: '#fff', lineHeight: '3em'}}>
-          <AuthorName id={this.props.data.author_id} />
-           </div>
-          { !editable &&
-            <div>
-              <OptionDescription text={this.props.data.description} />
-            </div>
-          }
+            <AuthorName id={this.props.data.author_id} />
+          </div>
 
-          { editable &&
-            <div>
-
-            <Editor
-              text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold','unorderedlist', 'h3','anchor', 'removeFormat', 'quote']}}}
-              onChange={this._handleChange} />
-
-
-              {/*
-              <textarea ref="description" rows="5" style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}>
-                {this.props.data.description}
-              </textarea>
-            */}
-            </div>
-          }
+          <div>
+            <OptionDescription text={this.props.data.description} />
+          </div>
 
         </div>
       );
@@ -142,7 +126,7 @@ var OptionContent = React.createClass({
             <OptionDescription text={this.props.data.description} />
           </div>
         }
-<UpvoteButton 
+        <UpvoteButton 
             label={<Glyphicon glyph='ok-circle'/>}
             this_type="option"
             this_id={this.props.data['.key']} 
@@ -151,24 +135,11 @@ var OptionContent = React.createClass({
 
         { editable &&
           <div>
-/*
-            <div style={{padding: '10px', marginBottom: '1em', border: '1px solid #CCC'}}>
-              <u>HTML (for debugging)</u><br/>
-              {this.state.descriptionDuringEdit}
-            </div>  */
 
-            <Editor
-              text={this.state.descriptionDuringEdit}
-              options={{toolbar: {buttons: ['bold', 'unorderedlist', 'anchor', 'h4', 'removeFormat', 'quote']}}}
+            <OptionEditor
+              text={this.props.data.description}
               onChange={this._handleChange} />
-
-            {/*
-            <textarea ref="description"
-              rows="5" 
-              style={{width:'100%', border: '1px solid #000', padding: '0.4em'}}
-              defaultValue={this.props.data.description} />
-            */}
-                     
+    
             <div>
               <Button onClick={this._save} style={{marginTop:'2em'}}>
                 Save

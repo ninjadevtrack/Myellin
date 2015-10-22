@@ -11,7 +11,7 @@ var DbHelper = (function () {
   var models = {
 
     options: {
-      create: function(author_id, parent_suboutcome_id){
+      create: function(author_id, parent_suboutcome_id, description){
 
         // Option ref
         var refOptions = _firebase.child('options');
@@ -19,8 +19,7 @@ var DbHelper = (function () {
         // Create Option
         var newOptionRef = refOptions.push({ 
           author_id: author_id,
-          description: '',
-          //editing: true
+          description: (description || '')
         });
 
         // Get Option id
