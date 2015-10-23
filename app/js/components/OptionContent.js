@@ -101,9 +101,19 @@ var OptionContent = React.createClass({
             <AuthorName id={this.props.data.author_id} />
           </div>
 
-          <div>
-            <OptionDescription text={this.props.data.description} />
-          </div>
+          { !editable &&
+            <div>
+              <OptionDescription text={this.props.data.description} />
+            </div>
+          }
+
+          { editable &&
+            <div>
+              <OptionEditor
+                text={this.props.data.description}
+                onChange={this._handleChange} />
+            </div>
+          }
 
         </div>
       );

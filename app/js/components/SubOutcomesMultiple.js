@@ -275,7 +275,7 @@ var SubOutcomesMultiple = React.createClass({
 
   // This iterates through suboutcomes (this.state.data) and saves their order to Firebase
   // This will also add any suboutcomes that aren't in the playlist (firebase) yet ... 
-  // ... such as ones dragged in from another playlist
+  // ... such as ones we just created while editing or dragged in from another playlist
   save: function(){
 
     var suboutcomes = this.state.data.slice(0);
