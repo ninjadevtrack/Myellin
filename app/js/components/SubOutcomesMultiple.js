@@ -23,6 +23,7 @@ var SubOutcomesMultiple = React.createClass({
 
   getInitialState: function(){
     return {
+      data: null,
       activeKey: null,
       // Keep track of any Options whos description text has been edited
       // Changes are passed up the chain via callbacks. We look at this object when saving ...
@@ -61,7 +62,7 @@ var SubOutcomesMultiple = React.createClass({
 
   _handleNewOptionDescription: function(data){
 
-     // Clone current object
+    // Clone current object
     var optionsNew = JSON.parse(JSON.stringify(this.state.optionsNew));
 
     // Make key option_id so it never gets added twice
@@ -118,13 +119,11 @@ var SubOutcomesMultiple = React.createClass({
     if (this._doesContainSuboutcome(suboutcome_id))
       return false;
 
-    // Do nothing if dragging SubOutcome over its own playlist
-    // We don't need to add it to the playlist 
-    // EDIT: We don't need this because handles above by this._doesContainSuboutcome();
-    /*if (this.props.playlist_id === parent_playlist_id)
-        return false; */
+    // Add the suboutcome to end of playlist (just updates the local state, not Firebase)
+    // The second it's added the handleMove() (see below) will take over
+    this.addSuboutcomeToLocalState(suboutcome_id, this.state.data.length, chosen_option);
 
-
+    /*
     var newSuboutcome = {
       suboutcome_id: suboutcome_id,
       parent_playlist_id: parent_playlist_id,
@@ -137,6 +136,7 @@ var SubOutcomesMultiple = React.createClass({
     var suboutcomes = this.state.data.slice(0);
     suboutcomes.push(newSuboutcome);
     this.setState({ data: suboutcomes });
+    */
 
   },
 
@@ -207,7 +207,9 @@ var SubOutcomesMultiple = React.createClass({
     }.bind(this));
 
     // Add the suboutcome to playlist
-    this.add(suboutcome_id);
+    //this.add(suboutcome_id);
+    this.addSuboutcomeToLocalState(suboutcome_id);
+
 
     // Create a new option to populate this suboutcome
     //var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
@@ -223,7 +225,10 @@ var SubOutcomesMultiple = React.createClass({
   },
 
   // Add a suboutcome to this playlist
-  // TODO: Move to DbHelper.js
+  // REMOVED: We should only ever update Firebase in final save() function
+  // Otherwise any local changes (re-ordering, etc) will be overwritten by Firebase
+  // We now use addSuboutcomeToLocalState() below
+  /*
   add: function(suboutcome_id, order){
     // Add to end if no order number set
     if (!order && order !== 0)
@@ -234,6 +239,33 @@ var SubOutcomesMultiple = React.createClass({
       suboutcome_id: suboutcome_id,
       order: order
     });
+  },
+  */
+
+  // Add a suboutcome to this playlist (local state, not Firebase)
+  addSuboutcomeToLocalState: function(suboutcome_id, order, chosen_option){
+    
+    // Specify order (position of Suboutcome from 0 - x)
+    // Add to end if no order specified
+    if (!order && order !== 0)
+      order = this.state.data.length;
+
+    var newSuboutcome = {
+      suboutcome_id: suboutcome_id,
+      parent_playlist_id: this.props.playlist_id,
+      order: order
+    };
+
+    // Set a default chosen_option
+    // This is used when a Suboutcome from another playlist is dragged in ...
+    // ... since we want to keep the same chosen_option set.
+    if (chosen_option)
+      newSuboutcome.chosen_option = chosen_option;
+
+    // Add to end of playlist (local state, not Firebase)
+    var suboutcomes = this.state.data.slice(0);
+    suboutcomes.push(newSuboutcome);
+    this.setState({ data: suboutcomes });
   },
 
   delete: function(suboutcome_id){
