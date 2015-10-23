@@ -1,6 +1,6 @@
 .createplaylistbutton, 
 .createoptionbutton {
-	bottom: 10px;
+	bottom: 20px;
 	right: 50px;
 	padding: 0;
 	position: absolute;
@@ -19,3 +19,7 @@
   height: 100%;
   width: 100%;
  }
+
+ .btn-link:hover {
+    color: #00FF9B;
+    }

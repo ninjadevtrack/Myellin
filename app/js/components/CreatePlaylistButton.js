@@ -129,8 +129,8 @@ var CreatePlaylisteButton = React.createClass({
 
     return (
       <div className="createplaylistbutton">
-        <Button onClick={this.create} style={{fontSize: '6em', margin: '0', padding: '0'}}  bsStyle='link'>
-          <Glyphicon glyph='pencil' className='createicon' />
+        <Button onClick={this.create} style={{fontSize: '2.5em', margin: '0', padding: '0'}}  bsStyle='link'>
+          <span style={{width: '100%', textDecoration: 'underline'}}>new list</span>
         </Button>
       </div>
     );
