@@ -114,7 +114,10 @@ var SubOutcome = React.createClass({
           {/* {this.props.relationData.order} - */}
           {this.state.data.title}
           {this.props.editable &&
-            <span onClick={this.onDelete} style={{ color: '#CCC', right: '-5%', position: 'absolute',}}><Glyphicon glyph='remove'/></span>
+            <span onClick={this.onDelete} style={{ color: '#CCC', right: '-30px', position: 'absolute'}}>
+
+              <Glyphicon glyph='remove'/>
+            </span>
           }
         </div>
         <div className="clearfix"></div>
