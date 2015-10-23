@@ -217,7 +217,7 @@ var Playlist = React.createClass({
       <div className="bottomborder">
 
         <div className="countdiv">
-          <div className="listnumber">1.</div>
+          <div className="listnumber">{this.props.number}.</div>
           <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
         </div>
       

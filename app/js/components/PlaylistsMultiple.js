@@ -91,13 +91,14 @@ var PlaylistsMultiple = React.createClass({
       return b.upvote_count - a.upvote_count;
     });
 
-    playlists = playlists.map(function (relationData) {
+    playlists = playlists.map(function (relationData, i) {
 
       relationData.parent_outcome_id = this.props.outcome_id;
 
       return (
         <Playlist 
           relationData={relationData}
+          number={i+1}
           key={relationData.playlist_id}/>
       );
 

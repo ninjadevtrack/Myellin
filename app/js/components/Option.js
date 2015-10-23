@@ -196,6 +196,7 @@ var Option = React.createClass({
           onCancel={this.toggleEdit} 
           onMenuSelect={this.menuSelect}
           onDescriptionChange={this._handleDescriptionChange}
+          number={this.props.number}
           ref="optionContent" 
           key={this.state.data['.key']} />
       </div>

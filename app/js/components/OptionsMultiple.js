@@ -75,7 +75,7 @@ var OptionsMultiple = React.createClass({
       return b.upvote_count - a.upvote_count;
     });
 
-    options = options.map(function (relationData) {
+    options = options.map(function (relationData, i) {
 
       var editable = false;
       if (this.state.user && 
@@ -91,6 +91,7 @@ var OptionsMultiple = React.createClass({
             parent_playlist_id={this.props.playlist_id}
             option_id={relationData.option_id}
             editable={editable} 
+            number={i+1}
             key={relationData.option_id} />
         </div>
       );
