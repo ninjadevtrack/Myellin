@@ -67,6 +67,12 @@ var OptionsMultiple = React.createClass({
     this.bindAsArray(this.refOptions, 'data');
   },
 
+  _handleBackClick: function (id) {
+    this.context.router.transitionTo('Playlists', {
+      outcome_slug: this.getParams().outcome_slug
+    });
+  },
+
   render: function () {
 
     // Sort playlists by upvote_count DESC order
@@ -99,13 +105,19 @@ var OptionsMultiple = React.createClass({
 
     return (
       <div className="options-multiple">
-       <div className="back-button">
-      <Glyphicon glyph='arrow-left' className='backicon'/></div>
-           <div style={{padding: '60px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#7A1D58'}}>
-            <div style={{fontSize:'3em', lineHeight: '1.4em', margin: '0', padding: '0'}}>Prerequsities</div>
-             <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>22 learning lists&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{textDecoration: 'underline'}}>add a learning list</span></div>
-             </div>
-        {options}
+        <div className="back-button" onClick={this._handleBackClick}>
+          <Glyphicon glyph='arrow-left' className='backicon'/>
+        </div>
+        <div style={{padding: '60px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#7A1D58'}}>
+          <div style={{fontSize:'3em', lineHeight: '1.4em', margin: '0', padding: '0'}}>Prerequsities</div>
+            <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>
+              22 learning lists&nbsp;&nbsp;|&nbsp;&nbsp;
+              <span style={{textDecoration: 'underline'}}>add a learning list</span>
+            </div>
+          </div>
+
+          {options}
+
       </div>
     );
   }
