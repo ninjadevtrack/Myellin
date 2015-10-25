@@ -1,3 +1,80 @@
+  @media (max-width: 769px) {
+   .panel-heading {
+  border: 0px solid #fff;
+
+}
+.learninglistheaderstyle {
+  
+  padding: 50vmin 3% 50px 3%; 
+  font-family: 'Akkurat-Bold';
+  color: #fff;
+  text-align: left;
+  width: 100%;
+  background-color: #00FF9B;
+
+}
+
+.howto {
+  font-size: 10vmin;
+  line-height: 1.1em;
+   margin: 0;
+  padding: 0;
+}
+
+
+.learninglist {
+font-size: 6vmin;
+line-height: 1em; 
+margin: 0; 
+padding: 0;
+}
+
+  }
+
+@media (min-width: 770px) {
+.panel-heading {
+  margin-bottom: 4px;
+  color: #333;
+  background: #fff;
+  border: 2px solid #F7F7F7;
+  font-family: 'Akkurat-Bold';
+  border-radius: 3px;
+}
+
+
+.learninglistheaderstyle {
+  padding: 80px; 
+  font-family: 'Akkurat-Bold';
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  background-color: #00FF9B;
+
+}
+
+.howto {
+  font-size: 3.2em;
+  line-height: 1.6em;
+   margin: 0;
+  padding: 0;
+}
+
+
+.learninglist {
+font-size: 1.9em;
+line-height: 1em; 
+margin: 0; 
+padding: 0;
+}
+
+
+
+
+.panel-heading:hover {
+  background: #f7f7f7;
+}
+}
+
 .playlists-multiple {  
 margin-top: 50px;
 
@@ -11,7 +88,6 @@ float: right;
   padding-left: 25%;
   min-width: 50%;
   padding-right: 25%;
-  margin-bottom: 2em;
   margin-top: 5em;
 
 .bottomborder {
@@ -44,8 +120,7 @@ cursor: move;
 }
 
   .bottomborder {
-    border-bottom: 8px solid #cdcdcd; 
-    padding-bottom: 10em;
+    padding-bottom: 5em;
   }
  
  .listnumber {
@@ -126,12 +201,12 @@ letter-spacing: -0.003em;
 }
 
 .panel-heading {
-  margin-bottom: 4px;
+  margin-bottom: 7px;
   color: #333;
   background: #fff;
   border: 2px solid #F7F7F7;
   font-family: 'Akkurat-Bold';
-  border-radius: 3px;
+  border-radius: 1px;
 }
 .panel-heading:hover {
   background: #f7f7f7;
@@ -221,4 +296,12 @@ letter-spacing: -0.003em;
 .panel-group {
     margin-bottom: 12px;
 }
+
+
+
+
+
+
+
+
 

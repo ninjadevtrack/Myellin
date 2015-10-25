@@ -131,9 +131,9 @@ var OutcomePlaylists = React.createClass({
       <div>
         { outcome && 
            <div className='learninglistheader'>
-           <div style={{padding: '80px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#00FF9B'}}>
-            <div style={{fontSize:'3.2em', lineHeight: '1.6em', margin: '0', padding: '0'}}>how to {outcome.title}</div>
-             <div style={{fontSize:'1.9em', lineHeight: '1em', margin: '0', padding: '0'}}>{outcome.playlist_count} learning lists</div>
+           <div className='learninglistheaderstyle'>
+           <div className='howto'>how to {outcome.title}</div>
+            <div className='learninglist'>{outcome.playlist_count} learning lists</div>
           </div>
           </div>
         }

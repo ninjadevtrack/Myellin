@@ -1,0 +1,64 @@
+
+	@media (max-width: 769px) {
+
+.list-group {
+margin-top: 1vmin;
+}
+
+.navbar {
+	display: none;
+}
+
+.slogan {
+	font-size: 3vmin;
+	padding-top: 3vmin;
+	font-family: 'Akkurat-Bold';
+}
+
+.list-group-item{
+	font-family: 'Akkurat-Bold';
+	margin-left: 5%;
+}
+.panel-heading {
+	border: 0px solid #fff;
+
+}
+
+.mobile {
+		display: none;
+
+}
+.headermobile {
+	height: 30vmax;
+	width: 100%;
+	 display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-justify-content: center; /* Safari */
+  justify-content:         center;
+  -webkit-align-items: center; /* Safari */
+  align-items:         center;
+   -webkit-flex-direction: column; /* Safari */
+  flex-direction:         column;
+  background-color: #FDFDFD;
+}
+
+
+.badge {
+	font-family: 'Akkurat-Bold';
+}
+}
+
+@media (min-width: 770px) {
+.logomobile {
+	display: none;
+}
+
+.slogan {
+	display: none;
+}
+
+}
+
+
+
+

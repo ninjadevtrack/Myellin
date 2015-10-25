@@ -177,8 +177,14 @@ var OutcomesMultiple = React.createClass({
 
     return (
       <ListGroup fill>
+      <div className="headermobile">
+      <div className="logomobile"><img src="/images/monogram2.svg" height="70vmin" width="70vmin" alt="Logo" /></div>
+      <div className="slogan">the starting point for learners</div>
+      </div>
+      <div className="mobile">
       <div style={{background: '#FEFEFE', paddingTop: '20px', paddingBottom: '5px'}}>
       <span style={{paddingLeft: '15px', fontSize: '1.1em', color: '#000', lineHeight: '0.1em'}}>how to</span><span style={{float: 'right', paddingRight: '20px', fontSize: '1.1em', color: '#222',}}>learning lists</span>
+      </div>
       </div>
         {createOutcome}
         {elements}
