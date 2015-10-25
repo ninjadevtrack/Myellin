@@ -116,7 +116,7 @@ var SubOutcomesMultiple = React.createClass({
       return false;
 
     // Do nothing is suboutcome is aleady present in this.state.data
-    if (this._doesContainSuboutcome(suboutcome_id))
+    if (this._doesContainSuboutcome(suboutcome_id) !== false)
       return false;
 
     // Add the suboutcome to end of playlist (just updates the local state, not Firebase)
@@ -179,11 +179,12 @@ var SubOutcomesMultiple = React.createClass({
   },
 
     // Checks if suboutcome_id already in suboutcomes (this.state.data)
+    // Returns index of suboutcome or false if not found
   _doesContainSuboutcome: function(suboutcome_id){
 
     for (var i = 0; i < this.state.data.length; i++) {
       if (this.state.data[i].suboutcome_id === suboutcome_id) {
-          return true;
+          return i;
       }
     }
     
@@ -270,6 +271,19 @@ var SubOutcomesMultiple = React.createClass({
 
   delete: function(suboutcome_id){
 
+    var index = this._doesContainSuboutcome(suboutcome_id);
+
+    if (index === false)
+      return false;
+
+    // Remove from state
+    // We can't rely on Firebase change updating state ...
+    // ... because suboutcome might not be in playlist yet (playlist hasn't been saved yet)
+    var suboutcomes = this.state.data.slice(0);
+    suboutcomes.splice(index, 1);
+    this.setState({ data: suboutcomes });
+  
+    // Remove from playlist
     DbHelper.suboutcomes.delete(this.props.playlist_id, suboutcome_id);
   },
 
