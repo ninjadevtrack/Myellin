@@ -28,16 +28,31 @@ var SubOutcomesMultiple = React.createClass({
       // Keep track of any Options whos description text has been edited
       // Changes are passed up the chain via callbacks. We look at this object when saving ...
       // ... the playlist, so we can also save any changed Options.
-      optionsChanged: {},
-      optionsNew: {}
+      optionsChanged: {}
     };
   },
 
   componentWillMount: function() {
 
+    console.log('SUBOUTCOMES-M: MOUNT');
+
     this.bindFirebaseRefs();
 
     this._passBackReferenceToSelf();
+  },
+
+  componentWillUpdate: function(nextProps, nextState){
+    
+    console.log('SUBOUTCOMES-M: WILL UPDATE', this.state);
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+
+    //console.log('this.props.isOver: ' + this.props.isOver);
+    console.log('SUBOUTCOMES-M: DID UPDATE', this.state);
+
+    if (this.props.playlist_id !== prevProps.playlist_id)
+      this.bindFirebaseRefs(true);
   },
 
   _passBackReferenceToSelf: function(){
@@ -48,39 +63,21 @@ var SubOutcomesMultiple = React.createClass({
   // This callback is passed all the way down to Option component ...
   // ... so that we are notified if any Option description text changes.
   // this.save() will update very changed Option.
-  _handleOptionDescriptionChange: function(option){
+  _handleOptionDescriptionChange: function(data){
 
     // Clone current object
     var optionsChanged = JSON.parse(JSON.stringify(this.state.optionsChanged));
 
     // Make key option_id so it never gets added twice
-    optionsChanged[option.option_id] = option;
+    optionsChanged[data.suboutcome_id] = data;
 
     // Update state
     this.setState({ optionsChanged : optionsChanged });
   },
 
-  _handleNewOptionDescription: function(data){
-
-    // Clone current object
-    var optionsNew = JSON.parse(JSON.stringify(this.state.optionsNew));
-
-    // Make key option_id so it never gets added twice
-    optionsNew[data.suboutcome_id] = data;
-
-    // Update state
-    this.setState({ optionsNew : optionsNew });
-  },
-
-  componentDidUpdate: function(prevProps, prevState) {
-
-    console.log('this.props.isOver: ' + this.props.isOver);
-
-    if (this.props.playlist_id !== prevProps.playlist_id)
-      this.bindFirebaseRefs(true);
-  },
-
   bindFirebaseRefs: function(rebind){
+
+    console.log('SUBOUTCOMES-M: bindFirebaseRefs');
 
     if (rebind){
       this.unbind('data');
@@ -91,7 +88,35 @@ var SubOutcomesMultiple = React.createClass({
 
     // Fetch all suboutcomes that are in this playlist
     this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
-    this.bindAsArray(this.refSubOutcomes, 'data');
+    
+    if (this.props.editable){
+
+      // If editing, we don't want Firebase data change to affect our state
+      // So we do a firebase once query
+      this.refSubOutcomes.once('value', function(snapshot){
+      
+        // Convert object to array
+        // TODO: move to utility function
+        var object = snapshot.val();
+        var array = [];
+
+        for (var i in object){
+          object[i]['.key'] = i;
+          array.push(object[i]);
+        }
+
+        this.setState({ data: array });
+
+      }.bind(this));
+
+    }else{
+
+      this.bindAsArray(this.refSubOutcomes, 'data');
+    }
+
+    
+
+  
   },
 
   handleSelect: function(activeKey) {
@@ -252,6 +277,7 @@ var SubOutcomesMultiple = React.createClass({
       order = this.state.data.length;
 
     var newSuboutcome = {
+      '.key': 'suboutcome_' + suboutcome_id,
       suboutcome_id: suboutcome_id,
       parent_playlist_id: this.props.playlist_id,
       order: order
@@ -310,32 +336,31 @@ var SubOutcomesMultiple = React.createClass({
     // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
     this.firebase.update(refPlaylistToSuboutcome);
 
-    // If any options were edited, iterate through and save them
+    // If any options were edited (or need to be created), iterate through and save them
     // When options are edited they pass their new text back up the chain through callbacks
     // This is done because (due to ReactDnD) we are unable to reach down to read them via React refs
+    // If data.option_id is null that means the option needs to be created (there was no existing chosen_option to edit)
     for (var key in this.state.optionsChanged){
 
-      var option = this.state.optionsChanged[key];
+      var data = this.state.optionsChanged[key];
 
-      DbHelper.options.update(option.option_id, option.description);
+      if (data.option_id){
+        DbHelper.options.update(data.option_id, data.description);
+      }else{
+        var option_id = DbHelper.options.create(this.state.user.id, data.suboutcome_id, data.description);
+        DbHelper.suboutcomes.choose_option(this.props.playlist_id, data.suboutcome_id, option_id);
+      }      
     }
-
-    // If any new options need to be created (text was entered for suboutcome, but no chosen_option yet)
-    // Create the options and set as chosen_option for the specified suboutcome_id
-    for (var key in this.state.optionsNew){
-
-      var data = this.state.optionsNew[key];
-
-      var option_id = DbHelper.options.create(this.state.user.id, data.suboutcome_id, data.description);
-      DbHelper.suboutcomes.choose_option(this.props.playlist_id, data.suboutcome_id, option_id);
-    }
-
+ 
   },
 
   render: function () {
 
     // We can read whether something is being dragged over if we want to change style
     //var over = (this.props.isOver ? 'OVER' : 'NOT OVER');
+
+    if (!this.state.data)
+      return false;
 
     // Re-sort by order
     var subOutcomes = this.state.data.sort(function(a, b){
@@ -362,7 +387,6 @@ var SubOutcomesMultiple = React.createClass({
           onMove={this.handleMove}
           onDelete={this.delete}
           onOptionDescriptionChange={this._handleOptionDescriptionChange}
-          onNewOptionDescription={this._handleNewOptionDescription}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
    

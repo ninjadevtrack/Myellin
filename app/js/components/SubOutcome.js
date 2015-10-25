@@ -95,12 +95,22 @@ var SubOutcome = React.createClass({
   // This is passed to OptionEditor in the case that we are in ...
   // ... edit playlist view and don't yet have an Option chosen
   _handleNewOptionDescription: function(description){
-    if (this.props.onNewOptionDescription){
-      this.props.onNewOptionDescription({
-        suboutcome_id: this.props.relationData.suboutcome_id,
-        description: description
-      });
-    }
+    if (!this.props.onOptionDescriptionChange)
+      return false;
+
+    this.props.onOptionDescriptionChange({
+      suboutcome_id: this.props.relationData.suboutcome_id,
+      option_id: null,
+      description: description
+    });
+  },
+
+  _handleOptionDescriptionChange: function(option){
+    if (!this.props.onOptionDescriptionChange)
+      return false;
+
+    option.suboutcome_id = this.props.relationData.suboutcome_id;
+    this.props.onOptionDescriptionChange(option);
   },
 
   render: function () {
@@ -165,7 +175,7 @@ var SubOutcome = React.createClass({
                     editable={this.props.editable} 
                     contentOnly={true} 
                     option_id={this.props.relationData.chosen_option}
-                    onDescriptionChange={this.props.onOptionDescriptionChange}
+                    onDescriptionChange={this._handleOptionDescriptionChange}
                     ref="option" />
                 }
 
