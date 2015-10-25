@@ -37,12 +37,14 @@ mixins: [ReactFireMixin, AuthMixin],
           { !this.props.collapse && 
             <Button onClick={this.props.onHide} bsStyle='link' style={{position: 'fixed', left: '45%', top: '6px', fontSize: '1.2em', color: '#4A4A4A', fontFamily: 'Akkurat-Bold', textDecoration: 'underline', zIndex: '99999 !important', cursor: 's-resize'}}>drag & drop</Button>
           }
-          
-            { !this.props.collapse && this.props.children}
 
-             {this.props.collapse &&
-          <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '4px', padding: '0', color: '#656565', fontSize: '1.5em'}}>your learning list</div>
-}
+          { this.props.collapse &&
+            <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '4px', padding: '0', color: '#656565', fontSize: '1.5em'}}>your learning list</div>
+          }
+          
+          <div style={{ display: (this.props.collapse ? 'none' : 'inherit') }}>
+            {this.props.children}
+          </div>
       
       </div>
     );
