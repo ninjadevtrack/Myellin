@@ -78,6 +78,10 @@ var OptionContent = React.createClass({
       this.props.onDescriptionChange(text);
   },
 
+  _userIsAuthor: function(){
+    return (this.state.user && this.state.user.id === this.props.data.author_id);
+  },
+
   render: function () {
 
     var menuItems = this._getMenuItems();
@@ -85,10 +89,7 @@ var OptionContent = React.createClass({
     var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />);
 
     var editable = false;
-    // If author AND (editing OR forceEdit)
-    // We use forceEdit prop when in edit playlist modal (should always be editable if you are author)
-    if ((this.state.user && this.state.user.id === this.props.data.author_id) &&
-          (this.props.editable || this.props.data.editing)){
+    if (this._userIsAuthor() && this.props.editable){
       editable = true;
     }
 
@@ -161,7 +162,8 @@ var OptionContent = React.createClass({
             </div>
           </div>
         }
- { !editable && menuItems.length >= 1 &&
+
+        { !editable && menuItems.length >= 1 &&
           <div style={{ float: 'right'}}>
             <DropdownButton style={{margin: '-10px 0 -15px 0', padding: '0', color: '#000'}} onSelect={this.props.onMenuSelect} bsSize='large' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
               {menuItems}
