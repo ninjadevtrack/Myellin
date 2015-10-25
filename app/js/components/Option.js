@@ -187,16 +187,13 @@ var Option = React.createClass({
     var jsx = (
       <div>
         <OptionContent 
-          relationData={this.props.relationData}
+          {...this.props}
           data={this.state.data}
           playlist={this.state.playlist}
-          editable={this.props.editable}
-          contentOnly={this.props.contentOnly}
           onSave={this.save}
           onCancel={this.toggleEdit} 
           onMenuSelect={this.menuSelect}
           onDescriptionChange={this._handleDescriptionChange}
-          number={this.props.number}
           ref="optionContent" 
           key={this.state.data['.key']} />
       </div>
