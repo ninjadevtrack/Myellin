@@ -132,7 +132,7 @@ var OptionContent = React.createClass({
         <AuthorName id={this.props.data.author_id} />
         
         { !editable &&
-          <div style={{ lineHeight: "1.2", marginBottom: '2em'}}>
+          <div style={{ lineHeight: "1.2"}}>
             <OptionDescription text={this.props.data.description} />
           </div>
         }

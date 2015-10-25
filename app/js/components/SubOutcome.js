@@ -169,7 +169,7 @@ var SubOutcome = React.createClass({
           ref="Panel">
 
           { this.state.expanded && 
-              <div style={{background: '#fff', paddingBottom: '2em'}}>
+              <div style={{background: '#fff'}}>
                 { this.props.relationData.chosen_option && 
                   <Option 
                     editable={this.props.editable} 
