@@ -168,7 +168,13 @@ var SubOutcome = React.createClass({
           accordion
           ref="Panel">
 
-          { this.state.expanded && 
+          {/* 
+            Render child components when expanded ... 
+            OR if in edit playlist mode, even if not expanded (so we never lost option text changes) 
+            TODO: Once we have a better method for keeping track of local state changes ... 
+            ... then remove "|| this.props.editable" below. 
+          */}
+          { (this.state.expanded || this.props.editable) && 
               <div style={{background: '#fff'}}>
                 { this.props.relationData.chosen_option && 
                   <Option 
