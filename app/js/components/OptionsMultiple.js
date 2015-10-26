@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
@@ -73,6 +75,18 @@ var OptionsMultiple = React.createClass({
     });
   },
 
+  createOption: function(e) {
+    e.preventDefault();
+
+    if (!this.state.user){
+      alert('You must be logged in');
+      return;
+    }
+
+    var option_id = DbHelper.options.create(this.state.user.id, this.props.suboutcome_id);
+    DbHelper.options.set_editing(this.state.user.id, this.props.suboutcome_id, option_id);
+  },
+
   render: function () {
 
     // Sort playlists by upvote_count DESC order
@@ -114,7 +128,7 @@ var OptionsMultiple = React.createClass({
             <div style={{fontSize:'3em', lineHeight: '1.4em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
             <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>
               {this.state.suboutcome.option_count} learning lists&nbsp;&nbsp;|&nbsp;&nbsp;
-              <span style={{textDecoration: 'underline'}}>add a learning list</span>
+              <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={this.createOption}>add a learning list</span>
             </div>
           </div>
         }
