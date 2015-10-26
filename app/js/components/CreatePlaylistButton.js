@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon; 
@@ -28,8 +30,7 @@ var CreatePlaylisteButton = React.createClass({
       return;
     }
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
     this.userOutcomePlaylistRef = this.firebase.child('relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.outcome_id);
 
     this.userOutcomePlaylistRef.once('value', function(snap) {

@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Router = require('react-router');
 var Glyphicon= require('react-bootstrap').Glyphicon;
@@ -80,8 +82,7 @@ _handleBrandClick: function(e) {
 
   bindFirebaseRefs: function(nextState){
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     // Get the outcome data
     // Fetch by outcome_id OR slug

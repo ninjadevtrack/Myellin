@@ -99,8 +99,7 @@ var Option = React.createClass({
       this.unbindRef('refPlaylist', 'playlist');
     }
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     this.refOption = this.firebase.child('options/' + this.props.option_id);
     this.bindAsObject(this.refOption, 'data');

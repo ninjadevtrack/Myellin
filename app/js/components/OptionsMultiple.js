@@ -57,11 +57,10 @@ var OptionsMultiple = React.createClass({
       this.unbind('suboutcome');
     }
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    var firebase = DbHelper.getFirebase();
 
     // Load data for suboutcome
-    this.refSubOutcome = new Firebase(firebaseRoot + '/suboutcomes/' + this.props.suboutcome_id);
+    this.refSubOutcome = firebase.child('suboutcomes/' + this.props.suboutcome_id);
     this.bindAsObject(this.refSubOutcome, 'suboutcome');
 
     // Fetch all options that are in this suboutcome

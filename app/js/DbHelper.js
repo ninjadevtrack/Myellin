@@ -6,9 +6,13 @@ require('firebase');
 
 var DbHelper = (function () {
 
-  var _firebase = new Firebase('https://myelin-gabe.firebaseio.com');
+  var _firebase = new Firebase('https://blazing-fire-4313.firebaseio.com');
 
   var models = {
+
+    getFirebase: function(){
+      return _firebase;
+    },
 
     options: {
       create: function(author_id, parent_suboutcome_id, description){

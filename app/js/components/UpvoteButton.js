@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon;
@@ -43,8 +45,7 @@ var UpvoteButton = React.createClass({
 
   bindFirebaseRefs: function(){
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    var firebase = DbHelper.getFirebase();
 
     // Return if not logged in
     if (!this.state.user){
@@ -103,8 +104,7 @@ var UpvoteButton = React.createClass({
       return;
     }
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    var firebase = DbHelper.getFirebase();
 
     var newUpvoteData = {};
     newUpvoteData[ this.props.this_type + '_id' ] = this.props.this_id;

@@ -83,8 +83,7 @@ var SubOutcomesMultiple = React.createClass({
       this.unbind('data');
     }
 
-    this.firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(this.firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     // Fetch all suboutcomes that are in this playlist
     this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);

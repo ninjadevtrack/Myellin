@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
@@ -47,8 +49,7 @@ var Outcome = React.createClass({
   */
 
   bindFirebaseRefs: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     //this.refOutcome = this.firebase.child('outcomes/' + this.props.data['.key']);
     this.refOutcome = this.firebase.child('outcomes/' + this.props.relationData.outcome_id);

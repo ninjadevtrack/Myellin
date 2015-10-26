@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Router = require('react-router');
 var RequestOutcome = require('../components/RequestOutcome');
@@ -50,22 +52,19 @@ var MainPage = React.createClass({
     if (this.state.user.editing_playlist.collapse === false)
       return;
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
     this.refUser = this.firebase.child('users/' + this.state.user.id);
     this.refUser.child('editing_playlist').update({ collapse: false });
   },
 
   hideEditingPlaylist: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
     this.refUser = this.firebase.child('users/' + this.state.user.id);
     this.refUser.child('editing_playlist').update({ collapse: true });
   },
 
   onDoneEditingPlaylist: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
     this.refUser = this.firebase.child('users/' + this.state.user.id);
     this.refUser.child('editing_playlist').remove();
   },

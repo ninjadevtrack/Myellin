@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
@@ -11,12 +13,8 @@ var AuthMixin = {
   },
 
   componentWillMount: function() {
-
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
-
+    this.firebase = DbHelper.getFirebase();
     this.firebase.onAuth(this.onAuthChange);
-
   },
 
   onAuthChange: function(authData){

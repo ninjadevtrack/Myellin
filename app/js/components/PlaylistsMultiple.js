@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
@@ -63,8 +65,7 @@ var PlaylistsMultiple = React.createClass({
 
   bindFirebaseRefs: function(nextState){
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     this.newRefPlaylists = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.outcome_id);
 

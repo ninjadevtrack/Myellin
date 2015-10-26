@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
@@ -17,8 +19,7 @@ var OutcomesMultiple = React.createClass({
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
   componentWillMount: function() {
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
     this.refOutcomes = this.firebase.child('relations/section_to_outcome/home');
     
     this.bindAsArray(this.refOutcomes, 'data');

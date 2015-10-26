@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 
 require('firebase');
@@ -31,8 +33,7 @@ var AuthorName = React.createClass({
     if (rebind)
       this.unbind('data');
 
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    var firebase = new Firebase(firebaseRoot);
+    var firebase = DbHelper.getFirebase();
 
     this.refAuthor = firebase.child('users/' + this.props.id);
     this.bindAsObject(this.refAuthor, 'data');

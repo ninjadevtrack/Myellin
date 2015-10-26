@@ -1,5 +1,7 @@
 'use strict';
 
+var DbHelper = require('../DbHelper');
+
 var React = require('react/addons');
 var Panel = require('react-bootstrap').Panel; 
 var cx = require('classnames');
@@ -62,8 +64,7 @@ var SubOutcome = React.createClass({
   },
 
   bindFirebaseRefs: function(){
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
-    this.firebase = new Firebase(firebaseRoot);
+    this.firebase = DbHelper.getFirebase();
 
     this.refSubOutcome = this.firebase.child('suboutcomes/' + this.props.relationData.suboutcome_id);
     this.bindAsObject(this.refSubOutcome, 'data');
