@@ -2,6 +2,8 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
+var Glyphicon= require('react-bootstrap').Glyphicon;
+
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -15,6 +17,12 @@ var OutcomePlaylists = React.createClass({
     return {
       outcome: null
     };
+  },
+
+
+_handleBrandClick: function(e) {
+    e.preventDefault();
+    this.context.router.transitionTo('app');
   },
 
   componentWillMount: function() {
@@ -131,6 +139,9 @@ var OutcomePlaylists = React.createClass({
       <div>
         { outcome && 
            <div className='learninglistheader'>
+           <div className="back-button" onClick={this._handleBrandClick}>
+          <Glyphicon glyph='arrow-left' className='backicon'/>
+          </div>
            <div className='learninglistheaderstyle'>
            <div className='howto'>how to {outcome.title}</div>
             <div className='learninglist'>{outcome.playlist_count} learning lists</div>

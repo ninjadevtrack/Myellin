@@ -24,6 +24,7 @@ var OutcomesMultiple = React.createClass({
     this.bindAsArray(this.refOutcomes, 'data');
   },
 
+
   addOutcomeSubmit: function(e){
     e.preventDefault();
 
@@ -141,6 +142,10 @@ var OutcomesMultiple = React.createClass({
     }
   },
 
+  _handleBrandClick: function(e) {
+    e.preventDefault();
+    this.context.router.transitionTo('app');
+  },
 
   render: function () {
 

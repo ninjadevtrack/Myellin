@@ -198,7 +198,7 @@ var SubOutcome = React.createClass({
 
           { !this.props.editable &&    
             <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
-              alternatives to this learning step ({this.state.data.option_count})
+              alternatives to this learning step ({this.state.data.option_count - 1})
             </Button>
           }
 

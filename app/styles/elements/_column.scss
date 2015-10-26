@@ -8,6 +8,9 @@ margin-top: 60px;
 	.column {
 		margin-top: 0px;
 	}
+	.column {
+		border-left: 0px solid #ECEBEC;
+	}
 }
 
 /* ==========================================================================
@@ -147,7 +150,26 @@ a.list-group-item {
  /* ==========================================================================
    State 4, 5 & 6 - Options open
  ========================================================================== */
- 
+ @media (max-width: 769px) {
+
+.state-4 {
+	display: none;
+
+}
+
+.state-5 {
+display: none;
+}
+
+.state-6 {
+padding-top: -20px;
+width: 100%;
+
+
+}
+ }
+@media (min-width: 770px) {
+
 .state-4 {
 	display: none;
 
@@ -178,6 +200,6 @@ width: 90%;
 
 
 }
-
+}
 
 

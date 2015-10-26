@@ -1,9 +1,7 @@
 
 	@media (max-width: 769px) {
 
-.list-group {
-margin-top: 1vmin;
-}
+
 
 .navbar {
 	display: none;
@@ -18,6 +16,8 @@ margin-top: 1vmin;
 .list-group-item{
 	font-family: 'Akkurat-Bold';
 	margin-left: 5%;
+	border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
 }
 .panel-heading {
 	border: 0px solid #fff;
@@ -40,6 +40,7 @@ margin-top: 1vmin;
    -webkit-flex-direction: column; /* Safari */
   flex-direction:         column;
   background-color: #FDFDFD;
+  border-bottom: 1px solid #D8D8D8;
 }
 
 

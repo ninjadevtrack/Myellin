@@ -12,10 +12,19 @@
   width: 100%;
   background-color: #00FF9B;
 
+.backplaylist {
+  position: fixed;
+  background-color: #000;
+  height: 50px;
+  width: 50px;
+  z-index: 999;
+}
+
+
 }
 
 .howto {
-  font-size: 10vmin;
+  font-size: 9vmin;
   line-height: 1.1em;
    margin: 0;
   padding: 0;
@@ -23,7 +32,7 @@
 
 
 .learninglist {
-font-size: 6vmin;
+font-size: 5vmin;
 line-height: 1em; 
 margin: 0; 
 padding: 0;
@@ -196,7 +205,6 @@ p {
  color: #333333;
  font-size: 16px; 
  line-height: 1.58;
-letter-spacing: -0.003em;
 
 }
 
