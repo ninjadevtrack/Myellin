@@ -1,6 +1,6 @@
 {
   "firebase": "myelin-gabe",
-  "rules": "firebase-security-rules.json",
+  //"rules": "firebase-security-rules.json",
   "public": "build",
   "ignore": [
     "firebase.json",
