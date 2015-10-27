@@ -6,7 +6,13 @@ require('firebase');
 
 var DbHelper = (function () {
 
-  var _firebase = new Firebase('https://blazing-fire-4313.firebaseio.com');
+  if (window.location.href.indexOf("myelin.io") > -1){
+    var firebaseRoot = 'https://blazing-fire-4313.firebaseio.com';
+  }else{
+    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+  }
+
+  var _firebase = new Firebase(firebaseRoot);
 
   var models = {
 
