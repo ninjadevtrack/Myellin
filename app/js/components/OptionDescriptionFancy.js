@@ -11,7 +11,10 @@ var OptionDescription = React.createClass({
     var p_close = '</p>';
 
     // This will split up some text into [before url], [url], [after url]
-    var urlAndSurroundingHtmlPattern = /(?:(<p(?:\sclass=\"\")?>(?:<b(?:\sclass=\"\")?>)?)(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])((?:<\/b>)?<\/p>))/gim;
+    //var urlAndSurroundingHtmlPattern = /(?:(<p(?:\sclass=\"\")?>(?:<b(?:\sclass=\"\")?>)?)(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])((?:<\/b>)?<\/p>))/gim;
+
+    // This will split up some text into [before url], [url], [after url]
+    var urlAndSurroundingHtmlPattern = /(?:<div\sclass=\"url-embed\"?>(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])<\/div>)/gim;
 
     // After being split into chunks, we iterate through each chunk and check (again) if it's a url
     // If its a url we set its type value so it's easier to handle this data later (we can check if any chunk is a url)

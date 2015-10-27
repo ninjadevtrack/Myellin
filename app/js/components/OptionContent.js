@@ -93,6 +93,15 @@ var OptionContent = React.createClass({
       editable = true;
     }
 
+    /*
+    // Testing rendering of urlEmbed components and then passing into React Editor
+    // Issue is that adds a lot of extra DOM nodes
+    var editText = this.props.data.description;
+    var editText = React.renderToStaticMarkup(
+      <OptionDescription text={this.props.data.description} />
+    );
+    */
+
     /** DISPLAY INLINE under Suboutcome **/
     if (this.props.contentOnly){
       return (

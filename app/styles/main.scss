@@ -29,3 +29,20 @@ a.list-group-item.create-outcome input{
 a.list-group-item.create-outcome:hover{
 	background: transparent;
 }
+
+div.url-embed {
+	position: relative;
+	display: block;
+	padding: 1em;
+	text-align: center;
+	margin-bottom: 0.5em;
+	background-color: #E9FF9E;
+}
+
+div.url-embed::after { 
+    content: "EMBEDDED URL";
+    font-size: 11px;
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+}
