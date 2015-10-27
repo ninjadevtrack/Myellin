@@ -124,10 +124,10 @@ var OptionsMultiple = React.createClass({
 
         { this.state.suboutcome && 
           <div style={{padding: '60px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#7A1D58'}}>
-            <div style={{fontSize:'3em', lineHeight: '1.4em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
+            <div style={{fontSize:'2em', lineHeight: '1.4em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
             <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>
               {this.state.suboutcome.option_count} alternatives&nbsp;&nbsp;|&nbsp;&nbsp;
-              <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={this.createOption}>add an alternative</span>
+              <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={this.createOption}>new alternative</span>
             </div>
           </div>
         }

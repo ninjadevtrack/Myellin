@@ -60,6 +60,13 @@
 
 }
 
+@media (min-width: 769px) {
 
+.learninglistheader {
+	.back-button {
+		display: none;
+	}
+}
+}
 
 
