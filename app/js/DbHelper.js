@@ -6,11 +6,16 @@ require('firebase');
 
 var DbHelper = (function () {
 
+  var firebaseRoot;
+
   if (window.location.href.indexOf("myelin.io") > -1){
-    var firebaseRoot = 'https://blazing-fire-4313.firebaseio.com';
+    firebaseRoot = 'https://blazing-fire-4313.firebaseio.com';
   }else{
-    var firebaseRoot = 'https://myelin-gabe.firebaseio.com';
+    firebaseRoot = 'https://myelin-gabe.firebaseio.com';
   }
+
+  // Uncomment to always load production Firebase
+  //firebaseRoot = 'https://blazing-fire-4313.firebaseio.com';
 
   var _firebase = new Firebase(firebaseRoot);
 
