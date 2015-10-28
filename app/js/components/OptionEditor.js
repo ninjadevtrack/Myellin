@@ -3,8 +3,6 @@
 var React = require('react/addons');
 var Editor = require('react-medium-editor');
 
-
-
 var rangy = require('rangy');
 require('rangy/lib/rangy-classapplier.js');
 require('rangy/lib/rangy-selectionsaverestore.js');
@@ -12,15 +10,12 @@ require('rangy/lib/rangy-selectionsaverestore.js');
 var MediumEditor = require('react-medium-editor/node_modules/medium-editor');
 rangy.init();
 
-var classApplierModule = rangy.modules;
-console.log('RANGY', classApplierModule);
-
 var EmbedButton = MediumEditor.extensions.button.extend({
-  name: 'highlighter',
+  name: 'embed',
   //tagNames: ['mark'], // nodeName which indicates the button should be 'active' when isAlreadyApplied() is called
   contentDefault: '<b>EMBED</b>', // default innerHTML of the button
-  aria: 'Hightlight', // used as both aria-label and title attributes
-  action: 'highlight', // used as the data-action attribute of the button
+  aria: 'Embed a URL', // used as both aria-label and title attributes
+  action: 'embed', // used as the data-action attribute of the button
 
   init: function () {
     MediumEditor.extensions.button.prototype.init.call(this);
@@ -29,16 +24,16 @@ var EmbedButton = MediumEditor.extensions.button.extend({
   handleClick: function (event) {
 
     // The selected text
-    // TODO: check if valid url
     var selection = rangy.getSelection().toString();
     //console.log('selection:' + selection);
 
-    var urlPattern = /^(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])$/gim;
-
-    var match = selection.match(urlPattern);
+    // Make sure selection was a url
+    // TODO: We need to somehow check everytime they edit the text (after it's an embed) if it's still a valid url
+    var urlOnlyPattern = /^(\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|])$/gim;
+    var match = selection.match(urlOnlyPattern);
 
     if (!match){
-      alert('You can only embed valid urls.');
+      alert('You must select a valid url that you\'d like to embed (starting with http://)');
       return;
     }
 
@@ -97,9 +92,6 @@ var OptionEditor = React.createClass ({
 
   render: function () {
 
-    //var text = '<div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/A3PDXmYoF5U?wmode=transparent&rel=0&autohide=1&showinfo=0&enablejsapi=1" frameborder="0" allowfullscreen style="width: 100%; height: 100%; position: absolute;"></iframe></div>';
-    //text += this.props.text;
-
     return (
       <div> 
 
@@ -113,7 +105,7 @@ var OptionEditor = React.createClass ({
           onChange={this._handleChange}
           options={{ 
             extensions: {
-              'highlighter': new EmbedButton()
+              'embed': new EmbedButton()
             },
             toolbar: { 
               buttons: [
@@ -123,7 +115,7 @@ var OptionEditor = React.createClass ({
                 'anchor',
                 'removeFormat',
                 'quote',
-                'highlighter'
+                'embed'
               ]
             }
           }} />
@@ -136,5 +128,4 @@ var OptionEditor = React.createClass ({
 });
 
 
-// Export the wrapped component
 module.exports = OptionEditor;
