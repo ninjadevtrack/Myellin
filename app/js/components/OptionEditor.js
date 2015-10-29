@@ -95,10 +95,12 @@ var OptionEditor = React.createClass ({
     return (
       <div> 
 
+        {/*
         <div style={{padding: '10px', marginBottom: '1em', border: '1px solid #CCC'}}>
           <u>HTML (for debugging)</u><br/>
           {this.state.contentDuringEdit}
         </div> 
+        */}
        
         <Editor
           text={this.props.text}
