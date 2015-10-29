@@ -27,22 +27,101 @@
   font-size: 2em;
  }
 
+.upvotediv:hover {
+.alternativetext {
+   line-height: 1em;
+    height: 30px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+   font-family: 'Akkurat-Regular';
+   color: #9B9B9B;
+  display: inline-block;
+}
+}
 
- .btn-success {
-    margin: -0.3em 0 0 0.3em;
-    padding: 0;
-    font-size: 1.1em;
-    background: transparent;
-    color: #222;
-    box-shadow: 0 0 0;
-    }
-.btn-link {
-    margin: -0.3em 0 0 0.3em;
-    padding: 0;
-    font-size: 1.1em;
-    color: $gray-dark;
-    }
+  @media (max-width: 769px) {
+.alternativetext {
+     font-size: 3vmin;
+
+}
+}
+ @media (min-width: 770px) {
+.alternativetext {
+     font-size: 1em;
+
+}
+}
+.upvotediv {
+
+  height: 80px;
+  padding-bottom: 10em;
+
+.alternativetext {
+  display: none;
+}
+
   .upvote{
+    margin-top: 0.45em;
+    line-height: 1em;
+    font-size: 2.4em;
+    float: right;
+    width: 100%;
+    height: 50px;
+        
+    .btn-link {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    color: #cdcdcd;
+    width: 100%;
+    height: 65px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #cdcdcd;
+    }
+
+:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
+    .btn-link:hover {
+    border: 1px solid #333;
+    border-radius: 3px;
+   color: #333;
+
+    }
+
+    .btn-success {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    background: transparent;
+    color: #000;
+    box-shadow: 0 0 0;
+    width: 100%;
+    height: 65px;
+    border: 2px solid #cdcdcd;
+    border-radius: 2px;
+    }
+     .btn-success:hover {
+    border: 2px solid #cdcdcd;
+    border-radius: 2px;
+    color: #222;
+    }
+  }
+}
+
+.listnumber {
+  float: left;
+  font-size:1.2em;
+  font-family: 'Akkurat-Regular';
+  color: #000;
+ }
+
+}
+
+.alternativeauthor{
   border-bottom: 3px #F7F7F7 solid;
   padding-bottom: 2em;
   }
@@ -53,19 +132,6 @@
     font-family: 'Akkurat-Bold';
     color: #850057;
     }
-
-}
-
-.listnumber {
-  float: left;
-  font-size:1.2em;
-  font-family: 'Akkurat-Regular';
-  color: #000;
- }
-
-
-
-
 
  .backicon {
   margin-top: -110px;

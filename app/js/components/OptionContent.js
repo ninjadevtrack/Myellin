@@ -134,7 +134,7 @@ var OptionContent = React.createClass({
 
       <div className="option-container">
 
-         <div className="upvote">
+         <div className="alternativeauthor">
          <div className="listnumber">{this.props.number}.</div>
           <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
         </div>  
@@ -146,12 +146,17 @@ var OptionContent = React.createClass({
             <OptionDescription text={this.props.data.description} />
           </div>
         }
+         <div className="upvotediv">
+        <div className="upvote">
         <UpvoteButton 
             label={<Glyphicon glyph='ok-circle'/>}
             this_type="option"
             this_id={this.props.data['.key']} 
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
+        </div>
+<div className="alternativetext">I found this the most useful alternative for this learning step.</div>
+        </div>
 
         { editable &&
           <div>

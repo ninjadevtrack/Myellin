@@ -77,7 +77,7 @@ var MainPage = React.createClass({
     var suboutcome_id = this.getParams().suboutcome_id;
 
     return (
-      <DocumentTitle title="MainPage">
+      <DocumentTitle title="Myelin">
         <section className="mainpage">
 
             { this.state.user && this.state.user.editing_playlist && 

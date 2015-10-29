@@ -48,6 +48,14 @@ padding: 0;
   border: 2px solid #F7F7F7;
   font-family: 'Akkurat-Bold';
   border-radius: 3px;
+
+ .suboutcome-header-title {
+  display:inline-block;
+  padding: 25px 10px;
+  cursor: pointer;
+
+ } 
+
 }
 
 
@@ -117,16 +125,11 @@ float: right;
 
 .playlist-container {
   position: relative;
-  padding-left: 20%;
-  padding-right: 26%;
+  padding-left: 21%;
+  padding-right: 25%;
   margin-bottom: 5em;
-  margin-top: 8em;
+  margin-top: 3em;
   line-height: 1.2;
-
-  .panel-heading {
-cursor: move;
-
-}
 
   .bottomborder {
     padding-bottom: 5em;
@@ -215,6 +218,12 @@ p {
   border: 2px solid #F7F7F7;
   font-family: 'Akkurat-Bold';
   border-radius: 1px;
+  .suboutcome-header-title {
+  display:inline-block;
+  padding: 25px 10px;
+  cursor: pointer;
+
+ } 
 }
 .panel-heading:hover {
   background: #f7f7f7;
@@ -223,16 +232,29 @@ p {
 
 .upvotediv:hover {
 .helptext {
-   font-size: 1.1em;
-   line-height: 4.5em;
-   text-align: center;
+   line-height: 1em;
+    height: 30px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
    font-family: 'Akkurat-Regular';
    color: #9B9B9B;
-  display: inline;
+  display: inline-block;
 }
 }
 
+  @media (max-width: 769px) {
+.helptext {
+     font-size: 3.5vmin;
 
+}
+}
+ @media (min-width: 770px) {
+.helptext {
+     font-size: 1.1em;
+
+}
+}
 .upvotediv {
 
   height: 80px;
@@ -305,7 +327,11 @@ p {
     margin-bottom: 12px;
 }
 
-
+@media (min-width: 770px) {
+  .back-button {
+    display: none;
+  }
+}
 
 
 
