@@ -56,7 +56,9 @@
                     // Can write if creating a new Playlist
                     !data.exists() ||
                     // Or if user is the author
-                    data.child('author_id').val() === auth.uid
+                    data.child('author_id').val() === auth.uid || 
+                    // Or if user is admin
+                    root.child('users/' + auth.uid + '/admin').val() === true
                   )",
         ".validate": "newData.hasChildren(['author_id', 'description'])",
         "author_id": {
@@ -78,6 +80,8 @@
                     !data.exists() ||
                     // Or if user is the author
                     data.child('author_id').val() === auth.uid ||
+                    // Or if user is admin
+                    root.child('users/' + auth.uid + '/admin').val() === true ||
                     (
                       // If not author, they can only write to option_count for existing data
                       // Our validate rule for option_count ensures ensures it can only be incremented and de-incremented
@@ -125,8 +129,12 @@
         // Must be creating a new option OR be the author
         ".write": "auth != null && 
                   (
+                    // Can write if creating a new Option
                     !data.exists() || 
-                    data.child('author_id').val() === auth.uid
+                    // Or if user is the author
+                    data.child('author_id').val() === auth.uid || 
+                    // Or if user is admin
+                    root.child('users/' + auth.uid + '/admin').val() === true
                   )",      
         // Required fields
         ".validate": "newData.hasChildren(['author_id', 'description'])", 
@@ -157,9 +165,14 @@
             ".write": "auth != null &&
                       (
                         ( 
-                          // If deleting and are the owner of the playlist
+                          // If deleting (newData will be empty)
                           !newData.exists() &&
-                           root.child('playlists/' + data.child('playlist_id').val() + '/author_id').val() === auth.uid
+                            (
+                              // And user is the author
+                              root.child('playlists/' + data.child('playlist_id').val() + '/author_id').val() === auth.uid ||
+                              // Or if user is admin
+                              root.child('users/' + auth.uid + '/admin').val() === true
+                            )
                         ) || 
                         // If writing and are owner of the playlist
                         root.child('playlists/' + newData.child('playlist_id').val() + '/author_id').val() === auth.uid ||

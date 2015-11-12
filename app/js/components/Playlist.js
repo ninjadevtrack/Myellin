@@ -204,8 +204,18 @@ var Playlist = React.createClass({
       return false;
 
     var menuItems = [];
-    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id){
-      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+
+    if (this.state.user && this.state.data && 
+          (
+            // User is author
+            this.state.user.id === this.state.data.author_id ||
+            // Or user is admin
+            this.state.user.admin === true
+          )){
+
+      if (this.state.user.id === this.state.data.author_id)
+        menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+
       menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
     }
 
