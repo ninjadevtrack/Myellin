@@ -1,5 +1,12 @@
 {
   "rules": {
+    "tokens": {
+      // User can only read/write their own token
+      "$user_id": {
+        ".read": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid"
+      }
+    },
     "outcomes": {
       ".indexOn": ["slug"],
       ".read": true,
