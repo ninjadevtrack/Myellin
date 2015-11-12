@@ -198,26 +198,31 @@ var Playlist = React.createClass({
     this.setState({ SubOutcomesMultipleRef : reference });
   },
 
+  _getMenuItems: function(){
+
+    var menuItems = [];
+
+    if (!this.state.user)
+      return [];
+
+    // If user is author
+    if (this.state.user.id === this.state.data.author_id)
+      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+
+    // If user is author OR admin
+    if (this.state.user.id === this.state.data.author_id || this.state.user.admin === true)
+      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+
+    return menuItems;
+  },
+
+
   render: function () {
 
     if (!this.state.data)
       return false;
 
-    var menuItems = [];
-
-    if (this.state.user && this.state.data && 
-          (
-            // User is author
-            this.state.user.id === this.state.data.author_id ||
-            // Or user is admin
-            this.state.user.admin === true
-          )){
-
-      if (this.state.user.id === this.state.data.author_id)
-        menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-
-      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
-    }
+    var menuItems = this._getMenuItems();
 
     var classes = cx('playlist-container', {
       'editing': this.state.editable

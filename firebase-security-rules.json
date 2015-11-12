@@ -266,9 +266,14 @@
             ".write": "auth != null &&
                       (
                         ( 
-                          // If deleting and are the owner of the option
+                          // If deleting (newData will be empty)
                           !newData.exists() &&
-                           root.child('options/' + data.child('option_id').val() + '/author_id').val() === auth.uid
+                          (
+                            // And user is the author
+                            root.child('options/' + data.child('option_id').val() + '/author_id').val() === auth.uid ||
+                            // Or if user is admin
+                            root.child('users/' + auth.uid + '/admin').val() === true
+                          ) 
                         ) || 
                         // If writing and are owner of the option
                         root.child('options/' + newData.child('option_id').val() + '/author_id').val() === auth.uid ||
