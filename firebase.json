@@ -1,6 +1,5 @@
 {
-  "firebase": "myelin-gabe",
-  //"rules": "firebase-security-rules.json",
+  "firebase": "blazing-fire-4313",
   "public": "build",
   "ignore": [
     "firebase.json",
