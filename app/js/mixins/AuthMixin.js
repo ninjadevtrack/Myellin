@@ -19,7 +19,7 @@ var AuthMixin = {
 
   onAuthChange: function(authData){
 
-    console.log('onAuthChange ...');
+    //console.log('onAuthChange ...');
 
     if (!authData){ // Handle logout
       try{

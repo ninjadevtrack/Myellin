@@ -34,7 +34,7 @@ var SubOutcomesMultiple = React.createClass({
 
   componentWillMount: function() {
 
-    console.log('SUBOUTCOMES-M: MOUNT');
+    //console.log('SUBOUTCOMES-M: MOUNT');
 
     this.bindFirebaseRefs();
 
@@ -43,13 +43,13 @@ var SubOutcomesMultiple = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState){
     
-    console.log('SUBOUTCOMES-M: WILL UPDATE', this.state);
+    //console.log('SUBOUTCOMES-M: WILL UPDATE', this.state);
   },
 
   componentDidUpdate: function(prevProps, prevState) {
 
     //console.log('this.props.isOver: ' + this.props.isOver);
-    console.log('SUBOUTCOMES-M: DID UPDATE', this.state);
+    //console.log('SUBOUTCOMES-M: DID UPDATE', this.state);
 
     if (this.props.playlist_id !== prevProps.playlist_id)
       this.bindFirebaseRefs(true);
@@ -77,7 +77,7 @@ var SubOutcomesMultiple = React.createClass({
 
   bindFirebaseRefs: function(rebind){
 
-    console.log('SUBOUTCOMES-M: bindFirebaseRefs');
+    //console.log('SUBOUTCOMES-M: bindFirebaseRefs');
 
     if (rebind){
       this.unbind('data');

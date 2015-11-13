@@ -87,7 +87,7 @@ var OptionDescription = React.createClass({
       </div>
     );
 
-    console.log(d);
+    //console.log(d);
 
     return (
       <div>
