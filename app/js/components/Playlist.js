@@ -72,6 +72,9 @@ var Playlist = React.createClass({
       case 'edit':
         this.toggleEdit();
         break;
+      case 'toggle_privacy':
+        this.togglePrivacy();
+        break;
       case 'delete':
         this.delete();
         break;
@@ -92,6 +95,11 @@ var Playlist = React.createClass({
       editing_playlist: dataEditingPlaylist
     });
 
+  },
+
+  togglePrivacy: function(){
+    var val = (this.state.data.private ? null : true);
+    this.refPlaylist.child('private').set(val);
   },
 
   delete: function(){
@@ -209,9 +217,18 @@ var Playlist = React.createClass({
     if (this.state.user.id === this.state.data.author_id)
       menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
 
+
+
     // If user is author OR admin
-    if (this.state.user.id === this.state.data.author_id || this.state.user.admin === true)
+    if (this.state.user.id === this.state.data.author_id || this.state.user.admin === true){
+      //var togglePrivacyLabel = (this.state.data.private ? 'Public' : 'Private');
+      menuItems.push( 
+        <MenuItem eventKey='toggle_privacy'>
+          Make {(this.state.data.private ? 'Public' : 'Private')}
+        </MenuItem> 
+      );
       menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
 
     return menuItems;
   },
