@@ -34,7 +34,7 @@ var MainPage = React.createClass({
   mixins: [Router.State, ReactFireMixin, AuthMixin],
 
   propTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    //currentUser: React.PropTypes.object.isRequired
   },
 
   getInitialState: function(){
