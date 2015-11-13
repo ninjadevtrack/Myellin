@@ -226,6 +226,9 @@ var Playlist = React.createClass({
     if (this.state.user && this.state.user.admin)
       return true;
 
+    if (this.state.user && this.state.user.id === this.state.data.author_id)
+      return true;
+
     // If user in outcome.can_view array return true
     if (this.state.user && this.state.data.can_view && this.state.data.can_view[this.state.user.id])
       return true;
