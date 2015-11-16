@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
-var Reflux = require('reflux');
+//var Reflux = require('reflux');
 var RouteHandler = require('react-router').RouteHandler;
 
 var CurrentUserActions = require('./actions/CurrentUserActions');
@@ -19,14 +19,15 @@ var HTML5Backend = require('react-dnd/modules/backends/HTML5');
 
 var App = React.createClass({
 
-  mixins: [Reflux.ListenerMixin],
+  //mixins: [Reflux.ListenerMixin],
 
   getInitialState: function () {
     return {
-      currentUser: {}
+      //currentUser: {}
     };
   },
 
+  /*
   _onUserChange: function (err, user) {
     if (err) {
       this.setState({error: err});
@@ -34,14 +35,16 @@ var App = React.createClass({
       this.setState({currentUser: user || {}, error: null});
     }
   },
+  */
 
   sectionChangeHandler: function(data){
     this.setState({ activeSection: data });
   },
 
+
   componentDidMount: function () {
-    CurrentUserActions.checkLoginStatus(this._onUserChange);
-    this.listenTo(CurrentUserStore, this._onUserChange);
+    //CurrentUserActions.checkLoginStatus(this._onUserChange);
+    //this.listenTo(CurrentUserStore, this._onUserChange);
   },
 
   render: function () {
@@ -50,7 +53,7 @@ var App = React.createClass({
         <NavbarTop section={this.state.activeSection} />
         <RouteHandler params={this.props.params}
                       query={this.props.query}
-                      currentUser={this.state.currentUser}
+                      //currentUser={this.state.currentUser}
                       sectionChangeHandler={this.sectionChangeHandler} />
         <Footer />
       </div>
@@ -60,5 +63,3 @@ var App = React.createClass({
 });
 
 module.exports = ReactDnD.DragDropContext(HTML5Backend)(App);
-
-//module.exports = App;

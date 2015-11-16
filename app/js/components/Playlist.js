@@ -72,6 +72,9 @@ var Playlist = React.createClass({
       case 'edit':
         this.toggleEdit();
         break;
+      case 'toggle_privacy':
+        this.togglePrivacy();
+        break;
       case 'delete':
         this.delete();
         break;
@@ -92,6 +95,11 @@ var Playlist = React.createClass({
       editing_playlist: dataEditingPlaylist
     });
 
+  },
+
+  togglePrivacy: function(){
+    var val = (this.state.data.private ? null : true);
+    this.refPlaylist.child('private').set(val);
   },
 
   delete: function(){
@@ -198,16 +206,65 @@ var Playlist = React.createClass({
     this.setState({ SubOutcomesMultipleRef : reference });
   },
 
+  _getMenuItems: function(){
+
+    var menuItems = [];
+
+    if (!this.state.user)
+      return [];
+
+    // If user is author
+    if (this.state.user.id === this.state.data.author_id)
+      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
+
+
+
+    // If user is author OR admin
+    if (this.state.user.id === this.state.data.author_id || this.state.user.admin === true){
+      //var togglePrivacyLabel = (this.state.data.private ? 'Public' : 'Private');
+      menuItems.push( 
+        <MenuItem eventKey='toggle_privacy'>
+          Make {(this.state.data.private ? 'Public' : 'Private')}
+        </MenuItem> 
+      );
+      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
+
+    return menuItems;
+  },
+
+  _isAllowedToView: function(){
+
+    // If not private return true
+    if (!this.state.data.private)
+      return true;
+
+    // If admin return true
+    if (this.state.user && this.state.user.admin)
+      return true;
+
+    if (this.state.user && this.state.user.id === this.state.data.author_id)
+      return true;
+
+    // If user in outcome.can_view array return true
+    if (this.state.user && this.state.data.can_view && this.state.data.can_view[this.state.user.id])
+      return true;
+
+    // Othewise return false
+    return false;
+  },
+
+
   render: function () {
 
     if (!this.state.data)
       return false;
 
-    var menuItems = [];
-    if (this.state.user && this.state.data && this.state.user.id === this.state.data.author_id){
-      menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
-    }
+    // If outcome is private make sure current user can view it
+    if (this._isAllowedToView() === false)
+      return false;
+
+    var menuItems = this._getMenuItems();
 
     var classes = cx('playlist-container', {
       'editing': this.state.editable

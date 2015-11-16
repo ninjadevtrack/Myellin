@@ -199,7 +199,9 @@ var Option = React.createClass({
       </div>
     );
 
-    if (this.props.editable){
+    // If editing option don't allow dragging (othewise it drags while trying to select text)
+    // If not logged in don't allow dragging (no reason to, hinders ability to select/copy text)
+    if (this.props.editable || !this.state.user){
       return jsx; 
     }else{
       return this.props.connectDragSource( jsx );

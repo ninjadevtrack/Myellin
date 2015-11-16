@@ -39,12 +39,22 @@ var OptionContent = React.createClass({
 
     var menuItems = [];
 
-    if (this.state.user && this.props.data && this.state.user.id === this.props.data.author_id){
+    if (!this.state.user)
+      return [];
+
+    // If user is author
+    if (this.state.user.id === this.props.data.author_id){
       menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-      menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
     }
 
-    if (this.state.user && this.props.playlist && this.state.user.id === this.props.playlist.author_id)
+    // If user is author OR admin
+    if (this.state.user.id === this.props.data.author_id || this.state.user.admin === true){
+        menuItems.push( <MenuItem eventKey='delete'>Delete</MenuItem> );
+    }
+
+    // If user is parent playlist author
+    // (If they aren't playlist author they should not be able to set its chosen_option)
+    if (this.props.playlist && this.state.user.id === this.props.playlist.author_id)
       menuItems.push( <MenuItem eventKey='switch'>Switch</MenuItem> );
 
     return menuItems;

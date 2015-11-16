@@ -63,14 +63,31 @@ var Outcome = React.createClass({
     });
   },
 
+  _isAllowedToView: function(){
+
+    // If not private return true
+    if (!this.state.data.private)
+      return true;
+
+    // If admin return true
+    if (this.state.user && this.state.user.admin)
+      return true;
+
+    // If user in outcome.can_view array return true
+    if (this.state.user && this.state.data.can_view && this.state.data.can_view[this.state.user.id])
+      return true;
+
+    // Othewise return false
+    return false;
+  },
+
   render: function () {
 
     if (!this.state.data)
       return false;
 
-    // If an outcome is private only show if current user is in outcome.can_view
-    if (this.state.data.private && 
-        (!this.state.user || !this.state.data.can_view || !this.state.data.can_view[this.state.user.id]))
+    // If outcome is private make sure current user can view it
+    if (this._isAllowedToView() === false)
       return false;
 
     var jsx = (

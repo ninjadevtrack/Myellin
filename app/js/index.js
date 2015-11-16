@@ -11,5 +11,14 @@ if ( process.env.NODE_ENV !== 'production' ) {
 }
 
 Router.run(routes, Router.HistoryLocation, function(Handler, state) {
-  React.render(<Handler params={state.params} query={state.query} />, document.getElementById('app'));
+
+	//console.log(state.path);
+
+	// Track as pageview in Google Analytics
+	ga('send', {
+	  hitType: 'pageview',
+	  page: state.path
+	});
+
+  	React.render(<Handler params={state.params} query={state.query} />, document.getElementById('app'));
 });

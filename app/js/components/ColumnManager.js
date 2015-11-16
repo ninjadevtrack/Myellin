@@ -67,7 +67,7 @@ var ColumnManager = React.createClass({
     var hoveredColumn = (isHovering ? column_num : null);
     var hoveredColumnData = (isHovering ? columnChildData : null)
 
-    console.log('hovered column: '+ hoveredColumn);
+    //console.log('hovered column: '+ hoveredColumn);
 
     if (this.state.hoveredColumn !== hoveredColumn) {
       this.setState({ hoveredColumn: hoveredColumn });

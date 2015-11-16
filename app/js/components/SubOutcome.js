@@ -162,7 +162,7 @@ var SubOutcome = React.createClass({
       'is-dragging': this.props.isDragging // Injected by React Dnd
     });
 
-    return this.props.connectDragSource(this.props.connectDropTarget(
+    var jsx = (
       
       <div className={classes}>
 
@@ -213,7 +213,14 @@ var SubOutcome = React.createClass({
         </Panel>
       </div>
 
-    ));
+    );
+
+    if (this.state.user){
+      return this.props.connectDragSource(this.props.connectDropTarget( jsx ));
+    }else{
+      return jsx;
+    }
+
 
   }
 
