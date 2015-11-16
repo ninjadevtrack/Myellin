@@ -354,6 +354,13 @@ var SubOutcomesMultiple = React.createClass({
  
   },
 
+  _handleReplaceChosenOption: function(suboutcome_id){     
+    var index = this._doesContainSuboutcome(suboutcome_id);      
+    var newData = JSON.parse(JSON.stringify(this.state.data));    
+    newData[index].chosen_option = null;    
+    this.setState({ data: newData });    
+  },
+
   render: function () {
 
     // We can read whether something is being dragged over if we want to change style
@@ -387,6 +394,7 @@ var SubOutcomesMultiple = React.createClass({
           onMove={this.handleMove}
           onDelete={this.delete}
           onOptionDescriptionChange={this._handleOptionDescriptionChange}
+          onReplaceChosenOption={this._handleReplaceChosenOption}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
    
