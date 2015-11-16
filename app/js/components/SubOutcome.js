@@ -81,6 +81,16 @@ var SubOutcome = React.createClass({
     e.preventDefault();
 
     this.setState({expanded: !this.state.expanded});
+
+    // Track event in Mixpanel (only on expand)
+    /*
+    if (!this.state.expanded){
+      mixpanel.track('View Learning Step', {
+        title: this.state.data.title,
+        step_number: this.props.relationData.order + 1
+      });
+    }
+    */
   },
 
   _handleOptionsClick: function () {
