@@ -363,6 +363,9 @@
         "provider": {
           ".validate": "newData.isString()"
         },
+        "email": {
+          ".validate": "newData.isString()"
+        },
         "editing_playlist": {
           ".validate": "newData.hasChildren(['parent_outcome_id', 'playlist_id', 'collapse'])",
           "parent_outcome_id": {

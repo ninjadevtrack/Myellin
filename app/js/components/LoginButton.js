@@ -45,7 +45,10 @@ var LoginButton = React.createClass({
                 this.firebase.child("tokens").child(authData.uid).set(authData.token);
             }
 
-        }.bind(this));
+        }.bind(this),
+        { 
+            scope: "email" // the permissions requested
+        });
     },
 
     logout: function(){
@@ -68,6 +71,7 @@ var LoginButton = React.createClass({
                 return {
                     username: username,
                     full_name: authData.facebook.displayName,
+                    email: authData.facebook.email
                 };
         }
     },
