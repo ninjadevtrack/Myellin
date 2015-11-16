@@ -1,3 +1,4 @@
+
 'use strict';
 
 var DbHelper = require('../DbHelper');
@@ -398,13 +399,19 @@ var SubOutcomesMultiple = React.createClass({
     var style = {};
     if (this.props.canDrop){
       style = {
-        border: '3px solid red',
-        minHeight: '4em'
+        border: '4px solid #00FF9B',
+        minHeight: '4em',
       }
     }
+    
+
+    
 
     return this.props.connectDropTarget(
       <div style={style}>
+      { this.props.editable &&
+<div className='dragndrop'>drag & drop anyone&#39;s step or alternative here</div>
+}
         <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
           {subOutcomes}
         </PanelGroup>

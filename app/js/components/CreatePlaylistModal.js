@@ -39,7 +39,7 @@ mixins: [ReactFireMixin, AuthMixin],
           }
 
           { this.props.collapse &&
-            <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '4px', padding: '0', color: '#656565', fontSize: '1.5em'}}>your learning list</div>
+            <div style={{textAlign: 'center', fontFamily: 'Akkurat-Bold', marginTop: '4px', padding: '0', color: '#656565', fontSize: '1.5em'}}>your manual</div>
           }
           
           <div style={{ display: (this.props.collapse ? 'none' : 'inherit') }}>

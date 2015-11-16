@@ -3,6 +3,7 @@
 var DbHelper = require('../DbHelper');
 
 var React = require('react/addons');
+
 var Panel = require('react-bootstrap').Panel; 
 var cx = require('classnames');
 var Glyphicon = require('react-bootstrap').Glyphicon; 
@@ -124,6 +125,11 @@ var SubOutcome = React.createClass({
     this.props.onOptionDescriptionChange(option);
   },
 
+  _handleReplaceChosenOption: function(){
+
+    this.props.onReplaceChosenOption(this.props.relationData.suboutcome_id)
+  },
+
   render: function () {
 
     if (!this.state.data)
@@ -193,6 +199,7 @@ var SubOutcome = React.createClass({
                     contentOnly={true} 
                     option_id={this.props.relationData.chosen_option}
                     onDescriptionChange={this._handleOptionDescriptionChange}
+                    onReplaceChosenOption={this._handleReplaceChosenOption}
                     ref="option" />
                 }
 
@@ -209,7 +216,7 @@ var SubOutcome = React.createClass({
 
           { !this.props.editable &&    
             <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
-              alternatives to this learning step ({this.state.data.option_count - 1})
+              alternatives to this step ({this.state.data.option_count - 1})
             </Button>
           }
 
