@@ -171,7 +171,7 @@ float: right;
    height: 2em;
    color: #9B9B9B;
    font-family: 'Akkurat-Regular';
-   font-size: 1.3em;
+   font-size: 1.1em;
 }
 
 .inputdescription::-moz-placeholder {  /* Firefox 19+ */
@@ -347,6 +347,20 @@ p {
  margin-top: -20px;
 }
 
+.dragndrop {
+border: 2px dashed #EEE;
+height: 4em;
+color: #9B9B9B;
+border-radius: 5px;
+font-size: 1.1em;
+width: 100%;
+margin: 5px 0;
+-webkit-align-items: center; /* Safari */
+  align-items:         center;
+  display: -webkit-inline-flex; /* Safari */
+  display: inline-flex;-webkit-justify-content: center; /* Safari */
+  justify-content:         center;
+}
 
 
 

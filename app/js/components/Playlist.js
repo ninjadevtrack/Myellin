@@ -284,16 +284,19 @@ var Playlist = React.createClass({
         { !this.state.editable &&
           <div style={{paddingBottom: '1.3em', marginTop: '-1.1em'}}><p>{this.getDescription()}</p></div>
         }
-
+{ this.state.editable &&
+<div className="steps"><div style={{marginTop: '8em'}}>DESCRIPTION:</div></div>
+}
         { this.state.editable &&
           <textarea 
             ref="description" 
             rows="5" 
             className='inputdescription' 
-            placeholder="In 2-3 lines tell us about your experience realted to this how-to, how you came up with your list, and who it is for." 
-            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', marginBottom: '2em'}} 
+            placeholder="In 2-3 lines tell us about your experience realted to this outcome, how you came up with your manual, and who it is for. " 
+            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '2em'}} 
             defaultValue={this.getDescription()} />
         }
+
        <div className="steps">STEPS:</div>
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
@@ -311,7 +314,7 @@ var Playlist = React.createClass({
             </ButtonGroup>
           </div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a learning step, edit this text and hit enter" type="text" style={{width:'100%', borderRadius: '5px', border: '2px solid #F1F1F1',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
+              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a step, edit this text and hit enter" type="text" style={{width:'100%', border: '2px solid #222',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
             </form>
           </div>
         }

@@ -1,9 +1,9 @@
+
 'use strict';
 
 var DbHelper = require('../DbHelper');
 
 var React = require('react/addons');
-
 var Router = require('react-router');
 var PanelGroup = require('react-bootstrap').PanelGroup;
 var SubOutcome = require('./SubOutcome');
@@ -147,6 +147,21 @@ var SubOutcomesMultiple = React.createClass({
     // Add the suboutcome to end of playlist (just updates the local state, not Firebase)
     // The second it's added the handleMove() (see below) will take over
     this.addSuboutcomeToLocalState(suboutcome_id, this.state.data.length, chosen_option);
+
+    /*
+    var newSuboutcome = {
+      suboutcome_id: suboutcome_id,
+      parent_playlist_id: parent_playlist_id,
+      chosen_option, chosen_option,
+      order: this.state.data.length
+    };
+
+    // Add newSuboutcome to end of this.state.data
+    // The second it's added the handleMove() (see below) will take over
+    var suboutcomes = this.state.data.slice(0);
+    suboutcomes.push(newSuboutcome);
+    this.setState({ data: suboutcomes });
+    */
 
   },
 
@@ -339,18 +354,6 @@ var SubOutcomesMultiple = React.createClass({
  
   },
 
-
-  _handleReplaceChosenOption: function(suboutcome_id){
-
-    var index = this._doesContainSuboutcome(suboutcome_id);
-
-    var newData = JSON.parse(JSON.stringify(this.state.data));
-
-    newData[index].chosen_option = null;
-
-    this.setState({ data: newData });
-  },
-
   render: function () {
 
     // We can read whether something is being dragged over if we want to change style
@@ -384,7 +387,6 @@ var SubOutcomesMultiple = React.createClass({
           onMove={this.handleMove}
           onDelete={this.delete}
           onOptionDescriptionChange={this._handleOptionDescriptionChange}
-          onReplaceChosenOption={this._handleReplaceChosenOption}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
    
@@ -397,13 +399,19 @@ var SubOutcomesMultiple = React.createClass({
     var style = {};
     if (this.props.canDrop){
       style = {
-        border: '3px solid red',
-        minHeight: '4em'
+        border: '4px solid #00FF9B',
+        minHeight: '4em',
       }
     }
+    
+
+    
 
     return this.props.connectDropTarget(
       <div style={style}>
+      { this.props.editable &&
+<div className='dragndrop'>drag & drop anyone&#39;s step or alternative here</div>
+}
         <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
           {subOutcomes}
         </PanelGroup>
