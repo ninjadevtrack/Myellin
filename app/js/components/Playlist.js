@@ -294,7 +294,7 @@ var Playlist = React.createClass({
             style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginTop: '2em', marginBottom: '2em'}} 
             defaultValue={this.getDescription()} />
         }
-       
+       <div className="steps">STEPS:</div>
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
@@ -331,7 +331,7 @@ var Playlist = React.createClass({
                   parent_id={this.props.relationData.parent_outcome_id}
                   key={this.getUpvoteButtonKey()} />
               </div>
-              <div className="helptext">I found this the most useful learning list for this how-to.</div>
+              <div className="helptext">This is the most useful manual for this outcome</div>
             </div>
           }
         </div>

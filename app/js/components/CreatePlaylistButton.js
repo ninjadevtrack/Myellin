@@ -130,8 +130,8 @@ var CreatePlaylisteButton = React.createClass({
 
     return (
       <div className="createplaylistbutton">
-        <Button onClick={this.create} style={{fontSize: '2.5em', margin: '0', padding: '0'}}  bsStyle='link'>
-          <span style={{width: '100%', textDecoration: 'underline'}}>new list</span>
+        <Button onClick={this.create} style={{fontSize: '2.3em', margin: '0 -20px 0', padding: '0'}}  bsStyle='link'>
+          <span style={{width: '100%', textDecoration: 'underline'}}>new manual</span>
         </Button>
       </div>
     );

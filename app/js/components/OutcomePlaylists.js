@@ -144,8 +144,8 @@ _handleBrandClick: function(e) {
           <Glyphicon glyph='arrow-left' className='backicon'/>
           </div>
            <div className='learninglistheaderstyle'>
-           <div className='howto'>how to {outcome.title}</div>
-            <div className='learninglist'>{outcome.playlist_count} learning lists</div>
+           <div className='howto'>{outcome.title}</div>
+            <div className='learninglist'>{outcome.playlist_count} manuals for this outcome</div>
           </div>
           </div>
         }
