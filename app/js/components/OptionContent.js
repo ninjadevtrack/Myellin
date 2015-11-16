@@ -82,6 +82,14 @@ var OptionContent = React.createClass({
     return (this.state.user && this.state.user.id === this.props.data.author_id);
   },
 
+  menuOnSelect: function(event, eventKey){
+    switch (eventKey){
+      case 'replace_option':
+        this.props.onReplaceChosenOption();
+        break;
+    }
+  },
+
   render: function () {
 
     var menuItems = this._getMenuItems();
@@ -91,6 +99,11 @@ var OptionContent = React.createClass({
     var editable = false;
     if (this._userIsAuthor() && this.props.editable){
       editable = true;
+    }
+
+    var canReplaceOption = false;
+    if (this._userIsAuthor() === false && this.props.editable){
+      canReplaceOption = true;
     }
 
     /*
@@ -105,11 +118,19 @@ var OptionContent = React.createClass({
     /** DISPLAY INLINE under Suboutcome **/
     if (this.props.contentOnly){
       return (
-        <div>
+        <div style={{ position: 'relative'}}>
 
           <div style={{background: '#CDCDCD', color: '#fff', lineHeight: '3em'}}>
             <AuthorName id={this.props.data.author_id} />
           </div>
+
+          { canReplaceOption &&
+            <div style={{ position: 'absolute', top: 0, right: '-3em', zIndex: '9999'}}>
+              <DropdownButton style={{margin: '0', padding: '0', color: '#000'}}  onSelect={this.menuOnSelect} bsSize='medium' title={ranking} bsStyle='link' classStyle='editbutton' pullRight noCaret>
+                <MenuItem eventKey='replace_option'>Replace content</MenuItem>
+              </DropdownButton>
+            </div>
+          }
 
           { !editable &&
             <div>
