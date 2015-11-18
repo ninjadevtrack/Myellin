@@ -96,6 +96,16 @@ var UpvoteButton = React.createClass({
     return path;
   },
 
+  _isUpvoted: function(){
+
+    // If we have value from Firebase (user voted for something for this parent_id)
+    // AND the value equals this_id, then vote button should show success state ...
+    if (this.state.upvote && this.state.upvote[ this.props.this_type + '_id' ] === this.props.this_id)
+      return true;
+
+    return false;
+  },
+
   handleUpvote: function(e){
     e.preventDefault();
 
@@ -146,14 +156,15 @@ var UpvoteButton = React.createClass({
       
     }.bind(this));
 
+    if (!this._isUpvoted())
+      mixpanel.track('Upvote ' + (this.props.this_type === 'playlist' ? 'Learning List' : 'Alternative'), {});
+
   },
 
 
   render: function () {
 
-    // If we have value from Firebase (user voted for something for this parent_id)
-    // AND the value equals this_id, then vote button should show success state ...
-    if (this.state.upvote && this.state.upvote[ this.props.this_type + '_id' ] === this.props.this_id){
+    if (this._isUpvoted()){
       var bsStyle = 'success';
       var label =[<Glyphicon glyph='ok-sign'/>];
     }else{

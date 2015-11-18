@@ -23,6 +23,17 @@ var NavbarTop = React.createClass({
     this.context.router.transitionTo('app');
   },
 
+  _handleSubmit: function(e){
+    e.preventDefault();
+
+    var search_term = this.refs.search_input.getValue();
+
+    mixpanel.track('Search', {
+      search_term: search_term
+    });
+
+    this.refs.search_input.getInputDOMNode().value = '';
+  },
 
   render: function() {
 
@@ -45,7 +56,9 @@ var NavbarTop = React.createClass({
           <Nav navbar left>
           <div className="compensate-for-the-nav">
             <div className="inputplaceholder">
-              <Input type='text' bsSize="large" placeholder="&#32;" />
+              <form onSubmit={ this._handleSubmit }>
+                <Input type='text' ref="search_input" bsSize="large" placeholder="&#32;" />
+              </form>
             </div>
             </div>
           </Nav>

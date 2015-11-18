@@ -31,6 +31,9 @@ var LoginButton = React.createClass({
 
             if (error) {
                 console.log("Login Failed!", error);
+
+                mixpanel.track('Error Logging In', {});
+
             } else {
                 console.log("Authenticated successfully with payload:", authData);
 
@@ -43,6 +46,10 @@ var LoginButton = React.createClass({
 
                 // Store their auth token (used by admins to login as any user)
                 this.firebase.child("tokens").child(authData.uid).set(authData.token);
+
+                mixpanel.track('Logged In', {
+                    provider: newUserData.provider  
+                });
             }
 
         }.bind(this),

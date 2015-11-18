@@ -51,6 +51,8 @@ var CreatePlaylisteButton = React.createClass({
 
     }.bind(this));
 
+    mixpanel.track('Create Learning List Clicked', {});
+
   },
 
   createPlaylist: function(){

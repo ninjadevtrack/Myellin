@@ -224,6 +224,23 @@ var DndSource = {
       // TODO: Stop using this.getParams().playlist_id and use props.parent_playlist_id instead if we keep it this way
       parent_playlist_id: props.parent_playlist_id
     }
+  },
+
+  // When this component is dropped
+  // Only used for event tracking currently
+  endDrag: function(props, monitor) {
+    // Data returned by beginDrag() above
+    var droppedItem = monitor.getItem();
+    // Data returned by Component this was dropped on
+    var dropResult = monitor.getDropResult();
+
+    if (dropResult) {
+
+      mixpanel.track('Dropped Alternative', {});
+
+      console.log("You dropped option_id " + droppedItem.option_id + 
+                      " into playlist_id "+ dropResult.playlist_id + "!");
+    }
   }
 };
 

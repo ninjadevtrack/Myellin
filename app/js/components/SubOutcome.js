@@ -101,6 +101,8 @@ var SubOutcome = React.createClass({
       playlist_id: this.props.relationData.parent_playlist_id,
       suboutcome_id: this.props.relationData.suboutcome_id
     });
+
+    mixpanel.track('View Alternatives', {});
   },
 
   // If new option was created ... 
@@ -251,8 +253,8 @@ var DndSource = {
     }
   },
 
-  // NOT USED YET
   // When this component is dropped
+  // Only used for event tracking currently
   endDrag: function(props, monitor) {
     // Data returned by beginDrag() above
     var droppedItem = monitor.getItem();
@@ -260,7 +262,10 @@ var DndSource = {
     var dropResult = monitor.getDropResult();
 
     if (dropResult) {
-        console.log("You dropped suboutcome_id " + droppedItem.suboutcome_id + 
+
+      mixpanel.track('Dropped Learning List Step', {});
+
+      console.log("You dropped suboutcome_id " + droppedItem.suboutcome_id + 
                       " into playlist_id "+ dropResult.playlist_id + "!");
     }
   }
