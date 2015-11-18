@@ -99,7 +99,10 @@ var Playlist = React.createClass({
 
   togglePrivacy: function(){
     var val = (this.state.data.private ? null : true);
-    this.refPlaylist.child('private').set(val);
+
+    DbHelper.playlists.update(this.props.relationData.playlist_id, {
+      private: val
+    });
   },
 
   delete: function(){
@@ -114,7 +117,7 @@ var Playlist = React.createClass({
     refOutcomeToPlaylist.remove();
 
     // Delete the playlist
-    this.refPlaylist.remove();
+    DbHelper.playlists.delete(this.props.relationData.playlist_id);
 
     // Remove user_to_outcome_to_playlist relation
     // So when we lookup whether user has a playlist for this outcome already it returns false
@@ -153,18 +156,20 @@ var Playlist = React.createClass({
   save: function(){
 
     var description = React.findDOMNode(this.refs.description).value.trim();
-    this.refPlaylist.update({ description: description });
 
     // Create new suboutcome if text in input
     this.addSubOutcome();
 
-    //console.log(this.refs.SubOutcomesMultiple.state);
-
     // Call SubOutcomesMultiple component's save method
     // See storeReferenceToSubOutcomesMultiple() above for explanation
-    this.state.SubOutcomesMultipleRef.save();
+    var suboutcome_count = this.state.SubOutcomesMultipleRef.save();
     //this.refs.SubOutcomesMultiple.refs.save();
     //this.refs.SubOutcomesMultiple.refs.child.save();
+
+    DbHelper.playlists.update(this.props.relationData.playlist_id, {
+      description: description,
+      suboutcome_count: suboutcome_count
+    });
 
     this.toggleEdit();
 
@@ -233,6 +238,21 @@ var Playlist = React.createClass({
     return menuItems;
   },
 
+  _isEmpty: function(){
+
+    if (this.state.data.suboutcome_count === 0)
+      return true;
+
+    return false;
+  },
+
+  _isPlaylistAuthor: function(){
+    if (this.state.user && this.state.user.id === this.state.data.author_id)
+      return true;
+
+    return false;
+  },
+
   _isAllowedToView: function(){
 
     // If not private return true
@@ -243,7 +263,7 @@ var Playlist = React.createClass({
     if (this.state.user && this.state.user.admin)
       return true;
 
-    if (this.state.user && this.state.user.id === this.state.data.author_id)
+    if ( this._isPlaylistAuthor() )
       return true;
 
     // If user in outcome.can_view array return true
@@ -263,6 +283,12 @@ var Playlist = React.createClass({
     // If outcome is private make sure current user can view it
     if (this._isAllowedToView() === false)
       return false;
+
+    // Hide playlists that have zero suboutcomes (unless user is the author)
+    /*
+    if (this._isEmpty() === true && this._isPlaylistAuthor() === false )
+      return false;
+    */
 
     var menuItems = this._getMenuItems();
 

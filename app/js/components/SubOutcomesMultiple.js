@@ -29,7 +29,8 @@ var SubOutcomesMultiple = React.createClass({
       // Keep track of any Options whos description text has been edited
       // Changes are passed up the chain via callbacks. We look at this object when saving ...
       // ... the playlist, so we can also save any changed Options.
-      optionsChanged: {}
+      optionsChanged: {},
+      suboutcomesDeleted: []
     };
   },
 
@@ -235,13 +236,6 @@ var SubOutcomesMultiple = React.createClass({
     // Add the suboutcome to playlist
     //this.add(suboutcome_id);
     this.addSuboutcomeToLocalState(suboutcome_id);
-
-
-    // Create a new option to populate this suboutcome
-    //var option_id = DbHelper.options.create(this.state.user.id, suboutcome_id);
-    
-    // Add the option as chosen_option for suboutcome
-    //DbHelper.suboutcomes.choose_option(this.props.playlist_id, suboutcome_id, option_id);
   },
 
   // Create a new suboutcome
@@ -302,15 +296,19 @@ var SubOutcomesMultiple = React.createClass({
     if (index === false)
       return false;
 
-    // Remove from state
-    // We can't rely on Firebase change updating state ...
-    // ... because suboutcome might not be in playlist yet (playlist hasn't been saved yet)
+    // Remove from local state
     var suboutcomes = this.state.data.slice(0);
     suboutcomes.splice(index, 1);
-    this.setState({ data: suboutcomes });
-  
-    // Remove from playlist
-    DbHelper.suboutcomes.delete(this.props.playlist_id, suboutcome_id);
+
+    // Record that suboutcome was removed (store its id in this.state.suboutcomesDeleted)
+    // When playlist is saved we iterate through and delete them from Firebase
+    var suboutcomesDeleted = JSON.parse(JSON.stringify(this.state.suboutcomesDeleted));
+    suboutcomesDeleted.push(suboutcome_id);
+    
+    this.setState({ 
+      data: suboutcomes,
+      suboutcomesDeleted : suboutcomesDeleted
+    });
   },
 
   // This iterates through suboutcomes (this.state.data) and saves their order to Firebase
@@ -318,12 +316,17 @@ var SubOutcomesMultiple = React.createClass({
   // ... such as ones we just created while editing or dragged in from another playlist
   save: function(){
 
+    // Delete any suboutcomes that were removed
+    if (this.state.suboutcomesDeleted.length){
+      for (var i = 0; i < this.state.suboutcomesDeleted.length; i++) {
+        DbHelper.suboutcomes.delete(this.props.playlist_id, this.state.suboutcomesDeleted[i]);
+      }
+    }
+    
+    // Update suboutcomes
     var suboutcomes = this.state.data.slice(0);
-
     var refPlaylistToSuboutcome = {};
-
     for (var i = 0; i < suboutcomes.length; i++) {
-      
       refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
         parent_playlist_id: this.props.playlist_id,
         suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
@@ -351,7 +354,8 @@ var SubOutcomesMultiple = React.createClass({
         DbHelper.suboutcomes.choose_option(this.props.playlist_id, data.suboutcome_id, option_id);
       }      
     }
- 
+
+    return suboutcomes.length;
   },
 
   _handleReplaceChosenOption: function(suboutcome_id){     

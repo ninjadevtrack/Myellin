@@ -25,6 +25,29 @@ var DbHelper = (function () {
       return _firebase;
     },
 
+    playlists: {
+      update: function(playlist_id, data){
+        var refPlaylist = _firebase.child('playlists/' + playlist_id);
+        refPlaylist.update(data);
+      },
+
+      delete: function(playlist_id){
+        var refPlaylist = _firebase.child('playlists/' + playlist_id);
+        refPlaylist.remove();
+      },
+
+      incrementSuboutcomeCount: function(playlist_id, increment){
+        var refPlaylist = _firebase.child('playlists/' + playlist_id);
+
+        refPlaylist.child('suboutcome_count').transaction(function(currentValue) {
+          if (!currentValue)
+            currentValue = 0;
+
+          return currentValue + increment;
+        });
+      }
+    },
+
     options: {
       create: function(author_id, parent_suboutcome_id, description){
 
@@ -80,7 +103,6 @@ var DbHelper = (function () {
 
         _firebase.child('users/' + user_id + '/editing_option').remove();
       }
-
     },
 
     suboutcomes: {
@@ -105,8 +127,8 @@ var DbHelper = (function () {
 
       delete: function(parent_playlist_id, suboutcome_id){
 
-         // Remove suboutcome from playlist
-         // TODO: Move to playlists.remove_suboutcome() (since we arent actually deleting the suboutcome object)
+        // Remove suboutcome from playlist
+        // TODO: Move to playlists.remove_suboutcome() (since we arent actually deleting the suboutcome object)
         var refPlaylistToSuboutcome = _firebase.child('relations/playlist_to_suboutcome/playlist_' + parent_playlist_id + '/suboutcome_' + suboutcome_id);
         refPlaylistToSuboutcome.remove();
       },
