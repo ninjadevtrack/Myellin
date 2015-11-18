@@ -35,10 +35,10 @@
         },
         "playlist_count": {
           ".validate": "newData.isNumber() &&
-                        // It's being initialized at 0
+                        // It's being initialized at 0 or 1
                         (
                           !data.exists() &&
-                          newData.val() === 0
+                          (newData.val() === 0 || newData.val() === 1)
                         ) ||
                         // Or it's being incremented / de-incremented
                         (
@@ -58,15 +58,28 @@
     "playlists": {
       ".read": true,
       "$playlist": {
-        ".write": "auth != null &&
-                  (
-                    // Can write if creating a new Playlist
-                    !data.exists() ||
-                    // Or if user is the author
-                    data.child('author_id').val() === auth.uid || 
-                    // Or if user is admin
-                    root.child('users/' + auth.uid + '/admin').val() === true
-                  )",
+        ".write": " (
+                      // Logged in
+                      auth != null &&
+                      (
+                        // And creating new playlist
+                        !data.exists() ||
+                        // Or if user is the author
+                        data.child('author_id').val() === auth.uid || 
+                        // Or if user is admin
+                        root.child('users/' + auth.uid + '/admin').val() === true
+                      ) 
+                    ) ||
+                    (
+                      // Otherwise then can write if only changing the view_count for existing data
+                      // Our validate rule for view_count ensures it can only be incremented and de-incremented
+                      data.exists() &&
+                      newData.hasChild('view_count') &&
+                      // Make sure they aren't changing any other fields
+                      data.child('author_id').val() === newData.child('author_id').val() && 
+                      data.child('description').val() === newData.child('description').val() &&
+                      data.child('suboutcome_count').val() === newData.child('suboutcome_count').val()
+                    )",
         ".validate": "newData.hasChildren(['author_id', 'description'])",
         "author_id": {
           ".validate": "newData.val() === auth.uid"
@@ -75,6 +88,29 @@
           ".validate": "newData.isString()"
           //".validate": "newData.isString() && newData.val().matches(/<(?>\/?)(?:[^p|body|b|u|em|strong|ul|ol|li|h1|h2|h3|h4|h5|h6|hr|a|br|img|tr|td|table|tbody|label|div|sup|sub|caption|P]|[p|cufontext|cufoncanvas|P][^\s>\/])[^>]*>/)"
           //".validate": "newData.isString() && newData.val().matches(/^([^<>]*(<(i|p|b|br|strong|em|blockquote|pre|code|a href=\"http[^\"]+\")>[^<>]+<\/(i|p|b|br|strong|em|blockquote|pre|code|a)>)?[^<>]*)+$/)"
+        },
+        "suboutcome_count": {
+          ".validate": "newData.isNumber()"
+        },
+        "view_count": {
+          ".validate": "newData.isNumber() &&
+                        // It's being initialized at 0 or 1
+                        (
+                          !data.exists() &&
+                          (newData.val() === 0 || newData.val() === 1)
+                        ) ||
+                        // Or it's being incremented / de-incremented
+                        (
+                          data.isNumber() && 
+                          (
+                              newData.val() === data.val() + 1 ||
+                              newData.val() === data.val() - 1
+                          )
+                        )"
+        },
+        // No other fields are allowed
+        "$other": {
+          ".validate": false
         }
       }
     },
