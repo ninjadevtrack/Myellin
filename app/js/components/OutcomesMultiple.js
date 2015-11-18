@@ -155,17 +155,15 @@ var OutcomesMultiple = React.createClass({
       return a.order - b.order;
     });
 
-    if (this.state.user && this.state.user.admin){
+    
       var createOutcome = (
-        <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create">
+        <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create" style={{border: '2px solid #222'}}>
          <form onSubmit={this.addOutcomeSubmit}>
-            <input ref="createOutcome" placeholder="Add a how-to. Hit enter." type="text" style={{width:'100%'}} />
+            <input ref="createOutcome" placeholder="Add an outcome by editing this text. Hit enter." type="text" style={{width:'100%'}}/>
           </form>
         </ListGroupItem>
       );
-    }else{
-      var createOutcome = null;
-    }
+    
 
     var elements = outcomes.map(function (relationData) {
 
@@ -192,8 +190,8 @@ var OutcomesMultiple = React.createClass({
       <span style={{paddingLeft: '15px', fontSize: '1.1em', color: '#000', lineHeight: '0.1em'}}>Outcomes</span><span style={{float: 'right', paddingRight: '20px', fontSize: '1.1em', color: '#222',}}># of Manuals</span>
       </div>
       </div>
-        {createOutcome}
         {elements}
+        {createOutcome}
       </ListGroup>
     );
   },

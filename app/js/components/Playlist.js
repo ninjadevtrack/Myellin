@@ -303,8 +303,8 @@ var Playlist = React.createClass({
         <div className="countdiv">
           <div className="listnumber">{this.props.number}.</div>
           <div className="count">
-            <span style={{ color: '#A5A5A5', paddingRight: '2em'}}>{this.state.data.view_count || 0} views</span>
-            {this.props.relationData.upvote_count + 3}0% relevant
+            <span style={{ color: '#cdcdcd', paddingRight: '2em'}}>{this.state.data.view_count || 0} views</span>
+            {this.props.relationData.upvote_count + 1}0% relevant
           </div>
         </div>
       
