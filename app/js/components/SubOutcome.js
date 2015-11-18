@@ -89,8 +89,10 @@ var SubOutcome = React.createClass({
         title: this.state.data.title,
         step_number: this.props.relationData.order + 1
       });
-    }
 
+      DbHelper.playlists.viewed(this.props.relationData.parent_playlist_id);
+    }
+  
   },
 
   _handleOptionsClick: function () {

@@ -36,6 +36,19 @@ var DbHelper = (function () {
         refPlaylist.remove();
       },
 
+      viewed: function(playlist_id){
+        var refPlaylist = _firebase.child('playlists/' + playlist_id);
+        
+        refPlaylist.child('view_count').transaction(function(currentValue) {
+          if (!currentValue)
+            currentValue = 0;
+
+          return currentValue + 1;
+        });
+      },
+
+      /*
+      // No longer needed
       incrementSuboutcomeCount: function(playlist_id, increment){
         var refPlaylist = _firebase.child('playlists/' + playlist_id);
 
@@ -45,7 +58,7 @@ var DbHelper = (function () {
 
           return currentValue + increment;
         });
-      }
+      }*/
     },
 
     options: {
