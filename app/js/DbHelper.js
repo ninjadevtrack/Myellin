@@ -9,7 +9,7 @@ var DbHelper = (function () {
   var firebaseRoot;
 
   if (window.location.href.indexOf("myelin.io") > -1 ||
-      window.location.href.indexOf("blazing-fire-4313.firebaseio.com") > -1){
+      window.location.href.indexOf("blazing-fire-4313") > -1){
     firebaseRoot = 'https://blazing-fire-4313.firebaseio.com';
   }else{
     firebaseRoot = 'https://myelin-gabe.firebaseio.com';
