@@ -12,8 +12,10 @@
       ".read": true,
       "$outcome": {
         ".write": "auth != null &&
-                  (
-                    // Admins can write
+                  ( 
+                    // Creating a new outcome
+                    !data.exists() ||
+                    // Or is an admin
                     root.child('users/' + auth.uid + '/admin').val() === true ||
                     (
                       // If not admin, they can only write to playlist_count for existing data
@@ -91,6 +93,9 @@
         },
         "suboutcome_count": {
           ".validate": "newData.isNumber()"
+        },
+        "private": {
+        ".validate": "newData.isBoolean()"
         },
         "view_count": {
           ".validate": "newData.isNumber() &&
@@ -197,7 +202,12 @@
           "$outcome": {
             // Must be an admin to add an outcome to the homepage
             ".write": "auth != null && 
-                      root.child('users/' + auth.uid + '/admin').val() === true"
+                      (
+                        // Can write if creating a new outcome
+                        !data.exists() ||
+                        // Or if an admin
+                        root.child('users/' + auth.uid + '/admin').val() === true
+                      )"
           }
         }
       },
