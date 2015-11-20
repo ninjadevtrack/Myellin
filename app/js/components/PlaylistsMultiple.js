@@ -100,7 +100,7 @@ var PlaylistsMultiple = React.createClass({
         <Playlist 
           relationData={relationData}
           number={i+1}
-          key={relationData.playlist_id}/>
+          key={relationData['.key']}/>
       );
 
     }.bind(this));
