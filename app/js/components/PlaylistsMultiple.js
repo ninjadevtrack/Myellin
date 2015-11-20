@@ -86,9 +86,13 @@ var PlaylistsMultiple = React.createClass({
 
   render: function () {
 
+    // Clone
+    var playlists = JSON.parse(JSON.stringify(this.state.data));
+    
     // Sort playlists by upvote_count DESC order
     // Our Firebase query sorts by upvote_count, but in ASC order (no easy solution for that)
-    var playlists = this.state.data.sort(function(a, b){
+    // If same upvote_count we sort by key
+    playlists.sort(function(a, b){
 
       if (b.upvote_count === a.upvote_count)
         return b['.key'] > a['.key'];
@@ -104,7 +108,7 @@ var PlaylistsMultiple = React.createClass({
         <Playlist 
           relationData={relationData}
           number={i+1}
-          key={relationData['.key']}/>
+          key={relationData['.key'] + i}/>
       );
 
     }.bind(this));
