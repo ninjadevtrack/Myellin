@@ -8,6 +8,7 @@ var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');
 var Button = require('react-bootstrap').Button;
 var Glyphicon= require('react-bootstrap').Glyphicon;
+var Well= require('react-bootstrap').Well;
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
@@ -116,24 +117,32 @@ var OptionsMultiple = React.createClass({
       );
     }.bind(this));
 
+
+
+
     return (
       <div className="options-multiple">
         <div className="back-button" onClick={this._handleBackClick}>
-          <Glyphicon glyph='arrow-left' className='backicon'/>
+          <Glyphicon glyph='arrow-right' className='backicon'/>
         </div>
 
         { this.state.suboutcome && 
-          <div style={{padding: '60px', fontFamily: 'Akkurat-Bold', color: '#fff', textAlign: 'center', width: '100%',  backgroundColor: '#7A1D58'}}>
-            <div style={{fontSize:'2em', lineHeight: '1.4em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
-            <div style={{fontSize:'1.3em', lineHeight: '1em', margin: '0', padding: '0'}}>
-              {this.state.suboutcome.option_count} alternatives to this step&nbsp;&nbsp;|&nbsp;&nbsp;
-              <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={this.createOption}>new alternative</span>
+          <div style={{padding: '100px 5% 100px 14%', fontFamily: 'Akkurat-Regular', color: '#fff', textAlign: 'left', width: '100%',  backgroundColor: '#7A1D58'}}>
+            <div style={{fontSize:'2.2em', lineHeight: '1em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
+            <div style={{fontSize:'1.1em', lineHeight: '1.3em', padding: '0', display: 'inline-block'}}>
+              <b>{this.state.suboutcome.option_count}</b> competing chapter alternative &nbsp;&nbsp;
             </div>
           </div>
         }
 
         {options}
-
+<div className="welloptiondiv"><Well>
+      <ul>
+      <li><b>Can you create a better chapter for this sub-outome?</b></li>
+      <li><b>Learning flow:</b> If a user did not like the original chapter for this manual, they can see alternative approaches to tackle this sub-outcome. This will enable learners to maintain their flow.</li>
+      <li><b>Building blocks:</b> If the author of the manual thinks your version is better, she can easily switch to your version instead. Other authors can also choose to include your chapter in their manuals.</li>
+      </ul>
+</Well></div>
       </div>
     );
   }

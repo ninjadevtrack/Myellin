@@ -21,7 +21,7 @@
 .list-group-item {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 17px 15px;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
   background-color: $list-group-bg;
@@ -47,7 +47,7 @@
 // Includes an extra `.active` modifier class for showing selected items.
 
 a.list-group-item {
-  color: #616161;
+  color: #333;
 
   .list-group-item-heading {
     color: $list-group-link-heading-color;

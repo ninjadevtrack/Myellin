@@ -42,8 +42,8 @@ var CreateOptionButton = React.createClass({
 
     return (
       <div className="createoptionbutton">
-        <Button onClick={this.createOption} style={{fontSize: '1.5em', margin: '0', padding: '0'}}  bsStyle='link'>
-          <span style={{width: '100%', textDecoration: 'underline'}}>new alternative</span>
+        <Button onClick={this.createOption} style={{fontSize: '1.5em', margin: '0 100px', padding: '0', textAlign: 'center'}}  bsStyle='link'>
+          + Alternative
         </Button>
       </div>
     );

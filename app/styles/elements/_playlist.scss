@@ -6,11 +6,12 @@
 .learninglistheaderstyle {
   
   padding: 50vmin 3% 50px 3%; 
-  font-family: 'Akkurat-Bold';
+  font-family: 'Akkurat-Regular';
   color: #fff;
   text-align: left;
   width: 100%;
   background-color: #00FF9B;
+
 
 .backplaylist {
   position: fixed;
@@ -41,54 +42,34 @@ padding: 0;
   }
 
 @media (min-width: 770px) {
-.panel-heading {
-  margin-bottom: 4px;
-  color: #333;
-  background: #fff;
-  border: 2px solid #F7F7F7;
-  font-family: 'Akkurat-Bold';
-  border-radius: 3px;
-
- .suboutcome-header-title {
-  display:inline-block;
-  padding: 25px 10px;
-  cursor: pointer;
-
- } 
-
-}
 
 
 .learninglistheaderstyle {
-  padding: 80px; 
-  font-family: 'Akkurat-Bold';
+  padding: 100px 100px 100px 100px; 
+  font-family: 'Akkurat-Regular';
   color: #fff;
   text-align: center;
   width: 100%;
   background-color: #00FF9B;
+  border-bottom: 4px solid #01EA8E;
 
 }
 
 .howto {
   font-size: 3.2em;
-  line-height: 1.6em;
-   margin: 0;
-  padding: 0;
+  line-height: 1em;
+  margin: 0;
+  padding: 0 0 0 3%;
 }
 
 
 .learninglist {
-font-size: 1.9em;
+font-size: 1.3em;
 line-height: 1em; 
 margin: 0; 
-padding: 0;
-}
-
-
-
-
-.panel-heading:hover {
-  background: #f7f7f7;
+padding: 0 0 0 3%;
+display: inline-block;
+margin-top: 5px;
 }
 }
 
@@ -125,11 +106,10 @@ float: right;
 
 .playlist-container {
   position: relative;
-  padding-left: 21%;
-  padding-right: 25%;
+  padding-left: 24.5%;
+  padding-right: 21%;
   margin-bottom: 5em;
   margin-top: 3em;
-  line-height: 1.2;
 
   .bottomborder {
     padding-bottom: 5em;
@@ -208,14 +188,16 @@ p {
  color: #333333;
  font-size: 16px; 
  line-height: 1.58;
-
 }
 
+
+
+
 .panel-heading {
-  margin-bottom: 7px;
+  margin-bottom: 12px;
   color: #333;
   background: #fff;
-  border: 2px solid #F7F7F7;
+  border: 1px solid #E8E8E8;
   font-family: 'Akkurat-Bold';
   border-radius: 1px;
   .suboutcome-header-title {
@@ -226,9 +208,15 @@ p {
  } 
 }
 .panel-heading:hover {
-  background: #f7f7f7;
-}
+  border: 1px solid #E8E8E8;
+  box-shadow: 0px 0px 4px rgba(227,227,227,1);
+  color: #000;
 
+}
+.panel-heading:active {
+  border: 1px solid #CECECE;
+  box-shadow: 0px 0px 0px rgba(227,227,227,1);
+}
 
 .upvotediv:hover {
 .helptext {
@@ -279,8 +267,6 @@ p {
     height: 50px;
         
     .btn-link {
-    margin: 0;
-    padding: 0;
     font-size: 1em;
     color: #cdcdcd;
     width: 100%;
@@ -295,15 +281,13 @@ p {
   outline-style: none;
 }
     .btn-link:hover {
-    border: 1px solid #333;
+    border: 2px solid #00FF99;
     border-radius: 3px;
    color: #333;
 
     }
 
     .btn-success {
-    margin: 0;
-    padding: 0;
     font-size: 1em;
     background: transparent;
     color: #000;
@@ -341,10 +325,10 @@ p {
 
 .steps {
  font-family: 'Akkurat-Bold';
- font-size: 0.8em;
+ font-size: 1em;
  margin-bottom: 10px; 
- color: #000;
- margin-top: -20px;
+ color: #333;
+ margin-top: 10px;
 }
 
 .dragndrop {
@@ -363,5 +347,43 @@ margin: 5px 0;
 }
 
 
+.footerplaylist {
+  position: relative;
+  padding-left: 24.5%;
+  padding-right: 21%;
+  border-top: 4px solid #00DB85;
+  background: #00FF9B;
+  height: 4em;
+  bottom: 0 ;
+  font-size: 2em;
+  line-height: 1.3em;
+  color: #fff;
+  padding-top: 0em;
+  font-family: 'Akkurat-Bold';
+  text-align: center;
 
+  a {
+  font-family: 'Akkurat-Bold';
+  color: #fff;
+  }
+}
+
+.welldiv {
+  padding-left: 24.5%;
+  padding-right: 21%;
+}
+
+.well {
+padding-top: 2.5em;
+padding-bottom: 1.5em;
+border-radius: 5px;
+margin-bottom: 3em;
+}
+
+.descriptiontext{
+p{
+margin-left: 0;
+margin-right: 0;
+}
+}
 

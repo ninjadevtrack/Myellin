@@ -95,9 +95,7 @@
 // Typography =================================================================
 
 body {
-  -webkit-font-smoothing: antialiased;
   letter-spacing: .1px;
-  text-rendering: optimizeLegibility;
 }
 
 p {
@@ -106,9 +104,7 @@ p {
 
 input,
 button {
-  -webkit-font-smoothing: antialiased;
   letter-spacing: .1px;
-  text-rendering: optimizeLegibility;
 }
 
 
@@ -530,7 +526,7 @@ input[type="checkbox"],
 .list-group {
 
   &-item {
-    padding: 14px;
+    padding: 18px;
   }
 
   &-item-text {

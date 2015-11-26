@@ -422,7 +422,7 @@ var SubOutcomesMultiple = React.createClass({
     return this.props.connectDropTarget(
       <div style={style}>
       { this.props.editable &&
-<div className='dragndrop'>drag & drop anyone&#39;s step or alternative here</div>
+<div className='dragndrop'>drag & drop anyone&#39;s chapter here</div>
 }
         <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
           {subOutcomes}

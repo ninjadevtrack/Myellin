@@ -174,6 +174,12 @@ var SubOutcome = React.createClass({
       'options-shown': this.props.optionsShown,
       'is-dragging': this.props.isDragging // Injected by React Dnd
     });
+var versioncount = 'alternative';
+      if (this.state.data.option_count == 1) {
+      versioncount = 'alternatives'; }
+      else {
+      versioncount = 'alternative';
+      }
 
     var jsx = (
       
@@ -195,7 +201,7 @@ var SubOutcome = React.createClass({
             ... then remove "|| this.props.editable" below. 
           */}
           { (this.state.expanded || this.props.editable) && 
-              <div style={{background: '#fff'}}>
+              <div style={{background: '#fff', padding: '0 20px'}}>
                 { this.props.relationData.chosen_option && 
                   <Option 
                     editable={this.props.editable} 
@@ -214,12 +220,17 @@ var SubOutcome = React.createClass({
                 { !this.props.relationData.chosen_option && !this.props.editable &&
                   <div style={{textAlign:'center', color: '#CCC'}}>No content yet</div>
                 }
+
             </div>
           }
 
-          { !this.props.editable &&    
+
+
+
+
+{ !this.props.editable &&    
             <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
-              alternatives to this step ({this.state.data.option_count - 1})
+            <span style={{fontFamily: 'Akkurat-Bold'}}>{this.state.data.option_count - 1}</span> competing chapter {versioncount}<span style={{float: 'right', fontSize: '1.5em', lineHeight: '0.8em'}}><Glyphicon glyph='arrow-left'/></span>
             </Button>
           }
 

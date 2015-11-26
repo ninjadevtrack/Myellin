@@ -5,11 +5,13 @@ var DbHelper = require('../DbHelper');
 var React = require('react/addons');
 var Router = require('react-router');
 var Glyphicon= require('react-bootstrap').Glyphicon;
+var Well= require('react-bootstrap').Well;
 
 
 require('firebase');
 //var ReactFireMixin = require('reactfire');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
+
 
 var OutcomePlaylists = React.createClass({
 
@@ -108,6 +110,8 @@ _handleBrandClick: function(e) {
     
   },
 
+
+
   render: function () {
 
     var outcome = this._getOutcome(this.state.outcome);
@@ -134,8 +138,14 @@ _handleBrandClick: function(e) {
           outcome_id: outcome_id
         });
       }.bind(this));
-    }
+      var manualcount = 'manual';
+if (outcome.playlist_count == 1){
+ manualcount = 'manual';
+} else {
+  manualcount = 'manuals';
+}
 
+    }
     return (
       <div>
         { outcome && 
@@ -145,7 +155,7 @@ _handleBrandClick: function(e) {
           </div>
            <div className='learninglistheaderstyle'>
            <div className='howto'>{outcome.title}</div>
-            <div className='learninglist'>{outcome.playlist_count} manuals for this outcome</div>
+            <div className='learninglist'><span style={{fontFamily: 'Akkurat-Bold'}}>{outcome.playlist_count}</span> competing {manualcount} for this outcome</div>
           </div>
           </div>
         }
@@ -157,6 +167,14 @@ _handleBrandClick: function(e) {
 
           </div>
         }
+      <div className="welldiv"><Well>
+      <ul>
+      <li><b>Myelin</b> is a community for Autodidacts. Think Github meets Medium. Together we systematically make it easier to achieve outcomes.</li>
+      <li><b>What?</b> We deconstruct outcomes, indicate the most important steps to achive them, and then curate the best resources to accomplish them.</li>
+      <li><b>Rapid content creation:</b> You can, a) drag and drop anyone's chapter to your own manual, b) reuse anyone's chapter stucture, and c) embed almost any online content into your manual.</li>
+      </ul>
+</Well></div>
+      <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
       </div>
     );
 

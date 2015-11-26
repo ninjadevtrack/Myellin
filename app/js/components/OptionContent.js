@@ -126,13 +126,16 @@ var OptionContent = React.createClass({
     */
 
     /** DISPLAY INLINE under Suboutcome **/
+
+
+
+
     if (this.props.contentOnly){
       return (
         <div style={{ position: 'relative'}}>
+        <div className="shadowoption">
 
-          <div style={{background: '#CDCDCD', color: '#fff', lineHeight: '3em'}}>
             <AuthorName id={this.props.data.author_id} />
-          </div>
 
           { canReplaceOption &&
             <div style={{ position: 'absolute', top: 0, right: '-3em', zIndex: '9999'}}>
@@ -155,7 +158,7 @@ var OptionContent = React.createClass({
                 onChange={this._handleChange} />
             </div>
           }
-
+        </div>
         </div>
       );
     }
@@ -166,11 +169,8 @@ var OptionContent = React.createClass({
       <div className="option-container">
 
          <div className="alternativeauthor">
-         <div className="listnumber">{this.props.number}.</div>
-          <div className="count">{this.props.relationData.upvote_count + 3}0% relevant</div>
-        </div>  
-
-        <AuthorName id={this.props.data.author_id} />
+         <div className="listnumber">{this.props.number}.</div><AuthorName id={this.props.data.author_id} /> 
+</div>
         
         { !editable &&
           <div style={{ lineHeight: "1.2"}}>
@@ -186,7 +186,7 @@ var OptionContent = React.createClass({
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
         </div>
-<div className="alternativetext">I found this the most useful alternative for this learning step.</div>
+<div className="alternativetext">This is the most useful chapter for this sub-outcome</div>
         </div>
 
         { editable &&

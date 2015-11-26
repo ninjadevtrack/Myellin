@@ -1,6 +1,5 @@
 .column {
 padding-top: 60px;
-  border-left: 2px solid #ECEBEC;
   overflow: scroll;
   height: 100vh;
 }
@@ -46,6 +45,7 @@ padding-top: 60px;
 padding-top: 0px;
  width: 100vw;
 
+
  .playlist-container {
  position: relative;
   padding-left: 3%;
@@ -72,6 +72,10 @@ padding-top: 0px;
 
 .state-2 {
 	width: 7%;
+	z-index: 10;
+	position: absolute;
+	border-right: 2px solid #cdcdcd;
+	background: #fff;
 
 	.create-outcome {
 	display: none;
@@ -80,7 +84,6 @@ padding-top: 0px;
 	.list-group {
 	width: 600%;
 	margin-left: -500%;
-	margin-top: 0.5em;
 	font-size: 0.8em;
 	}
 	.badge {
@@ -91,8 +94,7 @@ padding-top: 0px;
 
 .state-3 {
 	padding-top: -20px;
-   width: 93%;
-
+   width: 100%;
 }
 
 /*
@@ -114,17 +116,9 @@ a.list-group-item {
 
 
 .state-3.column-1-hovered {
-	width: 70%;
+	width: 100%;
 	padding-top: -20px;
-
-.playlist-container {
- position: relative;
-  padding-left: 20%;
-  padding-right: 10%;
-  margin-bottom: 5em;
-  margin-top: 8em;
-  line-height: 1.2;
- }
+	opacity: 0.9; 
 
 }
 
@@ -132,6 +126,9 @@ a.list-group-item {
 	width: 30%;
 	opacity: 1;
 	background: #fff;
+	z-index: 10;
+	position: absolute;
+	opacity: 0.99;
 
 	.list-group {
 	opacity: 1;
@@ -174,35 +171,47 @@ width: 100%;
  }
 @media (min-width: 770px) {
 
+
 .state-4 {
-	display: none;
+	width: 7%;
+	position: absolute;
+	z-index: 10;
+	border-right: 2px solid #cdcdcd;
+	opacity: 0.4;
 
+	.create-outcome {
+	display: none;
+	}
+
+	.list-group {
+	width: 600%;
+	margin-left: -500%;
+	font-size: 0.8em;
+	}
+	.badge {
+		font-size: 0.8em;
+	}
 }
 
+.column-1 {
+background: #fff;
+}
 .state-5 {
-width: 10%;
-.playlist-container {
-	opacity: 0.2;
-	width: 500%;
-	margin-left: -400%;
-	overflow: hidden; 
+padding-top: -20px;
+ width: 100%;
+ opacity: 0.4;
 }
 
-.learninglistheader {
-	opacity: 0.2;
-	width: 800%;
-	margin-left: -700%;
-}
-.createplaylistbutton {
-	display: none;
-}
-}
+
 
 .state-6 {
+background: #fff;
 padding-top: -20px;
-width: 90%;
-
-
+width: 65%;
+margin-left: 35%;
+z-index: 20;
+position: absolute;
+box-shadow: 0px 3px 15px rgba(000,000,000,0.4);
 }
 }
 

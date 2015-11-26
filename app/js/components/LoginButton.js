@@ -86,11 +86,11 @@ var LoginButton = React.createClass({
     render: function() {
 
         return (
-            <div className="row" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} style={{ margin: "10px 20px 0px 0px" }}>
+            <div className="row" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} style={{ margin: "14px 20px 0px 0px" }}>
                 
                 { this.state.user &&
                     <div>
-                        {this.state.user.username}&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{lineHeight: '2.4em', textDecoration: 'underline'}}><a href="#" onClick={this.logout}>logout</a></span>
+                        {this.state.user.username}&nbsp;&nbsp;|&nbsp;&nbsp;<span style={{lineHeight: '1.8em', textDecoration: 'underline'}}><a href="#" onClick={this.logout}>logout</a></span>
                     </div>
                 }
 
@@ -103,13 +103,13 @@ var LoginButton = React.createClass({
                                 </span>
                             </a>
                             <a href="#" onClick={this.authenticate.bind(this,'facebook')}>
-                                <span style={{margin: "0px -5px 0px 10px", color: "#222222"}}>
+                                <span style={{margin: "20px -5px 0px 10px", color: "#222222"}}>
                                     <i className="s s-glyph14 s-lock"></i>
                                 </span>
                             </a>
                         </div>
                         <div style={{display: (this.state.hover ? 'none' : 'inline')}}>
-                           <span style={{color: '#222', lineHeight: '2.4em'}}> sign up&nbsp;&nbsp;|&nbsp;&nbsp;login</span>
+                           <span style={{color: '#222', lineHeight: '1.8em'}}> sign up&nbsp;&nbsp;|&nbsp;&nbsp;login</span>
                         </div>
                     </div>
                 }

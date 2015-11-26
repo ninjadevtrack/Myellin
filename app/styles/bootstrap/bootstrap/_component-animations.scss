@@ -18,7 +18,8 @@
 .collapse {
   display: none;
 
-  &.in      { display: block; }
+  &.in      { display: block; 
+}
   // [converter] extracted tr&.in to tr.collapse.in
   // [converter] extracted tbody&.in to tbody.collapse.in
 }

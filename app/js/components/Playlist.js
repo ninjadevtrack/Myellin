@@ -303,15 +303,16 @@ var Playlist = React.createClass({
         <div className="countdiv">
           <div className="listnumber">{this.props.number}.</div>
           <div className="count">
-            <span style={{ color: '#cdcdcd', paddingRight: '2em'}}>{this.state.data.view_count || 0} views</span>
-            {this.props.relationData.upvote_count + 1}0% relevant
+            {this.state.data.view_count || 0} views
           </div>
         </div>
       
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&
+          <div className="descriptiontext">
           <div style={{paddingBottom: '1.3em', marginTop: '-1.1em'}}><p>{this.getDescription()}</p></div>
+          </div>
         }
 { this.state.editable &&
 <div className="steps"><div style={{marginTop: '8em'}}>DESCRIPTION:</div></div>
@@ -326,7 +327,7 @@ var Playlist = React.createClass({
             defaultValue={this.getDescription()} />
         }
 
-       <div className="steps">STEPS:</div>
+       <div className="steps">CHAPTERS:</div>
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
