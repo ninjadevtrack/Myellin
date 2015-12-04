@@ -23,9 +23,11 @@ var Column = require('../components/Column');
 //var Modal = require('react-bootstrap').Modal; 
 var Button = require('react-bootstrap').Button; 
 var Playlist = require('../components/Playlist');
+var Option = require('../components/Option');
 var CreatePlaylistButton = require('../components/CreatePlaylistButton');
 var CreateOptionButton = require('../components/CreateOptionButton');
 var CreatePlaylistModal = require('../components/CreatePlaylistModal');
+var CreateOptionModal = require('../components/CreateOptionModal');
 var AuthMixin = require('../mixins/AuthMixin');
 
 
@@ -92,6 +94,17 @@ var MainPage = React.createClass({
                     onDoneEditing={this.onDoneEditingPlaylist} />
 
               </CreatePlaylistModal>
+            }
+
+            { this.state.user && this.state.user.editing_option && 
+              <CreateOptionModal>
+
+                <Option 
+                  relationData={this.state.user.editing_option} 
+                  option_id={this.state.user.editing_option.option_id}
+                  editable={true} />
+
+              </CreateOptionModal>
             }
         
             <ColumnManager sectionChangeHandler={this.sectionChangeHandler}>

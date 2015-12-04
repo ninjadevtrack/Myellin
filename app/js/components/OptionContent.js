@@ -168,9 +168,14 @@ var OptionContent = React.createClass({
 
       <div className="option-container">
 
-         <div className="alternativeauthor">
-         <div className="listnumber">{this.props.number}.</div><AuthorName id={this.props.data.author_id} /> 
-</div>
+        <div className="alternativeauthor">
+
+          {this.props.number && 
+            <div className="listnumber">{this.props.number}.</div>
+          }
+
+          <AuthorName id={this.props.data.author_id} /> 
+        </div>
         
         { !editable &&
           <div style={{ lineHeight: "1.2"}}>
