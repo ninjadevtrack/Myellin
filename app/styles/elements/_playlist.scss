@@ -3,6 +3,38 @@
   border: 0px solid #fff;
 
 }
+
+.blacknwhite {
+    left: 3%;
+    top: 3%;
+    position: fixed;
+  }
+
+  
+.welldiv {
+  padding-left: 3%;
+  padding-right: 3%;
+}
+.footerplaylist {
+  position: relative;
+  padding-left: 3%;
+  padding-right: 3%;
+  border-top: 4px solid #00DB85;
+  background: #00FF9B;
+  height: 4em;
+  font-size: 2em;
+  bottom: 0 ;
+  line-height: 1.3em;
+  color: #fff;
+  padding-top: 0em;
+  font-family: 'Akkurat-Bold';
+  text-align: center;
+
+  a {
+  font-family: 'Akkurat-Bold';
+  color: #fff;
+  }
+}
 .learninglistheaderstyle {
   
   padding: 50vmin 3% 50px 3%; 
@@ -21,7 +53,15 @@
   z-index: 999;
 }
 
+.helptext {
+     font-size: 3.5vmin;
+}
 
+
+.urlembed-container{
+  padding-left: 1em;
+  padding-right: 1em;
+}
 }
 
 .howto {
@@ -231,17 +271,7 @@ p {
 }
 }
 
-  @media (max-width: 769px) {
-.helptext {
-     font-size: 3.5vmin;
-
-}
-
-.urlembed-container{
-  padding-left: 1em;
-  padding-right: 1em;
-}
-}
+  
  @media (min-width: 770px) {
 .helptext {
      font-size: 1.1em;
@@ -321,6 +351,30 @@ p {
   .back-button {
     display: none;
   }
+  .welldiv {
+  padding-left: 24.5%;
+  padding-right: 21%;
+}
+.footerplaylist {
+  position: relative;
+  padding-left: 24.5%;
+  padding-right: 21%;
+  border-top: 4px solid #00DB85;
+  background: #00FF9B;
+  height: 4em;
+  font-size: 2em;
+  bottom: 0 ;
+  line-height: 1.3em;
+  color: #fff;
+  padding-top: 0em;
+  font-family: 'Akkurat-Bold';
+  text-align: center;
+
+  a {
+  font-family: 'Akkurat-Bold';
+  color: #fff;
+  }
+}
 }
 
 .steps {
@@ -347,31 +401,8 @@ margin: 5px 0;
 }
 
 
-.footerplaylist {
-  position: relative;
-  padding-left: 24.5%;
-  padding-right: 21%;
-  border-top: 4px solid #00DB85;
-  background: #00FF9B;
-  height: 4em;
-  bottom: 0 ;
-  font-size: 2em;
-  line-height: 1.3em;
-  color: #fff;
-  padding-top: 0em;
-  font-family: 'Akkurat-Bold';
-  text-align: center;
 
-  a {
-  font-family: 'Akkurat-Bold';
-  color: #fff;
-  }
-}
 
-.welldiv {
-  padding-left: 24.5%;
-  padding-right: 21%;
-}
 
 .well {
 padding-top: 2.5em;

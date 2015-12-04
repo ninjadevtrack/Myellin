@@ -151,7 +151,7 @@ if (outcome.playlist_count == 1){
         { outcome && 
            <div className='learninglistheader'>
            <div className="back-button" onClick={this._handleBrandClick}>
-          <Glyphicon glyph='arrow-left' className='backicon'/>
+          <span className="blacknwhite"><img src="/images/monogram2.svg" height="37,65px" width="44,06px" alt="Logo" /></span>
           </div>
            <div className='learninglistheaderstyle'>
            <div className='howto'>{outcome.title}</div>
@@ -170,8 +170,8 @@ if (outcome.playlist_count == 1){
       <div className="welldiv"><Well>
       <ul>
       <li><b>Myelin</b> is a community for Autodidacts. Think Github meets Medium. Together we systematically make it easier to achieve outcomes.</li>
-      <li><b>What?</b> We deconstruct outcomes, indicate the most important steps to achive them, and then curate the best resources to accomplish them.</li>
-      <li><b>Rapid content creation:</b> You can, a) drag and drop anyone's chapter to your own manual, b) reuse anyone's chapter stucture, and c) embed almost any online content into your manual.</li>
+      <li><b>We deconstruct outcomes,</b> indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
+      <li><b>Rapid content creation:</b> Users can drag and drop anyone's chapter to their manual, reuse anyone's chapter structure, and embed almost any online content into their manual.</li>
       </ul>
 </Well></div>
       <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
