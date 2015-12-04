@@ -322,8 +322,8 @@ var Playlist = React.createClass({
             ref="description" 
             rows="5" 
             className='inputdescription' 
-            placeholder="In 2-3 lines tell us about your experience realted to this outcome, how you came up with your manual, and who it is for. " 
-            style={{width:'100%', borderBottom: '0px solid #FBFBFB', borderTop: '0px solid #FBFBFB', marginBottom: '2em'}} 
+            placeholder="In three sentences tell us about your experience related to this outcome, and who it is for. " 
+            style={{width:'100%', border: '2px solid #cdcdcd', marginBottom: '2em', padding: '10px'}} 
             defaultValue={this.getDescription()} />
         }
 
@@ -344,7 +344,7 @@ var Playlist = React.createClass({
             </ButtonGroup>
           </div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a step, edit this text and hit enter" type="text" style={{width:'100%', border: '2px solid #222',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
+              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a chapter, type the chapter title here and press enter." type="text" style={{width:'100%', border: '2px solid #cdcdcd',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
             </form>
           </div>
         }

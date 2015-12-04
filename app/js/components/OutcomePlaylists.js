@@ -169,7 +169,7 @@ if (outcome.playlist_count == 1){
         }
       <div className="welldiv"><Well>
       <ul>
-      <li><b>Myelin</b> is a community for Autodidacts. Think Github meets Medium. Together we systematically make it easier to achieve outcomes.</li>
+      <li><b>Myelin</b> is a community for self-learners. We curate the most effective approaches and resources to achieve outcomes.</li>
       <li><b>We deconstruct outcomes,</b> indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
       <li><b>Rapid content creation:</b> Users can drag and drop anyone's chapter to their manual, reuse anyone's chapter structure, and embed almost any online content into their manual.</li>
       </ul>
