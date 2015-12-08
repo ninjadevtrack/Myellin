@@ -103,6 +103,11 @@ var Playlist = React.createClass({
     DbHelper.playlists.update(this.props.relationData.playlist_id, {
       private: val
     });
+
+    // Change outcome's playlist_count (since we don't want it to include private playlists)
+    var increment = (this.state.data.private ? 1 : -1);
+    DbHelper.outcome.incrementPlaylistCount(this.props.relationData.parent_outcome_id, increment);
+
   },
 
   delete: function(){
@@ -125,12 +130,16 @@ var Playlist = React.createClass({
     userOutcomePlaylistRef.remove();
 
     // De-increment the outcome's playlist_count
+    DbHelper.outcome.incrementPlaylistCount(this.props.relationData.parent_outcome_id, -1);
+
+    // De-increment the outcome's playlist_count
+    /*
     this.firebase.child('outcomes/' + this.props.relationData.parent_outcome_id + '/playlist_count').transaction(function(currentValue) {
       if (!currentValue)
         return 0;
 
       return currentValue - 1;
-    });
+    });*/
   },
 
   addSubOutcomeSubmit: function(e){

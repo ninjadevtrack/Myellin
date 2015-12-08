@@ -26,6 +26,23 @@ var DbHelper = (function () {
       return _firebase;
     },
 
+    outcome: {
+
+      incrementPlaylistCount: function(outcome_id, increment){
+        var refOutcome = _firebase.child('outcomes/' + outcome_id);
+
+
+        refOutcome.child('playlist_count').transaction(function(currentValue) {
+          if (!currentValue)
+            currentValue = 0;
+
+          return currentValue + increment;
+        });
+
+      }
+
+    },
+
     playlists: {
       update: function(playlist_id, data){
         var refPlaylist = _firebase.child('playlists/' + playlist_id);
@@ -47,6 +64,8 @@ var DbHelper = (function () {
           return currentValue + 1;
         });
       },
+
+
 
       /*
       // No longer needed

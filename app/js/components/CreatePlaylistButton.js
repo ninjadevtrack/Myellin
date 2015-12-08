@@ -102,12 +102,16 @@ var CreatePlaylisteButton = React.createClass({
     });
 
     // Increment the outcome's playlist_count
+    DbHelper.outcome.incrementPlaylistCount(this.props.outcome_id, 1);
+
+    // Increment the outcome's playlist_count
+    /*
     this.firebase.child('outcomes/' + this.props.outcome_id + '/playlist_count').transaction(function(currentValue) {
       if (!currentValue)
         currentValue = 0;
 
       return currentValue + 1;
-    });
+    });*/
 
     /*
     this.refOutcomeToPlaylist.child('playlist_' + playlistId).({
