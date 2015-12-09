@@ -365,6 +365,16 @@ var SubOutcomesMultiple = React.createClass({
     this.setState({ data: newData });    
   },
 
+  // TODO: this function is also in MainPage.js
+  // - Either pass all the way down as prop or use context
+  _hideModal: function(){
+
+    this.firebase = DbHelper.getFirebase();
+    this.refUser = this.firebase.child('users/' + this.state.user.id);
+    this.refUser.child('editing_playlist').update({ collapse: true });
+
+  },
+
   render: function () {
 
     // We can read whether something is being dragged over if we want to change style
@@ -421,12 +431,17 @@ var SubOutcomesMultiple = React.createClass({
 
     return this.props.connectDropTarget(
       <div style={style}>
-      { this.props.editable &&
-<div className='dragndrop'>drag & drop anyone&#39;s chapter here</div>
-}
+
+        { this.props.editable &&
+          <div className='dragndrop' onClick={this._hideModal}>
+            drag & drop anyone&#39;s chapter here
+          </div>
+        }
+
         <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
           {subOutcomes}
         </PanelGroup>
+
       </div>
     );
   }

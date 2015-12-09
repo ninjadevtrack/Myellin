@@ -393,12 +393,19 @@ border-radius: 5px;
 font-size: 1.1em;
 width: 100%;
 margin: 5px 0;
+cursor: pointer;
 -webkit-align-items: center; /* Safari */
-  align-items:         center;
-  display: -webkit-inline-flex; /* Safari */
-  display: inline-flex;-webkit-justify-content: center; /* Safari */
-  justify-content:         center;
+align-items:         center;
+display: -webkit-inline-flex; /* Safari */
+display: inline-flex;-webkit-justify-content: center; /* Safari */
+justify-content:         center;
+
+  &:hover{
+    color:#6C6C6C;
+  }
 }
+
+
 
 
 
