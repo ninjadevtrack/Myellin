@@ -138,43 +138,56 @@ _handleBrandClick: function(e) {
           outcome_id: outcome_id
         });
       }.bind(this));
-      var manualcount = 'manual';
-if (outcome.playlist_count == 1){
- manualcount = 'manual';
-} else {
-  manualcount = 'manuals';
-}
 
+      var manualcount = 'manual';
+      if (outcome.playlist_count == 1){
+        manualcount = 'manual';
+      } else {
+        manualcount = 'manuals';
+      }
     }
+
     return (
       <div>
+
         { outcome && 
-           <div className='learninglistheader'>
-           <div className="back-button" onClick={this._handleBrandClick}>
-          <span className="blacknwhite"><img src="/images/monogram2.svg" height="37,65px" width="44,06px" alt="Logo" /></span>
-          </div>
-           <div className='learninglistheaderstyle'>
-           <div className='howto'>{outcome.title}</div>
-            <div className='learninglist'><span style={{fontFamily: 'Akkurat-Bold'}}>{outcome.playlist_count}</span> competing {manualcount} for this outcome</div>
-          </div>
+          <div className='learninglistheader'>
+            <div className="back-button" onClick={this._handleBrandClick}>
+              <span className="blacknwhite"><img src="/images/monogram2.svg" height="37,65px" width="44,06px" alt="Logo" /></span>
+            </div>
+            
+            <div className='learninglistheaderstyle'>
+              <div className='howto'>{outcome.title}</div>
+              <div className='learninglist'><span style={{fontFamily: 'Akkurat-Bold'}}>{outcome.playlist_count}</span> competing {manualcount} for this outcome</div>
+            </div>
           </div>
         }
 
         { outcome_id && 
           <div>
-
             {children}
-
           </div>
         }
-      <div className="welldiv"><Well>
-      <ul>
-      <li><b>Myelin</b> is a community for self-learners. We curate the most effective approaches and resources to achieve outcomes.</li>
-      <li><b>We deconstruct outcomes,</b> indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
-      <li><b>Rapid content creation:</b> Users can drag and drop anyone's chapter to their manual, reuse anyone's chapter structure, and embed almost any online content into their manual.</li>
-      </ul>
-</Well></div>
-      <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
+
+        { outcome && outcome.playlist_count == 0 &&
+          <div className="no-playlists welldiv">
+            <Well>
+              There are no playlists ...
+            </Well>
+          </div>
+        }
+
+        <div className="welldiv">
+          <Well>
+            <ul>
+              <li><b>Myelin</b> is a community for self-learners. We curate the most effective approaches and resources to achieve outcomes.</li>
+              <li><b>We deconstruct outcomes,</b> indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
+              <li><b>Rapid content creation:</b> Users can drag and drop anyone's chapter to their manual, reuse anyone's chapter structure, and embed almost any online content into their manual.</li>
+            </ul>
+          </Well>
+        </div>
+
+        <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
       </div>
     );
 
