@@ -22,6 +22,10 @@ $icon-font-path: "../fonts/";
 @import "medium-editor";
 @import "medium-editor-theme-default";
 
+html {
+	-webkit-overflow-scrolling: touch;
+}
+
 a.list-group-item.create-outcome input{
 	outline: none;
 }
