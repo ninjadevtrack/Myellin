@@ -25,12 +25,13 @@ var SubOutcomesMultiple = React.createClass({
   getInitialState: function(){
     return {
       data: null,
-      activeKey: null,
+      //activeKey: null,
       // Keep track of any Options whos description text has been edited
       // Changes are passed up the chain via callbacks. We look at this object when saving ...
       // ... the playlist, so we can also save any changed Options.
       optionsChanged: {},
-      suboutcomesDeleted: []
+      suboutcomesDeleted: [],
+      suboutcomeCreatedId: null
     };
   },
 
@@ -120,10 +121,10 @@ var SubOutcomesMultiple = React.createClass({
   
   },
 
+  /*
   handleSelect: function(activeKey) {
-
     this.setState({ activeKey });
-  },
+  },*/
 
   // Triggered when a SubOutcome or Option is dragged over this (SubOutcomesMultiple)
   handleDragOver: function(draggedItem){
@@ -272,6 +273,7 @@ var SubOutcomesMultiple = React.createClass({
 
     var newSuboutcome = {
       '.key': 'suboutcome_' + suboutcome_id,
+      expanded: true,
       suboutcome_id: suboutcome_id,
       parent_playlist_id: this.props.playlist_id,
       order: order
@@ -286,7 +288,11 @@ var SubOutcomesMultiple = React.createClass({
     // Add to end of playlist (local state, not Firebase)
     var suboutcomes = this.state.data.slice(0);
     suboutcomes.push(newSuboutcome);
-    this.setState({ data: suboutcomes });
+    
+    this.setState({ 
+      data: suboutcomes,
+      suboutcomeCreatedId: suboutcome_id
+    });
   },
 
   delete: function(suboutcome_id){
@@ -399,8 +405,14 @@ var SubOutcomesMultiple = React.createClass({
       // We now include "parent_playlist_id" value when writing to Firebase
       relationData.parent_playlist_id = this.props.playlist_id;
 
+      // Auto expand this suboutcome if it was just created
+      var autoExpand = false;
+      if (relationData.suboutcome_id == this.state.suboutcomeCreatedId)
+        autoExpand = true;
+      
       return (
         <SubOutcome 
+          autoExpand={autoExpand}
           optionsShown={optionsShown}
           eventKey={relationData.suboutcome_id}
           relationData={relationData}
@@ -411,7 +423,6 @@ var SubOutcomesMultiple = React.createClass({
           onReplaceChosenOption={this._handleReplaceChosenOption}
           key={relationData.suboutcome_id}
           ref={'SubOutcome_' + relationData.suboutcome_id} />
-   
       );
     }.bind(this));
 
@@ -438,7 +449,7 @@ var SubOutcomesMultiple = React.createClass({
           </div>
         }
 
-        <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} ref="PanelGroup" accordion>
+        <PanelGroup ref="PanelGroup" accordion>
           {subOutcomes}
         </PanelGroup>
 

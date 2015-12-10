@@ -36,8 +36,18 @@ var SubOutcome = React.createClass({
   getInitialState: function(){
     return {
       data: null,
-      expanded: false
+      // Expand if it recieves the autoExpand=true prop
+      // Suboutcomes that are created within the create playlist modal are expanded by default
+      expanded: (this.props.autoExpand || false)
     };
+  },
+
+  // Expand if it recieves the autoExpand=true prop
+  // Suboutcomes that are created within the create playlist modal are expanded by default
+  componentWillReceiveProps: function(nextProps){
+    if (nextProps.autoExpand != this.props.autoExpand && this.props.autoExpand == true){
+      this.setState({ expanded: true });
+    }
   },
 
   componentWillMount: function() {
@@ -142,10 +152,10 @@ var SubOutcome = React.createClass({
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
           {/* {this.props.relationData.order} - */}
+
           {this.state.data.title}
           {this.props.editable &&
             <span onClick={this.onDelete} style={{ color: '#CCC', right: '-30px', position: 'absolute'}}>
-
               <Glyphicon glyph='remove'/>
             </span>
           }
