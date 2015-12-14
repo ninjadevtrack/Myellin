@@ -425,7 +425,7 @@
           }
         },
         "editing_option": {
-          ".validate": "newData.hasChildren(['parent_suboutcome_id', 'option_id'])",
+          ".validate": "newData.hasChildren(['parent_suboutcome_id'])",
           "parent_suboutcome_id": {
             ".validate": "newData.isString()"
           },

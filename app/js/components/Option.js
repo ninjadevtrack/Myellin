@@ -31,8 +31,7 @@ var Option = React.createClass({
   getInitialState: function(){
     return {
       data: null,
-      playlist: null,
-      //editable: (this.props.editable || false)
+      playlist: null
     };
   },
 
@@ -76,12 +75,6 @@ var Option = React.createClass({
   componentDidUpdate: function(prevProps, nextState) {
     if (this.props.option_id !== prevProps.option_id)
       this.bindFirebaseRefs(true);
-
-    // Toggle editable state if editable prop changes
-    // No longer needed (we update option.editing in firebase instead)
-    /*
-    if (this.props.editable !== prevProps.editable)
-      this.toggleEdit(); */
   },
 
   unbindRef: function(firebaseRef, bindVar){
@@ -101,17 +94,27 @@ var Option = React.createClass({
 
     this.firebase = DbHelper.getFirebase();
 
-    this.refOption = this.firebase.child('options/' + this.props.option_id);
-    this.bindAsObject(this.refOption, 'data');
+    if (this.props.option_id){
+      this.refOption = this.firebase.child('options/' + this.props.option_id);
+      this.bindAsObject(this.refOption, 'data');
+    }else{
+      // If no option_id passed in then we are creating a new option
+      // Populate data object directly instead of loading from firebase
+      // We need a short timeout here so that this.state.user is populated (NOT IDEAL)
+      setTimeout(function(){
+        this.setState({
+          data: {
+            author_id: this.state.user.id
+          }
+        })
+      }.bind(this), 100);
+    }
 
     // Fetch playlist data so we know if current user is owner of playlist
     // ... in which case we show them "switch" in dropdown menu
     // TODO: Better way to access app state without doing another Firebase query
     this.refPlaylist = this.firebase.child('playlists/' + this.getParams().playlist_id);
-    this.bindAsObject(this.refPlaylist, 'playlist');
-
-    //this.refSuboutcome = this.firebase.child('suboutcomes/' + this.props.relationData.parent_suboutcome_id);
-    //this.bindAsObject(this.refSuboutcome, 'suboutcome');     
+    this.bindAsObject(this.refPlaylist, 'playlist');   
   },
 
   menuSelect: function(event, eventKey){
@@ -161,7 +164,11 @@ var Option = React.createClass({
 
   save: function(description){
 
-    DbHelper.options.update(this.props.option_id, description);
+    if (this.props.option_id){
+      DbHelper.options.update(this.props.option_id, description);
+    }else{
+      DbHelper.options.create(this.state.user.id, this.props.relationData.parent_suboutcome_id, description);
+    }
 
     this.toggleEdit();
   },
@@ -182,7 +189,7 @@ var Option = React.createClass({
 
     if (!this.state.data)
       return false;
-
+    
     var jsx = (
       <div>
         <OptionContent 

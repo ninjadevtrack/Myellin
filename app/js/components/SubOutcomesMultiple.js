@@ -438,8 +438,6 @@ var SubOutcomesMultiple = React.createClass({
     }
     
 
-    
-
     return this.props.connectDropTarget(
       <div style={style}>
 
