@@ -172,8 +172,17 @@ _handleBrandClick: function(e) {
         { outcome && outcome.playlist_count == 0 &&
           <div className="no-playlists welldiv">
             <Well>
-              There are no playlists ...
-            </Well>
+<h2>Let people do more.</h2>
+
+<b>You are clever.</b> You've spent years tackling complex situations with sharp, focused tactics. Share them.<br></br><br></br>
+
+Allow learners to skip tiresome textbooks, getting lost in Google, or fooled by click baits. Instead, give them access to simple manuals to get stuff done.<br></br><br></br>
+
+Knowing where to start is a hard and comparing resources fuels procrastination. You have knowledge that beginners don't.<br></br><br></br>
+
+There is a goldmine of resources spread across the web. Collect the resources that helped you, add a bit of context, and summarize the key concepts. Learners will love you.<br></br><br></br>
+
+If you know how to achieve this outcome, this could be your first manual. Just create an account and do your magic.</Well>
           </div>
         }
 
@@ -181,12 +190,11 @@ _handleBrandClick: function(e) {
           <Well>
             <ul>
               <li><b>Myelin</b> is a community for self-learners. We curate the most effective approaches and resources to achieve outcomes.</li>
-              <li><b>We deconstruct outcomes,</b> indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
+              <li><b>We deconstruct outcomes</b>, indicate the most important steps to achieve them, and then curate the best resources to accomplish them.</li>
               <li><b>Rapid content creation:</b> Users can drag and drop anyone's chapter to their manual, reuse anyone's chapter structure, and embed almost any online content into their manual.</li>
             </ul>
           </Well>
         </div>
-
         <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
       </div>
     );

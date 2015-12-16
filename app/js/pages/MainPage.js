@@ -115,7 +115,6 @@ var MainPage = React.createClass({
                   selected_outcome_id={outcome_id} />
 
               </Column>
-           
               { (outcome_id || outcome_slug)  &&
                 <Column>
 

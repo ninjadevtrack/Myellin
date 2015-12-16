@@ -182,6 +182,7 @@ var OptionContent = React.createClass({
             <OptionDescription text={this.props.data.description} />
           </div>
         }
+          { !editable &&
          <div className="upvotediv">
         <div className="upvote">
         <UpvoteButton 
@@ -193,7 +194,7 @@ var OptionContent = React.createClass({
         </div>
 <div className="alternativetext">This is the most useful chapter for this sub-outcome</div>
         </div>
-
+        }
         { editable &&
           <div>
 
@@ -202,12 +203,12 @@ var OptionContent = React.createClass({
               onChange={this._handleChange} />
     
             <div>
-              <Button onClick={this._save} style={{marginTop:'2em'}}>
-                Save
+              <Button onClick={this._save} style={{marginTop:'2em', color: '#FFF', fontFamily: 'Akkurat-Regular', backgroundColor:'#00FF9B', border: '0px solid #fff', width:'100px', height: '35px', borderRadius: '5px', lineHeight: '1.4em'}}>
+                save
               </Button>
 
-              <Button onClick={this._cancel} style={{marginTop:'2em', marginLeft: '2em'}}>
-                Cancel
+              <Button onClick={this._cancel} style={{marginTop:'2em', color: '#4A4A4A', fontFamily: 'Akkurat-Regular', backgroundColor:'#FFF', border: '0px solid #fff', width:'100px', height: '35px', borderRadius: '5px', lineHeight: '1.4em'}}>
+                cancel
               </Button>
             </div>
           </div>
