@@ -4,10 +4,9 @@
   display: inline;
   position: fixed;
   background: #000;
-  height: 50px;
-  width: 50px;
+  height: 37,65px;
+  width: 44,06px;
   z-index: 999;
-
 }
 
 .navbar-nav {
@@ -62,10 +61,10 @@
 /* Set width so that it doesn't prevent left/right navbar items from being clickable */
 .navbar-default .logo.navbar-brand {
   z-index: 9999;
-  width: 38px;
+  width: 44px;
   left: 50%;
   margin-top: -2px;
-  padding-right: 19; /* half of width */
+  margin-left: -22px; /* half of width */
 }
 
 .navbar-default .navbar-brand:hover {

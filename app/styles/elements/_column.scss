@@ -16,11 +16,12 @@ padding-top: 60px;
    State 1 - Homepage
    ========================================================================== */
 .state-1 {
-  padding-left: 20%;
-  padding-right: 20%;
   border-left: 0px solid transparent;
   width: 100%;
   text-decoration: none;
+  .list-group {
+  	margin-bottom: 0;
+  }
 
 }
 
@@ -28,6 +29,12 @@ padding-top: 60px;
 	.state-1 {
 	 padding-left: 0%;
   padding-right: 0%;
+}
+.create-outcome {
+display: none;
+}
+.badge {
+display: none;
 }
 }
 
@@ -76,7 +83,13 @@ padding-top: 0px;
 	position: absolute;
 	border-right: 2px solid #cdcdcd;
 	background: #fff;
-
+	.outcomesdiv {
+  padding-left: 0;
+  padding-right: 0;
+}
+.pattern {
+display: none
+}
 	.create-outcome {
 	display: none;
 	}

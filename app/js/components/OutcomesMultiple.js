@@ -157,7 +157,7 @@ var OutcomesMultiple = React.createClass({
 
     
       var createOutcome = (
-        <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create" style={{border: '2px solid #222'}}>
+        <ListGroupItem className="create-outcome" href="javascript:void(0)" key="create" style={{}}>
          <form onSubmit={this.addOutcomeSubmit}>
             <input ref="createOutcome" placeholder="Add an outcome by editing this text. Hit enter." type="text" style={{width:'100%'}}/>
           </form>
@@ -181,6 +181,7 @@ var OutcomesMultiple = React.createClass({
 
     return (
       <ListGroup fill>
+      <div className="outcomesdiv">
       <div className="headermobile">
       <div className="logomobile"><img src="/images/monogram2.svg" height="70vmin" width="70vmin" alt="Logo" /></div>
       <div className="slogan">the starting point for learners</div>
@@ -192,6 +193,8 @@ var OutcomesMultiple = React.createClass({
       </div>
         {elements}
         {createOutcome}
+      </div>
+      <div className="pattern"><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>
       </ListGroup>
     );
   },

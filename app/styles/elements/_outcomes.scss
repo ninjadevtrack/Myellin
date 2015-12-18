@@ -1,5 +1,5 @@
 
-	@media (max-width: 769px) {
+@media (max-width: 769px) {
 
 
 
@@ -15,9 +15,9 @@
 
 .list-group-item{
 	font-family: 'Akkurat-Bold';
-	margin-left: 5%;
 	border-top: 1px solid #f1f1f1;
 	border-bottom: 1px solid #f1f1f1;
+	padding: 20px 10px;
 }
 .panel-heading {
 	border: 0px solid #fff;
@@ -43,13 +43,38 @@
   border-bottom: 1px solid #D8D8D8;
 }
 
+.pattern {
+position: relative;
+    padding-left: 3%;
+    padding-right: 3%;
+    background: #7A1D58;
+  	border-top: 6px solid #611645;
+    height: 4em;
+    font-size: 2em;
+    bottom: 0 ;
+    line-height: 1.3em;
+    color: #fff;
+    font-family: 'Akkurat-Bold';
+    text-align: center;
+    padding-top: 1.1em;
 
+    a {
+      font-family: 'Akkurat-Bold';
+      color: #fff;
+    }
+}
 .badge {
 	font-family: 'Akkurat-Bold';
 }
-}
+} /* End - @media (max-width: 769px) */
 
 @media (min-width: 770px) {
+
+.learninglistheader {
+	.back-button {
+		display: none;
+	}
+}
 .logomobile {
 	display: none;
 }
@@ -58,15 +83,37 @@
 	display: none;
 }
 
+.outcomesdiv {
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
-@media (min-width: 769px) {
+.pattern {
+ position: relative;
+ height: 4em;
+ width: 100%;
+ margin-top: 1em;
+ color: #fff;
+ font-family: 'Akkurat-Bold';
+  text-align: center;
+  font-size: 2.1em;
+  padding-top: 1em;
+  margin-top: 2em;
+  background: #7A1D58;
+  	border-top: 6px solid #611645;
+  	    height: 4em;
 
-.learninglistheader {
-	.back-button {
-		display: none;
-	}
+  a {
+color: #fff;
 }
 }
 
+a.list-group-item.create-outcome input{
+	outline: none;
+}
+
+a.list-group-item.create-outcome:hover{
+	background: transparent;
+}
+} /* End - @media (min-width: 769px) */
 

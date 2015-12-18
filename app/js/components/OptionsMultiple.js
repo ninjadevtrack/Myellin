@@ -137,11 +137,7 @@ var OptionsMultiple = React.createClass({
 
         {options}
 <div className="welloptiondiv"><Well>
-      <ul>
-      <li><b>Can you create a better chapter for this sub-outome?</b></li>
-      <li><b>Learning flow:</b> If a user did not like the original chapter for this manual, they can see alternative approaches to tackle this sub-outcome. This will enable learners to maintain their flow.</li>
-      <li><b>Building blocks:</b> If the author of the manual thinks your version is better, she can easily switch to your version instead. Other authors can also choose to include your chapter in their manuals.</li>
-      </ul>
+      <b>You can challenge this chapter.</b> Can you make it easier to digest, do you know better resources, or a stronger way to structure it? Just create an account, hit + Alternative and do you magic. If your chapter is ace, the author can use your chapter instead. In fact, anyone that loves your chapter can include it in their learning manual. 
 </Well></div>
       </div>
     );

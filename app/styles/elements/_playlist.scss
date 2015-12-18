@@ -1,18 +1,25 @@
 @media (max-width: 769px) {
-
   .panel-heading {
     border: 0px solid #fff;
   }
 
   .blacknwhite {
-    left: 3%;
-    top: 3%;
-    position: fixed;
+    display: none;
   }
 
   .welldiv {
     padding-left: 3%;
     padding-right: 3%;
+  }
+
+  .no-playlists {
+    margin-bottom: 2em;
+    h2 {
+      line-height: 1em;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 1em;
+    }
   }
 
   .footerplaylist {
@@ -44,6 +51,7 @@
     text-align: left;
     width: 100%;
     background-color: #00FF9B;
+
 
     .backplaylist {
       position: fixed;
@@ -79,6 +87,14 @@
 } /* End - @media (max-width: 769px) */
 
 @media (min-width: 770px) {
+  .helptext {
+    font-size: 1.1em;
+  }
+.well {
+  padding: 2.5em 4em 1.5em;
+  border-radius: 5px;
+  margin-bottom: 3em;
+}
 
   .learninglistheaderstyle {
     padding: 100px 100px 100px 100px; 
@@ -94,16 +110,54 @@
     font-size: 3.2em;
     line-height: 1em;
     margin: 0;
-    padding: 0 0 0 3%;
+    padding: 0;
   }
 
   .learninglist {
     font-size: 1.3em;
     line-height: 1em; 
     margin: 0; 
-    padding: 0 0 0 3%;
+    padding: 0;
     display: inline-block;
     margin-top: 5px;
+  }
+   .welldiv {
+    padding-left: 23%;
+    padding-right: 23%;
+  }
+  .no-playlists {
+  margin-bottom: 2em;
+
+h2 {
+margin: 0;
+padding: 0;
+line-height: 2.5em;
+}
+}
+
+  .back-button {
+    display: none;
+  }
+
+  .footerplaylist {
+    position: relative;
+    padding-left: 23%;
+    padding-right: 23%;
+    border-top: 4px solid #00DB85;
+    background: #00FF9B;
+    height: 4em;
+    font-size: 2em;
+    bottom: 0 ;
+    line-height: 1.3em;
+    color: #fff;
+    padding-top: 0em;
+    font-family: 'Akkurat-Bold';
+    text-align: center;
+
+    a {
+      font-family: 'Akkurat-Bold';
+      color: #fff;
+    }
   }
 } /* End - @media (min-width: 770px) */
 
@@ -133,12 +187,12 @@
   .countdiv {
     display: none;
   }
-}
+} /* End - playlist container editing */
 
 .playlist-container {
   position: relative;
-  padding-left: 24.5%;
-  padding-right: 21%;
+  padding-left: 23%;
+  padding-right: 23%;
   margin-bottom: 5em;
   margin-top: 3em;
 
@@ -258,12 +312,6 @@
   }
 }
   
-@media (min-width: 770px) {
-  .helptext {
-    font-size: 1.1em;
-  }
-}
-
 .upvotediv {
 
   height: 80px;
@@ -332,40 +380,6 @@
   margin-bottom: 12px;
 }
 
-@media (min-width: 770px) {
-
-  .back-button {
-    display: none;
-  }
-
-  .welldiv {
-    padding-left: 24.5%;
-    padding-right: 21%;
-  }
-
-  .footerplaylist {
-    position: relative;
-    padding-left: 24.5%;
-    padding-right: 21%;
-    border-top: 4px solid #00DB85;
-    background: #00FF9B;
-    height: 4em;
-    font-size: 2em;
-    bottom: 0 ;
-    line-height: 1.3em;
-    color: #fff;
-    padding-top: 0em;
-    font-family: 'Akkurat-Bold';
-    text-align: center;
-
-    a {
-      font-family: 'Akkurat-Bold';
-      color: #fff;
-    }
-  }
-
-}
-
 .steps {
    font-family: 'Akkurat-Bold';
    font-size: 1em;
@@ -395,32 +409,10 @@
 }
 
 
-.well {
-  padding-top: 2.5em;
-  padding-bottom: 1.5em;
-  border-radius: 5px;
-  margin-bottom: 3em;
-}
-
 .descriptiontext  {
   p {
     margin-left: 0;
     margin-right: 0;
   }
-}
-
-.no-playlists {
-  margin-bottom: 2em;
-
-h2 {
-margin: 0;
-padding: 0;
-line-height: 2.5em;
-}
-
-.well {
-  padding: 20px 50px;
-}
-
 }
 
