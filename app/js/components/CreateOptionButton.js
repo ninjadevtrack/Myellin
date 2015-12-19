@@ -44,7 +44,7 @@ var CreateOptionButton = React.createClass({
     return (
       <div className="createoptionbutton">
         <Button onClick={this.createOption} style={{fontSize: '1.5em', margin: '0 100px', padding: '0', textAlign: 'center'}}  bsStyle='link'>
-          + Alternative
+          + Step
         </Button>
       </div>
     );

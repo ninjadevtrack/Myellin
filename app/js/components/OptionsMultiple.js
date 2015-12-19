@@ -130,14 +130,14 @@ var OptionsMultiple = React.createClass({
           <div style={{padding: '100px 5% 100px 14%', fontFamily: 'Akkurat-Regular', color: '#fff', textAlign: 'left', width: '100%',  backgroundColor: '#7A1D58'}}>
             <div style={{fontSize:'2.2em', lineHeight: '1em', margin: '0', padding: '0'}}>{this.state.suboutcome.title}</div>
             <div style={{fontSize:'1.1em', lineHeight: '1.3em', padding: '0', display: 'inline-block'}}>
-              <b>{this.state.suboutcome.option_count}</b> competing chapter alternative &nbsp;&nbsp;
+              <b>{this.state.suboutcome.option_count}</b> competing steps &nbsp;&nbsp;
             </div>
           </div>
         }
 
         {options}
 <div className="welloptiondiv"><Well>
-      <b>You can challenge this chapter.</b> Can you make it easier to digest, do you know better resources, or a stronger way to structure it? Just create an account, hit + Alternative and do you magic. If your chapter is ace, the author can use your chapter instead. In fact, anyone that loves your chapter can include it in their learning manual. 
+      <b>You can challenge this step.</b> Can you make it easier to digest, do you know better resources, or a stronger way to structure it? Just create an account, hit <b>+ Step</b> and do you magic. If your step is ace, the author can use your step instead. In fact, anyone that loves your step can include it in their learning manual. 
 </Well></div>
       </div>
     );

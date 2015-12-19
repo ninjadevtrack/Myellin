@@ -185,11 +185,11 @@ var SubOutcome = React.createClass({
       'is-dragging': this.props.isDragging // Injected by React Dnd
     });
 
-    var versioncount = 'alternative';
+    var versioncount = 'step';
     if (this.state.data.option_count == 1) {
-      versioncount = 'alternatives'; 
+      versioncount = 'steps'; 
     }else {
-      versioncount = 'alternative';
+      versioncount = 'step';
     }
 
     var alternative_count = (this.state.data.option_count > 0 ? this.state.data.option_count-1 : 0);
@@ -239,7 +239,7 @@ var SubOutcome = React.createClass({
 
           { !this.props.editable &&    
             <Button href="javascript:void(0)" onClick={this._handleOptionsClick} bsStyle='link' className="options-button">
-            <span style={{fontFamily: 'Akkurat-Bold'}}>{alternative_count}</span> competing chapter {versioncount}<span style={{float: 'right', fontSize: '1.5em', lineHeight: '0.8em'}}><Glyphicon glyph='arrow-left'/></span>
+            <span style={{fontFamily: 'Akkurat-Bold'}}>{alternative_count}</span> competing {versioncount}<span style={{float: 'right', fontSize: '1.5em', lineHeight: '0.8em'}}><Glyphicon glyph='arrow-left'/></span>
             </Button>
           }
 

@@ -192,7 +192,7 @@ var OptionContent = React.createClass({
             parent_type="suboutcome"
             parent_id={this.props.relationData.parent_suboutcome_id} />
         </div>
-<div className="alternativetext">This is the most useful chapter for this sub-outcome</div>
+<div className="alternativetext">This is the most useful step for this sub-outcome</div>
         </div>
         }
         { editable &&

@@ -188,7 +188,7 @@ If you know how to achieve this outcome, this could be your first manual. Just c
 
         <div className="welldiv">
           <Well>
-      <b>You can challenge this manual.</b> Can you make it easier to digest, do you know better resources, or a stronger way to structure it? Just create an account, hit + Manual and do you magic. Don't start from scratch. You can reuse anyone's chapters by dragging them to your learning manual. <br></br><br></br>
+      <b>You can challenge this manual.</b> Can you make it easier to digest, do you know better resources, or a stronger way to structure it? Just create an account, hit + Manual and do you magic. Don't start from scratch. You can reuse anyone's steps by dragging them to your learning manual. <br></br><br></br>
 <b>What is Myelin?</b> We are a community of self-learners. We curate approaches and resources to achieve outcomes. Think software. You can build with all the components created on Myelin, optimize them, and combine them to achieve different outcomes.</Well>
         </div>
         <div className="footerplaylist"><br></br><a href='http://myelin.io/how-to-use-myelin'>About</a>  |  <a href='http://twitter.com/myelinio'>Twitter</a></div>

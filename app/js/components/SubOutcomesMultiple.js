@@ -443,7 +443,7 @@ var SubOutcomesMultiple = React.createClass({
 
         { this.props.editable &&
           <div className='dragndrop' onClick={this._hideModal}>
-            drag & drop anyone&#39;s chapter here
+            drag & drop anyone&#39;s step here
           </div>
         }
 

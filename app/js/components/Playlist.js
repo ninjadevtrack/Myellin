@@ -336,7 +336,7 @@ var Playlist = React.createClass({
             defaultValue={this.getDescription()} />
         }
 
-       <div className="steps">CHAPTERS:</div>
+       <div className="steps">STEPS:</div>
         <SubOutcomesMultiple 
           playlist_id={this.state.data['.key']} 
           editable={this.state.editable}
@@ -353,7 +353,7 @@ var Playlist = React.createClass({
             </ButtonGroup>
           </div>
             <form onSubmit={this.addSubOutcomeSubmit}>
-              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a chapter, type the chapter title here and press enter." type="text" style={{width:'100%', border: '2px solid #cdcdcd',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
+              <input ref="createSuboutcome" className='inputchapter' placeholder="To add a step, type the step title here and press enter." type="text" style={{width:'100%', border: '2px solid #cdcdcd',backgroundColor: '#fff', paddingBottom: '1.1em', paddingTop: '1.1em', paddingLeft: '1.2em', marginBottom: '10em'}} />
             </form>
           </div>
         }
