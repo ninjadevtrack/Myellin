@@ -33,7 +33,6 @@ var PlaylistsMultiple = React.createClass({
   },
 
   shouldComponentUpdate: function(){
-    //console.log('componentShouldUpdate', this.state);
     return true;
   },
 

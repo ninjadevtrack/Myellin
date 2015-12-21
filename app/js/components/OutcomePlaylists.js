@@ -23,8 +23,7 @@ var OutcomePlaylists = React.createClass({
     };
   },
 
-
-_handleBrandClick: function(e) {
+  _handleBrandClick: function(e) {
     e.preventDefault();
     this.context.router.transitionTo('app');
   },
@@ -43,17 +42,14 @@ _handleBrandClick: function(e) {
 
   componentWillUpdate: function(nextProps, nextState) {
 
-    // If we now have outcome data pass the title back up the chain
-    // So we can populate the navbar
-    /*
-    if (!this.state.outcome && nextState.outcome){
+    // DEPRECATED - We no longer diplay title in navbar
+    // Pass outcome title back up the component hierarchy so we can populate the navbar
+    /* if (!this.state.outcome && nextState.outcome){
       var outcome = this._getOutcome(nextState.outcome);
 
       if (outcome)
         this.props.loadedCallback({ title: outcome.title }); 
-    }
-    */
-    
+    }*/
   },
 
   unbindRef: function(firebaseRef, bindVar){

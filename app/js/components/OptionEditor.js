@@ -77,7 +77,6 @@ var OptionEditor = React.createClass ({
 
   shouldComponentUpdate: function(){
     return true;
-    //return false;
   },
 
   _handleChange: function(content){

@@ -138,8 +138,7 @@ var Option = React.createClass({
     }else{
       DbHelper.options.set_editing(this.state.user.id, this.props.relationData.parent_suboutcome_id, this.props.option_id);
     }
-
-
+    
   },
 
   delete: function(){
@@ -189,7 +188,7 @@ var Option = React.createClass({
 
     if (!this.state.data)
       return false;
-    
+
     var jsx = (
       <div>
         <OptionContent 
