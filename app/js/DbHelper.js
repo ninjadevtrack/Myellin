@@ -86,6 +86,18 @@ var DbHelper = (function () {
         return playlistId;
       },
 
+      set_editing: function(user_id, parent_outcome_id, playlist_id){
+
+        var userEditPlaylistRef = _firebase.child('users/' + user_id + '/editing_playlist');
+
+        userEditPlaylistRef.update({
+          parent_outcome_id: parent_outcome_id,
+          playlist_id: playlist_id,
+          collapse: false
+        });
+
+      },
+
       update: function(playlist_id, data){
         var refPlaylist = _firebase.child('playlists/' + playlist_id);
         refPlaylist.update(data);

@@ -83,18 +83,11 @@ var Playlist = React.createClass({
 
   toggleEdit: function(){
 
-    var dataEditingPlaylist = {
-      parent_outcome_id: this.props.relationData.parent_outcome_id,
-      playlist_id: this.props.relationData.playlist_id,
-      collapse: false
-    };
-
-    //console.log('dataEditingPlaylist', dataEditingPlaylist);
-
-    this.firebase.child('users/' + this.state.user.id).update({
-      editing_playlist: dataEditingPlaylist
-    });
-
+    DbHelper.playlists.set_editing(
+      this.state.user.id, 
+      this.props.relationData.parent_outcome_id, 
+      this.props.relationData.playlist_id
+    );
   },
 
   togglePrivacy: function(){

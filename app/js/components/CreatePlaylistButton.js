@@ -60,14 +60,8 @@ var CreatePlaylisteButton = React.createClass({
     // Create the playlist
     var playlistId = DbHelper.playlists.create(this.state.user.id, this.props.outcome_id, true);
 
-    // Add playlist to user.editing_playlist object
-    var userEditPlaylistRef = this.firebase.child('users/' + this.state.user.id + '/editing_playlist');
-
-    userEditPlaylistRef.update({
-      parent_outcome_id: this.props.outcome_id,
-      playlist_id: playlistId,
-      collapse: false
-    });
+    // Start editing playlist
+    DbHelper.playlists.set_editing(this.state.user.id, this.props.outcome_id, playlistId);
   },
 
   render: function () {
