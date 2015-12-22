@@ -103,9 +103,23 @@ var DbHelper = (function () {
         refPlaylist.update(data);
       },
 
-      delete: function(playlist_id){
+      delete: function(playlist_id, parent_outcome_id, author_id){
+
+        // Remove the playlist
         var refPlaylist = _firebase.child('playlists/' + playlist_id);
         refPlaylist.remove();
+
+        // Remove playlist from outcome
+        var refOutcomeToPlaylist = _firebase.child('relations/outcome_to_playlist/outcome_' + parent_outcome_id + '/playlist_' + playlist_id);
+        refOutcomeToPlaylist.remove();
+
+        // Remove user_to_outcome_to_playlist relation
+        // So when we lookup whether user has a playlist for this outcome already it returns false
+        var userOutcomePlaylistRef = _firebase.child('relations/user_to_outcome_to_playlist/user_' + author_id +'/outcome_' + parent_outcome_id);
+        userOutcomePlaylistRef.remove();
+
+        // De-increment the outcome's playlist_count
+        models.outcome.incrementPlaylistCount(parent_outcome_id, -1);
       },
 
       viewed: function(playlist_id){

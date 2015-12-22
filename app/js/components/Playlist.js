@@ -107,32 +107,16 @@ var Playlist = React.createClass({
 
     if (!this.props.relationData.playlist_id){
       alert('Cannot delete. Missing relationData.playlist_id value (value was not set for older test data). Delete manually from Firebase forge.');
+      return;
     }
 
-    var refOutcomeToPlaylist = this.firebase.child('relations/outcome_to_playlist/outcome_' + this.props.relationData.parent_outcome_id + '/playlist_' + this.props.relationData.playlist_id);
-
-    // Remove playlist from outcome
-    refOutcomeToPlaylist.remove();
-
     // Delete the playlist
-    DbHelper.playlists.delete(this.props.relationData.playlist_id);
+    DbHelper.playlists.delete(
+      this.props.relationData.playlist_id,
+      this.props.relationData.parent_outcome_id,
+      this.state.user.id
+    );
 
-    // Remove user_to_outcome_to_playlist relation
-    // So when we lookup whether user has a playlist for this outcome already it returns false
-    var userOutcomePlaylistRef = this.firebase.child('relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.relationData.parent_outcome_id);
-    userOutcomePlaylistRef.remove();
-
-    // De-increment the outcome's playlist_count
-    DbHelper.outcome.incrementPlaylistCount(this.props.relationData.parent_outcome_id, -1);
-
-    // De-increment the outcome's playlist_count
-    /*
-    this.firebase.child('outcomes/' + this.props.relationData.parent_outcome_id + '/playlist_count').transaction(function(currentValue) {
-      if (!currentValue)
-        return 0;
-
-      return currentValue - 1;
-    });*/
   },
 
   addSubOutcomeSubmit: function(e){
