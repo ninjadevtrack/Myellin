@@ -44,6 +44,48 @@ var DbHelper = (function () {
     },
 
     playlists: {
+
+      create: function(author_id, parent_outcome_id, isPrivate){
+        var refPlaylists = _firebase.child('playlists');
+
+        // Create playlist
+        var newPlaylistRef = refPlaylists.push({ 
+          author_id: author_id,
+          description: '',
+          suboutcome_count: 0,
+          private: isPrivate
+        });
+
+        // Get new playlist ID
+        var playlistId = newPlaylistRef.key();
+
+        var firebasePaths = {};
+
+        // Add playlist to outcome (update relations table)
+        firebasePaths['relations/outcome_to_playlist/outcome_' + parent_outcome_id + '/playlist_' + playlistId] = {
+          parent_outcome_id: parent_outcome_id,
+          playlist_id: playlistId,
+          upvote_count: 0
+        };
+
+        // So we can quickly lookup a playlist by user/outcome
+        // We need to do this to see if a given user has already created a playlist for an outcome
+        firebasePaths['relations/user_to_outcome_to_playlist/user_' + author_id +'/outcome_' + parent_outcome_id] = playlistId;
+
+        // Update both firebase paths at same time
+        // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
+        _firebase.update(firebasePaths, function(error) {
+          if (error) {
+            console.log("Error creating playlist:", error);
+          }
+        });
+
+        // Increment the outcome's playlist_count
+        models.outcome.incrementPlaylistCount(parent_outcome_id, 1);
+
+        return playlistId;
+      },
+
       update: function(playlist_id, data){
         var refPlaylist = _firebase.child('playlists/' + playlist_id);
         refPlaylist.update(data);

@@ -57,78 +57,17 @@ var CreatePlaylisteButton = React.createClass({
 
   createPlaylist: function(){
 
-    this.refPlaylists = this.firebase.child('playlists');
+    // Create the playlist
+    var playlistId = DbHelper.playlists.create(this.state.user.id, this.props.outcome_id, true);
 
-    // Create playlist
-    var newPlaylistRef = this.refPlaylists.push({ 
-      author_id: this.state.user.id,
-      description: '',
-      suboutcome_count: 0,
-      private: true
-    });
+    // Add playlist to user.editing_playlist object
+    var userEditPlaylistRef = this.firebase.child('users/' + this.state.user.id + '/editing_playlist');
 
-    // Get new playlist ID
-    var playlistId = newPlaylistRef.key();
-
-    // Object that holds Firebase paths we want to update at same time
-    var playlistDataForFirebase = {};
-
-    // Populate object ...
-    // Add playlist to outcome (update relations table)
-    playlistDataForFirebase['relations/outcome_to_playlist/outcome_' + this.props.outcome_id + '/playlist_' + playlistId] = {
-      parent_outcome_id: this.props.outcome_id,
-      playlist_id: playlistId,
-      upvote_count: 0
-    };
-
-    // So we can quickly lookup a playlist by user/outcome
-    // We need to do this to see if a given user has already created a playlist for an outcome
-    playlistDataForFirebase['relations/user_to_outcome_to_playlist/user_' + this.state.user.id +'/outcome_' + this.props.outcome_id] = playlistId;
-
-    // Populate object ..
-    // Add playlist to user's "editing_playlist" object so that edit playlist modal is displayed
-    playlistDataForFirebase['users/' + this.state.user.id + '/editing_playlist'] = {
+    userEditPlaylistRef.update({
       parent_outcome_id: this.props.outcome_id,
       playlist_id: playlistId,
       collapse: false
-    };
-
-    // Update both firebase paths at same time
-    // See: https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html
-    this.firebase.update(playlistDataForFirebase, function(error) {
-      if (error) {
-        console.log("Error creating playlist:", error);
-      }
     });
-
-    // Increment the outcome's playlist_count
-    DbHelper.outcome.incrementPlaylistCount(this.props.outcome_id, 1);
-
-    // Increment the outcome's playlist_count
-    /*
-    this.firebase.child('outcomes/' + this.props.outcome_id + '/playlist_count').transaction(function(currentValue) {
-      if (!currentValue)
-        currentValue = 0;
-
-      return currentValue + 1;
-    });*/
-
-    /*
-    this.refOutcomeToPlaylist.child('playlist_' + playlistId).({
-      parent_outcome_id: this.props.outcome_id,
-      playlist_id: playlistId,
-      upvote_count: 0
-    });
-
-    this.refUser = this.firebase.child('users/' + this.state.user.id).update({
-      editing_playlist: {
-        parent_outcome_id: this.props.outcome_id,
-        playlist_id: playlistId,
-        collapse: false
-      }
-    });
-    */
-
   },
 
   render: function () {
