@@ -45,7 +45,7 @@ var DbHelper = (function () {
 
     playlists: {
 
-      create: function(author_id, parent_outcome_id, isPrivate){
+      create: function(author_id, parent_outcome_id, is_private){
         var refPlaylists = _firebase.child('playlists');
 
         // Create playlist
@@ -53,7 +53,7 @@ var DbHelper = (function () {
           author_id: author_id,
           description: '',
           suboutcome_count: 0,
-          private: isPrivate
+          private: is_private
         });
 
         // Get new playlist ID
@@ -88,14 +88,27 @@ var DbHelper = (function () {
 
       set_editing: function(user_id, parent_outcome_id, playlist_id){
 
-        var userEditPlaylistRef = _firebase.child('users/' + user_id + '/editing_playlist');
-
-        userEditPlaylistRef.update({
+        _firebase.child('users/' + user_id + '/editing_playlist').update({
           parent_outcome_id: parent_outcome_id,
           playlist_id: playlist_id,
           collapse: false
         });
+      },
 
+      hide_editing: function(user_id){
+        _firebase.child('users/' + user_id + '/editing_playlist').update({
+          collapse: true
+        });
+      },
+
+      show_editing: function(user_id){
+        _firebase.child('users/' + user_id + '/editing_playlist').update({
+          collapse: false
+        });
+      },
+
+      stop_editing: function(user_id){
+        _firebase.child('users/' + user_id + '/editing_playlist').remove();
       },
 
       update: function(playlist_id, data){
@@ -105,10 +118,6 @@ var DbHelper = (function () {
 
       delete: function(playlist_id, parent_outcome_id, author_id){
 
-        // Remove the playlist
-        var refPlaylist = _firebase.child('playlists/' + playlist_id);
-        refPlaylist.remove();
-
         // Remove playlist from outcome
         var refOutcomeToPlaylist = _firebase.child('relations/outcome_to_playlist/outcome_' + parent_outcome_id + '/playlist_' + playlist_id);
         refOutcomeToPlaylist.remove();
@@ -117,6 +126,12 @@ var DbHelper = (function () {
         // So when we lookup whether user has a playlist for this outcome already it returns false
         var userOutcomePlaylistRef = _firebase.child('relations/user_to_outcome_to_playlist/user_' + author_id +'/outcome_' + parent_outcome_id);
         userOutcomePlaylistRef.remove();
+
+        // Remove the playlist
+        // NOTE: This must always happen after the previous two Firebase queries ...
+        // ... because they fail (see security rules) without an author_id value in the playlist object
+        var refPlaylist = _firebase.child('playlists/' + playlist_id);
+        refPlaylist.remove();
 
         // De-increment the outcome's playlist_count
         models.outcome.incrementPlaylistCount(parent_outcome_id, -1);
@@ -131,22 +146,9 @@ var DbHelper = (function () {
 
           return currentValue + 1;
         });
-      },
+      }
 
 
-
-      /*
-      // No longer needed
-      incrementSuboutcomeCount: function(playlist_id, increment){
-        var refPlaylist = _firebase.child('playlists/' + playlist_id);
-
-        refPlaylist.child('suboutcome_count').transaction(function(currentValue) {
-          if (!currentValue)
-            currentValue = 0;
-
-          return currentValue + increment;
-        });
-      }*/
     },
 
     options: {

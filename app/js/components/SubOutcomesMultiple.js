@@ -80,13 +80,19 @@ var SubOutcomesMultiple = React.createClass({
 
   bindFirebaseRefs: function(rebind){
 
-    //console.log('SUBOUTCOMES-M: bindFirebaseRefs');
-
-    if (rebind){
+    if (rebind)
       this.unbind('data');
-    }
 
     this.firebase = DbHelper.getFirebase();
+
+    // If we don't have a props.playlist_id that means this component was rendered within ...
+    // ... a new playlist (not actually created in Firebase yet)
+    // Set data to empty array and return since there won't be any suboutcomes to fetch from firebase 
+    if (!this.props.playlist_id){
+      this.setState({ data: [] });
+      console.log('no playlist_id');
+      return;
+    }
 
     // Fetch all suboutcomes that are in this playlist
     this.refSubOutcomes = this.firebase.child('relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id);
@@ -275,7 +281,6 @@ var SubOutcomesMultiple = React.createClass({
       '.key': 'suboutcome_' + suboutcome_id,
       expanded: true,
       suboutcome_id: suboutcome_id,
-      parent_playlist_id: this.props.playlist_id,
       order: order
     };
 
@@ -320,12 +325,16 @@ var SubOutcomesMultiple = React.createClass({
   // This iterates through suboutcomes (this.state.data) and saves their order to Firebase
   // This will also add any suboutcomes that aren't in the playlist (firebase) yet ... 
   // ... such as ones we just created while editing or dragged in from another playlist
-  save: function(){
+  save: function(playlist_id){
+
+    // We can pass in a playlist_id so that this function may be called from the parent Playlist component ...
+    // ... right after creating the playlist, without having to re-render and pass in props.playlist_id
+    var playlist_id = (playlist_id || this.props.playlist_id);
 
     // Delete any suboutcomes that were removed
     if (this.state.suboutcomesDeleted.length){
       for (var i = 0; i < this.state.suboutcomesDeleted.length; i++) {
-        DbHelper.suboutcomes.delete(this.props.playlist_id, this.state.suboutcomesDeleted[i]);
+        DbHelper.suboutcomes.delete(playlist_id, this.state.suboutcomesDeleted[i]);
       }
     }
     
@@ -333,8 +342,8 @@ var SubOutcomesMultiple = React.createClass({
     var suboutcomes = this.state.data.slice(0);
     var refPlaylistToSuboutcome = {};
     for (var i = 0; i < suboutcomes.length; i++) {
-      refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + this.props.playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
-        parent_playlist_id: this.props.playlist_id,
+      refPlaylistToSuboutcome['relations/playlist_to_suboutcome/playlist_' + playlist_id + '/suboutcome_' + suboutcomes[i].suboutcome_id] = {
+        parent_playlist_id: playlist_id,
         suboutcome_id: suboutcomes[i].suboutcome_id, // In case it's not in the playlist (firebase) yet
         chosen_option: (suboutcomes[i].chosen_option || null), // Copy over chosen_option
         order: i
@@ -357,7 +366,7 @@ var SubOutcomesMultiple = React.createClass({
         DbHelper.options.update(data.option_id, data.description);
       }else{
         var option_id = DbHelper.options.create(this.state.user.id, data.suboutcome_id, data.description);
-        DbHelper.suboutcomes.choose_option(this.props.playlist_id, data.suboutcome_id, option_id);
+        DbHelper.suboutcomes.choose_option(playlist_id, data.suboutcome_id, option_id);
       }      
     }
 

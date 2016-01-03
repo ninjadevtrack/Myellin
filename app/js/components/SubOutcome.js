@@ -66,10 +66,8 @@ var SubOutcome = React.createClass({
       // ... since we don't yet have a good way for these components to talk to eachother
       if (this.state.user.editing_playlist){
         setTimeout(function(){
-          this.refUser = this.firebase.child('users/' + this.state.user.id);
-          //this.refUser.child('editing_playlist').update({ collapse: !nextProps.isDragging });
-          this.refUser.child('editing_playlist').update({ collapse: false });
-        }.bind(this, nextProps), 300);
+          DbHelper.playlists.show_editing(this.state.user.id);
+        }.bind(this), 300);
       }
     }
   },

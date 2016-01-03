@@ -54,21 +54,15 @@ var MainPage = React.createClass({
     if (this.state.user.editing_playlist.collapse === false)
       return;
 
-    this.firebase = DbHelper.getFirebase();
-    this.refUser = this.firebase.child('users/' + this.state.user.id);
-    this.refUser.child('editing_playlist').update({ collapse: false });
+    DbHelper.playlists.show_editing(this.state.user.id);
   },
 
   hideEditingPlaylist: function(){
-    this.firebase = DbHelper.getFirebase();
-    this.refUser = this.firebase.child('users/' + this.state.user.id);
-    this.refUser.child('editing_playlist').update({ collapse: true });
+    DbHelper.playlists.hide_editing(this.state.user.id);
   },
 
   onDoneEditingPlaylist: function(){
-    this.firebase = DbHelper.getFirebase();
-    this.refUser = this.firebase.child('users/' + this.state.user.id);
-    this.refUser.child('editing_playlist').remove();
+    DbHelper.playlists.stop_editing(this.state.user.id);
   },
 
   render: function () {
@@ -88,10 +82,10 @@ var MainPage = React.createClass({
                 onHide={this.hideEditingPlaylist}
                 onMouseEnter={this.showEditingPlaylist}>
 
-                 <Playlist 
-                    relationData={this.state.user.editing_playlist} 
-                    editable={true}
-                    onDoneEditing={this.onDoneEditingPlaylist} />
+                <Playlist 
+                  relationData={this.state.user.editing_playlist} 
+                  editable={true}
+                  onDoneEditing={this.onDoneEditingPlaylist} />
 
               </CreatePlaylistModal>
             }

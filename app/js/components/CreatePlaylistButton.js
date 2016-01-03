@@ -46,7 +46,7 @@ var CreatePlaylisteButton = React.createClass({
           }
         });
       }else{
-        this.createPlaylist();
+        this.editNewPlaylist();
       }
 
     }.bind(this));
@@ -55,13 +55,14 @@ var CreatePlaylisteButton = React.createClass({
 
   },
 
-  createPlaylist: function(){
+  editNewPlaylist: function(){
 
+    // DEPRECATED: We no longer create the playlist first
     // Create the playlist
-    var playlistId = DbHelper.playlists.create(this.state.user.id, this.props.outcome_id, true);
+    //var playlistId = DbHelper.playlists.create(this.state.user.id, this.props.outcome_id, true);
 
-    // Start editing playlist
-    DbHelper.playlists.set_editing(this.state.user.id, this.props.outcome_id, playlistId);
+    // Start editing playlist (null playlist_id since we don't create the playlist until saved)
+    DbHelper.playlists.set_editing(this.state.user.id, this.props.outcome_id, null);
   },
 
   render: function () {

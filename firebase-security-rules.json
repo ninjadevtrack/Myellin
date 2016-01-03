@@ -413,7 +413,7 @@
           ".validate": "newData.isString()"
         },
         "editing_playlist": {
-          ".validate": "newData.hasChildren(['parent_outcome_id', 'playlist_id', 'collapse'])",
+          ".validate": "newData.hasChildren(['parent_outcome_id', 'collapse'])",
           "parent_outcome_id": {
             ".validate": "newData.isString()"
           },

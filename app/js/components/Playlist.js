@@ -63,8 +63,21 @@ var Playlist = React.createClass({
 
     this.firebase = DbHelper.getFirebase();
 
-    this.refPlaylist = this.firebase.child('playlists/' + this.props.relationData.playlist_id);
-    this.bindAsObject(this.refPlaylist, 'data');
+    if (this.props.relationData.playlist_id){
+      this.refPlaylist = this.firebase.child('playlists/' + this.props.relationData.playlist_id);
+      this.bindAsObject(this.refPlaylist, 'data');
+    }else{
+      // If no playlist_id passed in then we are editing a new playlist (not created in Firebase yet)
+      // Populate data object directly instead of loading from firebase
+      // We need a short timeout here so that this.state.user is populated (NOT IDEAL)
+      setTimeout(function(){
+        this.setState({
+          data: {
+            author_id: this.state.user.id
+          }
+        })
+      }.bind(this), 100);
+    }
   },
 
   menuOnSelect: function(event, eventKey){
@@ -133,13 +146,23 @@ var Playlist = React.createClass({
       return false;
 
     this.state.SubOutcomesMultipleRef.createThenAdd(title);
-    //this.refs.SubOutcomesMultiple.refs.child.createThenAdd(title);
 
     // Clear input
     React.findDOMNode(this.refs.createSuboutcome).value = '';
   },
 
   save: function(){
+
+    // Create the playlist if it doesn't exist yet
+    if (!this.props.relationData.playlist_id){
+      var playlist_id = DbHelper.playlists.create(
+        this.state.user.id,
+        this.props.relationData.parent_outcome_id,
+        true // is_private
+      );
+    }else{
+      var playlist_id = this.props.relationData.playlist_id;
+    }
 
     var description = React.findDOMNode(this.refs.description).value.trim();
 
@@ -148,16 +171,14 @@ var Playlist = React.createClass({
 
     // Call SubOutcomesMultiple component's save method
     // See storeReferenceToSubOutcomesMultiple() above for explanation
-    var suboutcome_count = this.state.SubOutcomesMultipleRef.save();
+    var suboutcome_count = this.state.SubOutcomesMultipleRef.save(playlist_id);
     //this.refs.SubOutcomesMultiple.refs.save();
     //this.refs.SubOutcomesMultiple.refs.child.save();
 
-    DbHelper.playlists.update(this.props.relationData.playlist_id, {
+    DbHelper.playlists.update(playlist_id, {
       description: description,
       suboutcome_count: suboutcome_count
     });
-
-    this.toggleEdit();
 
     if (this.props.onDoneEditing)
       this.props.onDoneEditing();
@@ -165,7 +186,8 @@ var Playlist = React.createClass({
 
   cancel: function(){
 
-    this.toggleEdit();
+    // Not sure why this was here, it updates the edit_paylist object, but callback below immediately deleted it
+    //this.toggleEdit();
 
     if (this.props.onDoneEditing)
       this.props.onDoneEditing();
@@ -207,8 +229,6 @@ var Playlist = React.createClass({
     // If user is author
     if (this.state.user.id === this.state.data.author_id)
       menuItems.push( <MenuItem eventKey='edit'>Edit</MenuItem> );
-
-
 
     // If user is author OR admin
     if (this.state.user.id === this.state.data.author_id || this.state.user.admin === true){
@@ -292,7 +312,7 @@ var Playlist = React.createClass({
             {this.state.data.view_count || 0} views
           </div>
         </div>
-      
+
         <AuthorName id={this.getAuthorId()} />
 
         { !this.state.editable &&

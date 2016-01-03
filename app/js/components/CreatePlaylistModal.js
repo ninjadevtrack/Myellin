@@ -39,7 +39,9 @@ mixins: [ReactFireMixin, AuthMixin],
           }
 
           { this.props.collapse &&
-            <div style={{textAlign: 'center', color: '#656565', fontSize: '1em', border: '2px dashed #cdcdcd', borderRadius: '5px', width: '30%', padding: '6px 0',margin: '4px 35%'}}>drag & drop anyone's step here</div>
+            <div style={{textAlign: 'center', color: '#656565', fontSize: '1em', border: '2px dashed #cdcdcd', borderRadius: '5px', width: '30%', padding: '6px 0', margin: '4px 35%'}}>
+              drag & drop anyone's step here
+            </div>
           }
           
           <div style={{ display: (this.props.collapse ? 'none' : 'inherit') }}>
