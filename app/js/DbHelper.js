@@ -26,6 +26,15 @@ var DbHelper = (function () {
       return _firebase;
     },
 
+    users: {
+      update: function(uid, data){
+        _firebase.child('users/' + uid).update(data);
+      },
+      save_auth_token: function(uid, token){
+        _firebase.child('tokens/' + uid).set(token);
+      }
+    },
+
     outcome: {
 
       incrementPlaylistCount: function(outcome_id, increment){

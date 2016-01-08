@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var DbHelper = require('../DbHelper');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 
 require('firebase');
@@ -25,7 +26,8 @@ var LoginButton = React.createClass({
         this.setState({hover: false});
     },
 
-    authenticate: function(provider) {
+    authenticate: function(provider, event) {
+        event && event.preventDefault();
 
         this.firebase.authWithOAuthPopup(provider, function(error, authData) {
 
@@ -42,10 +44,10 @@ var LoginButton = React.createClass({
                 newUserData.provider = authData.provider;
 
                 // Update user
-                this.firebase.child("users").child(authData.uid).update(newUserData);
+                DbHelper.users.update(authData.uid, newUserData);
 
-                // Store their auth token (used by admins to login as any user)
-                this.firebase.child("tokens").child(authData.uid).set(authData.token);
+                // Store users auth token (can be used to authenticate as any user)
+                DbHelper.users.save_auth_token(authData.uid, authData.token);
 
                 mixpanel.track('Logged In', {
                     provider: newUserData.provider  
@@ -58,7 +60,9 @@ var LoginButton = React.createClass({
         });
     },
 
-    logout: function(){
+    logout: function(event){
+        event && event.preventDefault();
+
         this.firebase.unauth();
     },
 
