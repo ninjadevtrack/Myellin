@@ -165,7 +165,7 @@ var OutcomesMultiple = React.createClass({
       );
     
 
-    var elements = outcomes.map(function (relationData) {
+    var elements = outcomes.map(function (relationData, i) {
 
       // NOT NEEDED once we clear out Firebase data
       // We now include "parent_section" value when writing to Firebase
@@ -174,6 +174,7 @@ var OutcomesMultiple = React.createClass({
       return (
         <Outcome 
           relationData={relationData}
+          number={i+1}
           onMove={this.handleMove}
           key={relationData.outcome_id} />
       );

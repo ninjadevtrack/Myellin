@@ -29,24 +29,16 @@ var Outcome = React.createClass({
     };
   },
 
+  getDefaultProps: function(){
+    return {
+      // Show each outcome's number in list
+      showNumbering: true
+    };
+  },
+
   componentWillMount: function() {
     this.bindFirebaseRefs();
   },
-
-
-  // No need for this component to ever update currently
-  // IMPORTANT: modify this if we ever want component to update based on prop/state changes 
-  /*
-  shouldComponentUpdate: function(nextProps, nextState){
-
-    // Update component if outcome title or playlist_count changes
-    if (nextProps.data.title != this.props.data.title || 
-          nextProps.data.playlist_count != this.props.data.playlist_count) 
-      return true;
-
-    return false;
-  },
-  */
 
   bindFirebaseRefs: function(){
     this.firebase = DbHelper.getFirebase();
@@ -92,6 +84,9 @@ var Outcome = React.createClass({
 
     var jsx = (
       <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, this.state.data['.key'])} key={this.state.data['.key']}>
+        <span className="number" style={{ position:'absolute', left:'-2em', opacity: '0.5' }}>
+          {this.props.number}.
+        </span>
         {this.state.data.title}
         <Badge>{this.state.data.playlist_count}</Badge>
       </ListGroupItem>
