@@ -77,9 +77,6 @@ var Outcome = React.createClass({
 
     var jsx = (
       <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, this.state.data['.key'])} key={this.state.data['.key']}>
-        <span className="number" style={{ position:'absolute', left:'-2em', opacity: '0.5' }}>
-          {this.props.number}.
-        </span>
         {this.state.data.title}
         <Badge>{this.state.data.playlist_count}</Badge>
       </ListGroupItem>
