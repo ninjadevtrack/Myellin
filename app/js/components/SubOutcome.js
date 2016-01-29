@@ -149,7 +149,9 @@ var SubOutcome = React.createClass({
     var PanelHeader = (
       <div className="suboutcome-header">
         <div className="suboutcome-header-title" style={{float:'left'}}>
-          {/* {this.props.relationData.order} - */}
+          <span class="number" style={{ position: 'absolute', left: '-2em'}}>
+            {this.props.number}.
+          </span>
 
           {this.state.data.title}
           {this.props.editable &&

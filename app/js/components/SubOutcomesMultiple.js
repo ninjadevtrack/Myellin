@@ -421,6 +421,7 @@ var SubOutcomesMultiple = React.createClass({
       
       return (
         <SubOutcome 
+          number={i+1}
           autoExpand={autoExpand}
           optionsShown={optionsShown}
           eventKey={relationData.suboutcome_id}
