@@ -40,8 +40,6 @@ var LoginButton = React.createClass({
                 console.log("Authenticated successfully with payload:", authData);
 
                 var newUserData = this.getNewUserData(authData);
-                newUserData.id = authData.uid;
-                newUserData.provider = authData.provider;
 
                 // Update user
                 DbHelper.users.update(authData.uid, newUserData);
@@ -67,24 +65,31 @@ var LoginButton = React.createClass({
     },
 
     getNewUserData: function(authData){
+        var newUserData = {};
+
         switch(authData.provider) {
-            case 'password':
-                return authData.password.email.replace(/@.*/, '');
             case 'twitter':
-                return {
+                newUserData = {
                     username: authData.twitter.username,
                     full_name: authData.twitter.displayName,
                 };
+                break;
             case 'facebook':
 
                 var username = authData.facebook.displayName.replace(/\s+/g, '').toLowerCase();
 
-                return {
+                newUserData = {
                     username: username,
                     full_name: authData.facebook.displayName,
                     email: authData.facebook.email
                 };
+                break;
         }
+
+        newUserData.id = authData.uid;
+        newUserData.provider = authData.provider;
+
+        return newUserData;
     },
 
     render: function() {
