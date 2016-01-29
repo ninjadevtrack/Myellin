@@ -29,13 +29,6 @@ var Outcome = React.createClass({
     };
   },
 
-  getDefaultProps: function(){
-    return {
-      // Show each outcome's number in list
-      showNumbering: true
-    };
-  },
-
   componentWillMount: function() {
     this.bindFirebaseRefs();
   },
