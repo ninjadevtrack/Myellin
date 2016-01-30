@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');

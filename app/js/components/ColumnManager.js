@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var Column = require('../components/Column');
 
 var ColumnManager = React.createClass({
@@ -89,7 +89,7 @@ var ColumnManager = React.createClass({
       var isHovered = (this.state.hoveredColumn === column_num ? true : false);
       var siblingIsHovered = ((this.state.hoveredColumn && isHovered == false) ? true : false);
 
-      var column = React.addons.cloneWithProps(child, {
+      var column = React.cloneElement(child, {
         number: column_num,
         div: column_div,
         active: (column_num === column_count ? true : false),

@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var DbHelper = require('../DbHelper');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 

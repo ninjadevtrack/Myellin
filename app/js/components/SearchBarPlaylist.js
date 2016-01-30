@@ -1,7 +1,6 @@
 'use strict';
 
-var react = require('react');
-var React = require('react/addons');
+var React = require('react');
 var Col = require('react-bootstrap').Col;
 var Input = require('react-bootstrap').Input;
 var Row = require('react-bootstrap').Row;

@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Badge = require('react-bootstrap').Badge;
@@ -23,6 +23,10 @@ var Outcome = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
 
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function(){
     return {
       data: null
@@ -42,10 +46,14 @@ var Outcome = React.createClass({
   },
 
   _handleClick: function (id) {
+    this.context.router.push('/' + this.state.data.slug);
+
+    /*
     this.context.router.transitionTo('Playlists', {
       outcome_id: id,
       outcome_slug: this.state.data.slug
     });
+    */
   },
 
   _isAllowedToView: function(){
@@ -76,10 +84,12 @@ var Outcome = React.createClass({
       return false;
 
     var jsx = (
-      <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, this.state.data['.key'])} key={this.state.data['.key']}>
-        {this.state.data.title}
-        <Badge>{this.state.data.playlist_count}</Badge>
-      </ListGroupItem>
+      <div>
+        <ListGroupItem href="javascript:void(0)" onClick={this._handleClick.bind(this, this.state.data['.key'])} key={this.state.data['.key']}>
+          {this.state.data.title}
+          <Badge>{this.state.data.playlist_count}</Badge>
+        </ListGroupItem>
+      </div>
     );
 
     // If user logged return jsx inside React DnD wrapper functions 

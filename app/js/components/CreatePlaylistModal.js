@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var AuthMixin = require('./../mixins/AuthMixin.js');
 var Button = require('react-bootstrap').Button; 
 

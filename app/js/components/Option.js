@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
@@ -27,6 +27,10 @@ var ranking = (<Glyphicon glyph='option-vertical' className='optionplaylist' />)
 var Option = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
+
+  contextTypes: {
+    params: React.PropTypes.object.isRequired
+  },
 
   getInitialState: function(){
     return {
@@ -113,7 +117,7 @@ var Option = React.createClass({
     // Fetch playlist data so we know if current user is owner of playlist
     // ... in which case we show them "switch" in dropdown menu
     // TODO: Better way to access app state without doing another Firebase query
-    this.refPlaylist = this.firebase.child('playlists/' + this.getParams().playlist_id);
+    this.refPlaylist = this.firebase.child('playlists/' + this.context.params.playlist_id);
     this.bindAsObject(this.refPlaylist, 'playlist');   
   },
 
@@ -156,7 +160,7 @@ var Option = React.createClass({
 
 
   chooseOption: function(){
-    DbHelper.suboutcomes.choose_option(this.getParams().playlist_id, 
+    DbHelper.suboutcomes.choose_option(this.context.params.playlist_id, 
                                           this.props.relationData.parent_suboutcome_id,
                                             this.state.data['.key']);
   },
@@ -226,8 +230,7 @@ var DndSource = {
       type: ComponentTypes.OPTION,
       option_id: props.relationData.option_id,
       parent_suboutcome_id: props.relationData.parent_suboutcome_id,
-      // We pass "parent_playlist_id" as prop because we cant use this.getParams().playlist_id within DndSource
-      // TODO: Stop using this.getParams().playlist_id and use props.parent_playlist_id instead if we keep it this way
+      // We pass "parent_playlist_id" as prop because we cant access this.context.params.playlist_id within DndSource
       parent_playlist_id: props.parent_playlist_id
     }
   },

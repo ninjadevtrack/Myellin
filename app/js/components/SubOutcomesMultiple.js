@@ -3,7 +3,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var PanelGroup = require('react-bootstrap').PanelGroup;
 var SubOutcome = require('./SubOutcome');
@@ -14,13 +14,17 @@ require('firebase');
 var ReactFireMixin = require('../../../submodules/reactfire/src/reactfire.js');
 
 var ReactDnD = require('react-dnd');
-var HTML5Backend = require('react-dnd/modules/backends/HTML5');
+var HTML5Backend = require('react-dnd-html5-backend');
 
 var ComponentTypes = require('./ComponentTypes');
 
 var SubOutcomesMultiple = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
+
+  contextTypes: {
+    params: React.PropTypes.object.isRequired
+  },
 
   getInitialState: function(){
     return {
@@ -392,6 +396,9 @@ var SubOutcomesMultiple = React.createClass({
 
   render: function () {
 
+    console.log('LOCATION:', this.context.params);
+
+
     // We can read whether something is being dragged over if we want to change style
     //var over = (this.props.isOver ? 'OVER' : 'NOT OVER');
 
@@ -408,7 +415,7 @@ var SubOutcomesMultiple = React.createClass({
     // ... <PanelGroup> will pass props to <SubOutcome> which are then forwarded to <Panel> via {...this.props}
     subOutcomes = subOutcomes.map(function (relationData, i) {
 
-      var optionsShown = ((this.getParams().suboutcome_id == relationData.suboutcome_id) ? true : false);
+      var optionsShown = ((this.context.params.suboutcome_id == relationData.suboutcome_id) ? true : false);
 
       // NOT NEEDED once we clear out Firebase data
       // We now include "parent_playlist_id" value when writing to Firebase

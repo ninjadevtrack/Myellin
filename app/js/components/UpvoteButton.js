@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon;
 

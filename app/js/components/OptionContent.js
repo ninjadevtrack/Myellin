@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 
 var Button = require('react-bootstrap').Button; 
 var Glyphicon= require('react-bootstrap').Glyphicon;
@@ -61,13 +61,6 @@ var OptionContent = React.createClass({
   },
 
   _save: function(){
-
-    /*
-    if (!this.refs.description)
-      return false;
-
-    var description = React.findDOMNode(this.refs.description).value.trim();
-    */
 
     var description = this.state.descriptionDuringEdit;
     this.props.onSave(description);

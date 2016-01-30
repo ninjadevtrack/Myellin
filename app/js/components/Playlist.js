@@ -2,7 +2,9 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var cx = require('classnames');
 var ListGroupItem = require('react-bootstrap').ListGroupItem; 
 var Glyphicon = require('react-bootstrap').Glyphicon; 
@@ -140,7 +142,7 @@ var Playlist = React.createClass({
 
   addSubOutcome: function(){
 
-    var title = React.findDOMNode(this.refs.createSuboutcome).value.trim();
+    var title = ReactDOM.findDOMNode(this.refs.createSuboutcome).value.trim();
 
     if (!title)
       return false;
@@ -148,7 +150,7 @@ var Playlist = React.createClass({
     this.state.SubOutcomesMultipleRef.createThenAdd(title);
 
     // Clear input
-    React.findDOMNode(this.refs.createSuboutcome).value = '';
+    ReactDOM.findDOMNode(this.refs.createSuboutcome).value = '';
   },
 
   save: function(){
@@ -164,7 +166,7 @@ var Playlist = React.createClass({
       var playlist_id = this.props.relationData.playlist_id;
     }
 
-    var description = React.findDOMNode(this.refs.description).value.trim();
+    var description = ReactDOM.findDOMNode(this.refs.description).value.trim();
 
     // Create new suboutcome if text in input
     this.addSubOutcome();

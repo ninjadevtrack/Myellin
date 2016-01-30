@@ -1,6 +1,6 @@
 'use strict';
 
-var React         = require('react/addons');
+var React         = require('react');
 var Link          = require('react-router').Link;
 var DocumentTitle = require('react-document-title');
 

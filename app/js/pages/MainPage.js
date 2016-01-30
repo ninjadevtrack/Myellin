@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var RequestOutcome = require('../components/RequestOutcome');
 var OutcomesMultiple = require('../components/OutcomesMultiple');
@@ -45,7 +45,7 @@ var MainPage = React.createClass({
 
   sectionChangeHandler: function(data){
 
-    this.props.sectionChangeHandler(data);
+    //this.props.sectionChangeHandler(data);
   },
 
   showEditingPlaylist: function(){
@@ -67,10 +67,10 @@ var MainPage = React.createClass({
 
   render: function () {
 
-    var outcome_id = this.getParams().outcome_id;
-    var outcome_slug = this.getParams().outcome_slug;
-    var playlist_id = this.getParams().playlist_id;
-    var suboutcome_id = this.getParams().suboutcome_id;
+    var outcome_id = this.props.params.outcome_id;
+    var outcome_slug = this.props.params.outcome_slug;
+    var playlist_id = this.props.params.playlist_id;
+    var suboutcome_id = this.props.params.suboutcome_id;
 
     return (
       <DocumentTitle title="Myelin">

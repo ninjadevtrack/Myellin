@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Router = require('react-router');
@@ -21,6 +21,11 @@ var Option = require('./Option');
 var OptionsMultiple = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
+
+  contextTypes: {
+    router: React.PropTypes.object.isRequired,
+    params: React.PropTypes.object.isRequired
+  },
 
   getInitialState: function(){
     return {
@@ -70,9 +75,8 @@ var OptionsMultiple = React.createClass({
   },
 
   _handleBackClick: function (id) {
-    this.context.router.transitionTo('Playlists', {
-      outcome_slug: this.getParams().outcome_slug
-    });
+
+    this.context.router.push('/' + this.context.params.outcome_slug);
   },
 
   createOption: function(e) {

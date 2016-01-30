@@ -2,7 +2,9 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var ListGroup = require('react-bootstrap').ListGroup;
 var Badge = require('react-bootstrap').Badge;
@@ -73,7 +75,7 @@ var OutcomesMultiple = React.createClass({
     if (!order && order !== 0)
       order = this.state.data.length;
 
-    var title = React.findDOMNode(this.refs.createOutcome).value.trim();
+    var title = ReactDOM.findDOMNode(this.refs.createOutcome).value.trim();
 
     if (!title)
       return false;
@@ -96,7 +98,7 @@ var OutcomesMultiple = React.createClass({
     });
 
     // Clear input
-    React.findDOMNode(this.refs.createOutcome).value = '';
+    ReactDOM.findDOMNode(this.refs.createOutcome).value = '';
   },
 
 

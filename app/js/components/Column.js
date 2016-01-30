@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var cx = require('classnames');
 
 var Column = React.createClass({
@@ -30,7 +30,7 @@ var Column = React.createClass({
 
     // Give each child a callback function so they can pass data up (such as title for showing in navbar)
     var children = React.Children.map(this.props.children, function (child) {
-      return React.addons.cloneWithProps(child, {
+      return React.cloneElement(child, {
         loadedCallback: this.setChildData
       });
     }.bind(this));

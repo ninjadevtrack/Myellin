@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var Navbar = require('react-bootstrap').Navbar;
 var Nav = require('react-bootstrap').Nav;
 var DropdownButton = require('react-bootstrap').DropdownButton;
@@ -18,9 +18,13 @@ var NavbarTop = React.createClass({
 
    mixins: [Router.Navigation],
 
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   _handleBrandClick: function(e) {
     e.preventDefault();
-    this.context.router.transitionTo('app');
+    this.context.router.push('/')
   },
 
   _handleSubmit: function(e){

@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var Glyphicon= require('react-bootstrap').Glyphicon;
 var Well= require('react-bootstrap').Well;
@@ -130,7 +130,7 @@ var OutcomePlaylists = React.createClass({
         //if (!child) // Skip null children (such as {if xxxx && } wrapper)
           //return false;
 
-        return React.addons.cloneWithProps(child, {
+        return React.cloneElement(child, {
           outcome_id: outcome_id
         });
       }.bind(this));

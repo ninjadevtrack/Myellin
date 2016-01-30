@@ -2,7 +2,7 @@
 
 var DbHelper = require('../DbHelper');
 
-var React = require('react/addons');
+var React = require('react');
 
 var Panel = require('react-bootstrap').Panel; 
 var cx = require('classnames');
@@ -32,6 +32,11 @@ var ReactDnD = require('react-dnd');
 var SubOutcome = React.createClass({
 
   mixins: [Router.Navigation, Router.State, ReactFireMixin, AuthMixin],
+
+  contextTypes: {
+    router: React.PropTypes.object.isRequired,
+    params: React.PropTypes.object.isRequired
+  },
 
   getInitialState: function(){
     return {
@@ -104,11 +109,10 @@ var SubOutcome = React.createClass({
   },
 
   _handleOptionsClick: function () {
-    this.context.router.transitionTo('Options', {
-      outcome_slug: this.getParams().outcome_slug,
-      playlist_id: this.props.relationData.parent_playlist_id,
-      suboutcome_id: this.props.relationData.suboutcome_id
-    });
+
+    this.context.router.push(this.context.params.outcome_slug + '/' +
+      this.props.relationData.parent_playlist_id + '/' +
+      this.props.relationData.suboutcome_id);
 
     mixpanel.track('View Alternatives', {});
   },
