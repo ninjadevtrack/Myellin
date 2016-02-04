@@ -1,8 +1,10 @@
 'use strict';
 
 var React = require('react');
+
 var Navbar = require('react-bootstrap').Navbar;
 var Nav = require('react-bootstrap').Nav;
+
 var DropdownButton = require('react-bootstrap').DropdownButton;
 var CollapsibleNav = require('react-bootstrap').CollapsibleNav;
 var NavItem = require('react-bootstrap').NavItem;
@@ -56,21 +58,24 @@ var NavbarTop = React.createClass({
 
     return (
       <div className='navbarhidemobilemenu'>
-        <Navbar fixedTop={true} fluid={true}  toggleNavKey={0} brand={icon}>{/* This is the eventKey referenced */}
-          <Nav navbar left>
-          <div className="compensate-for-the-nav">
-            <div className="inputplaceholder">
-              <form onSubmit={ this._handleSubmit }>
-                <Input type='text' ref="search_input" bsSize="large" placeholder="&#32;" />
-              </form>
-            </div>
+        <Navbar fixedTop={true} fluid={true}>{/* This is the eventKey referenced */}
+          <Nav navbar pullLeft>
+            <div className="compensate-for-the-nav">
+              <div className="inputplaceholder">
+                <form onSubmit={ this._handleSubmit }>
+                  <Input type='text' ref="search_input" bsSize="large" placeholder="&#32;" />
+                </form>
+              </div>
             </div>
           </Nav>
-          <Nav navbar right>
+
+          <Navbar.Brand>
+            {icon}
+          </Navbar.Brand>
+
+          <Nav navbar pullRight>
             <div><LoginButton/></div>
           </Nav>
-          <CollapsibleNav eventKey={0}>   
-          </CollapsibleNav>
         </Navbar>
       </div>
     );
